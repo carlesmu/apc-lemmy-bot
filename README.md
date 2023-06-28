@@ -9,12 +9,12 @@ GNU Affero General Public License 3.
 ### Main dependencies
 - python3
 - supabase
-- pythorhead 
+- pythorhead
 - typing-extension
 
 ### Development dependencies
 - poetry
-- commitizen 
+- commitizen
 - black
 - pylint
 - pre-commit
@@ -28,21 +28,25 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    python -m venv .venv
    .venv/bin/pip install poetry
    ```
-   
-3. We will use that `venv` for development and update the dependencies and 
+
+3. We will use that `venv` for development and update the dependencies and
    the build system:
    ```
    .venv/bin/poetry install --no-root
    ```
 4. We have definied in our pyproject 3 groups:
-   - The main dependencies, needed to run `apc-lemmy-bot`, and installed in 
+   - The main dependencies, needed to run `apc-lemmy-bot`, and installed in
      step 3.
-   - The dev dependencies, useful utilities to build and mantain the package, 
+   - The dev dependencies, useful utilities to build and mantain the package,
      and installed in step 3.
-   - an optional IDE dependencies for `spyder`. SOme times they are not 
+   - an optional IDE dependencies for `spyder`. SOme times they are not
     autoupload with poetry, ig you are stuck with this problem, you can use:
     `.venv/bin/pip install spyder`
-    
+5. Install the precommit hooks:
+   ```
+   .venv/bin/poetry run pre-commit install-hooks
+   ```
+
 
 ### Development cycle
 1. Create a new branch for the development:
