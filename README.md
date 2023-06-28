@@ -44,6 +44,7 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
     `.venv/bin/pip install spyder`
 5. Install the precommit hooks:
    ```
+   .venv/bin/poetry run pre-commit install
    .venv/bin/poetry run pre-commit install-hooks
    ```
 
