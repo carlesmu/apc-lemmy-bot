@@ -1015,7 +1015,7 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "diff-cover (>=7.5)", "p
 name = "flake8"
 version = "6.0.0"
 description = "the modular source code checker: pep8 pyflakes and co"
-optional = false
+optional = true
 python-versions = ">=3.8.1"
 files = [
     {file = "flake8-6.0.0-py2.py3-none-any.whl", hash = "sha256:3833794e27ff64ea4e9cf5d410082a8b97ff1a06c16aa3d2027339cd0f1195c7"},
@@ -2267,7 +2267,7 @@ tests = ["pytest"]
 name = "pycodestyle"
 version = "2.10.0"
 description = "Python style guide checker"
-optional = false
+optional = true
 python-versions = ">=3.6"
 files = [
     {file = "pycodestyle-2.10.0-py2.py3-none-any.whl", hash = "sha256:8a4eaf0d0495c7395bdab3589ac2db602797d76207242c17d470186815706610"},
@@ -2358,7 +2358,7 @@ toml = ["tomli (>=1.2.3)"]
 name = "pyflakes"
 version = "3.0.1"
 description = "passive checker of Python programs"
-optional = false
+optional = true
 python-versions = ">=3.6"
 files = [
     {file = "pyflakes-3.0.1-py2.py3-none-any.whl", hash = "sha256:ec55bf7fe21fff7f1ad2f7da62363d749e2a470500eab1b555334b67aa1ef8cf"},
@@ -4541,4 +4541,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.12"
-content-hash = "d0abe726501bf49ecce212798db9131b20683deebcd4d2c46c288f9999dbd51b"
+content-hash = "0a90ebd45daba31ba983c8185b6801260dd303bdea500aaf683c9d77da69d647"
