@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "apc-lemmy-bot"
-version = "0.0.0"
+version = "0.1.0"
 description = "Post supabase events to a Lemmy instance or show them."
 authors = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
@@ -51,7 +51,7 @@ update_changelog_on_bump = true
 major_version_zero = true  # TODO: change it when version >= 1.0.0
 version_files = [
     "apc_lemmy_bot/__init__.py:^__version__",
-    "pyptoject.toml:^version",
+    "pyproject.toml:^version",
 ]
 
 [build-system]
