@@ -1,3 +1,9 @@
+[project]
+# Used by cx_Freeze
+name = "apc-lemmy-bot"
+version = "0.1.0"
+description = "Post supabase events to a Lemmy instance or show them."
+
 [tool.poetry]
 name = "apc-lemmy-bot"
 version = "0.1.0"
@@ -28,6 +34,7 @@ trove-classifiers = "^2023.5.24"  # for classifiers in this file
 commitizen = "^3.5.2"
 poetry = "^1.5.1"
 prompt-toolkit = "^3.0.38"  # for comitizen 3.5.2
+cx-freeze = "^6.15.2"
 
 
 [tool.poetry.group.IDE.dependencies]
@@ -60,6 +67,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 apc_lemmy_bot = "apc_lemmy_bot.__main__:main"
+
+[tool.poetry.build]
+generate-setup-file = false
+script = "scripts/build.py"
 
 [tool.black]
 line-length = 89
