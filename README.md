@@ -69,7 +69,7 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    git add [files]
    .venv/bin/poetry run cz commit
    ```
-4. Merge the branch in main and, later, delete the development branc.
+4. Merge the branch in main and, later, delete the development branch.
 5. Release new version (it will autogenerate the changelog and create the tag)
    ```
    .venv/bin/poetry run cz bump
