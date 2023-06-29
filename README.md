@@ -83,4 +83,4 @@ git add CHANGELOG.md apc_lemmy_bot/__init__.py
 git commit -m "bump: release version 0.1.0"
 ```
 Create a pull request  and, after it get merged with main,
-create the release and tag `v0.1.0'.
+create the release and tag `v0.1.0`.
