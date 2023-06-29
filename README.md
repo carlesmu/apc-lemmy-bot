@@ -7,17 +7,26 @@ GNU Affero General Public License 3.
 ## Development
 
 ### Main dependencies
-- python3
-- supabase
-- pythorhead
-- typing-extension
+- [python3](https://www.python.org):
+  [source code](https://github.com/python/).
+- [supabase](https://supabase.com/docs/reference/python/introduction):
+  [source code](https://github.com/supabase-community/supabase-py).
+- pythorhead:
+  [source code](https://github.com/db0/pythorhead).
+- [typing-extension](https://typing-extensions.readthedocs.io/):
+  [source code](https://github.com/python/typing_extensions).
 
 ### Development dependencies
-- poetry
-- commitizen
-- black
-- pylint
-- pre-commit
+- [poetry](https://python-poetry.org/):
+  [source](https://github.com/python-poetry/poetry)
+- [commitizen](https://commitizen-tools.github.io/commitizen/):
+  [source code](https://github.com/commitizen-tools/commitizen).
+- [black](https://black.readthedocs.io/):
+  [source code](https://github.com/psf/black).
+- [pylint](https://pylint.org/):
+  [source code](https://github.com/pylint-dev/pylint).
+- [pre-commit](https://pre-commit.com/):
+  [source code](https://github.com/pre-commit/pre-commit).
 
 ### Initial clone
 Note: depending of the OS, you should use or a `Script` or a `bin` directory.
@@ -48,7 +57,6 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    .venv/bin/poetry run pre-commit install-hooks
    ```
 
-
 ### Development cycle
 1. Create a new branch for the development:
    ```
@@ -61,7 +69,7 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    git add [files]
    .venv/bin/poetry run cz commit
    ```
-4. Merge the branch in main and, later, delete the development branc.
+4. Merge the branch in main and, later, delete the development branch.
 5. Release new version (it will autogenerate the changelog and create the tag)
    ```
    .venv/bin/poetry run cz bump
