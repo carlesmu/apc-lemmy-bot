@@ -74,3 +74,13 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    ```
    .venv/bin/poetry run cz bump
    ```
+
+### Release a new version
+You should change the version number to the new version in the examples:
+```
+.venv/Scripts/poetry run cz bump  -cc --major-version-zero 0.1.0
+git add CHANGELOG.md apc_lemmy_bot/__init__.py
+git commit -m "bump: release version 0.1.0"
+```
+Create a pull request  and, after it get merged with main,
+create the release and tag `v0.1.0'.
