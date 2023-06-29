@@ -51,7 +51,7 @@ python-lsp-server = {version = "^1.7.3", optional = true}
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
 name = "cz_conventional_commits"
-tag_format = "$version"
+tag_format = "v$version"
 version_scheme = "pep440"
 version_provider = "poetry"
 update_changelog_on_bump = true
