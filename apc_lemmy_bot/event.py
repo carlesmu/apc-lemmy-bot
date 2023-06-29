@@ -116,8 +116,27 @@ class Event:
         return self.title + " " + self.otd
 
     def nice_description(self) -> str:
-        """@TODO: improved description."""
-        return self.description  # TODO
+        """Improved description."""
+        # Replace asterisks * with heavy asterisk ✱
+        nice_desc = self.description.replace("*", "✱")
+        # Replace underscore _ with fullwith low line ＿
+        nice_desc = nice_desc.replace("_", "＿")
+        # Replace grave accent ` with apostrophe '
+        nice_desc = nice_desc.replace("`", "'")
+
+        # Improve quotation text at end of the description:
+        text = nice_desc.split("\n\n")
+        if (
+            len(text) > 1
+            and text[-1].startswith("- ")
+            and text[-2].startswith('"')
+            and text[-2].endswith('"')
+        ):
+            text[-2] = f"> *{text[-2]}*"
+            text[-1] = f"> `{text[-1]}`"
+            nice_desc = "\n\n".join(text[:-1])
+            nice_desc = f"{nice_desc}\n> \n{text[-1]}"
+        return nice_desc
 
     def get_content(self) -> str:
         """Return a formated missage content of the event."""
