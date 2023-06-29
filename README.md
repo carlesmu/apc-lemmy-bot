@@ -72,13 +72,13 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
 4. Merge the branch in main and, later, delete the development branch.
 
 ### Release a new version
-It will autogenerate the changelog and create the tag. You should 
-change the version number to the new version in the example code:
-1. 
+It will autogenerate the changelog and create the tag. 
+1. You should change the version number to the new version in the
+   example code:
    ```
    .venv/Scripts/poetry run cz bump  -cc --major-version-zero 0.1.0
    git add CHANGELOG.md apc_lemmy_bot/__init__.py
    git commit -m "bump: release version 0.1.0"
    ```
-2. Create a pull request  and, after it get merged with main,
-3. Create the release and tag `v0.1.0`.
+3. Create a pull request  and, after it get merged with main,
+4. Create the release and tag `v0.1.0`.
