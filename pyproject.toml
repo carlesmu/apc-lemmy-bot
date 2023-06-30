@@ -13,6 +13,7 @@ maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
 packages = [{include = "apc_lemmy_bot"}]
+include = ["CHANGELOG.md"]
 keywords = ["lemmy"]
 classifiers = [
     "Development Status :: 3 - Alpha",
