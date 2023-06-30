@@ -2,7 +2,7 @@
 
 ### Feat
 
-- **event.py**: Use some markdown in the description (citation)
+- **event.py**: Use some markdawn in the description (citation)
 
 ### Fix
 
@@ -10,6 +10,7 @@
 
 ### Refactor
 
+- **cli**: simplified imports
 - **cli**: simplified imports
 
 ## v0.1.1 (2023-06-30)
