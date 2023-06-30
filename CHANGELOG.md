@@ -4,6 +4,10 @@
 
 - **event.py**: Use some markdawn in the description (citation)
 
+### Refactor
+
+- **cli**: simplified imports
+
 ## v0.1.1 (2023-06-30)
 
 ### Fix
