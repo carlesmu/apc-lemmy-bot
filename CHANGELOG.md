@@ -10,6 +10,7 @@
 
 ### Refactor
 
+- **lemmy.py**: don't use protecter member _requestor.nodeinfo
 - **cli**: simplified imports
 - **cli**: simplified imports
 
