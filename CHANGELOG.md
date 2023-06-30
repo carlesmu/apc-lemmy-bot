@@ -2,7 +2,11 @@
 
 ### Feat
 
-- **event.py**: Use some markdawn in the description (citation)
+- **event.py**: Use some markdown in the description (citation)
+
+### Fix
+
+- **cli**: corrected imports, sorted callbacks and added callback for supabase key
 
 ### Refactor
 
