@@ -37,10 +37,10 @@ def login(instance: str = None, user: str = None, password: str = None) -> Lemmy
         password = apc_lb_conf.lemmy.password
 
     lemmy = Lemmy(instance)
+    if not lemmy.nodeinfo:
+        raise LemmyException(f"Sorry, cannot connect to lemmy instance {instance}.")
 
     if not lemmy.log_in(user, password):
-        if not lemmy._requestor.nodeinfo:
-            raise LemmyException(f"Sorry, cannot connect to lemmy instance {instance}.")
         raise LemmyException(
             f"Sorry, cannot login {user} into {instance}. Bad user or wrong password."
         )
