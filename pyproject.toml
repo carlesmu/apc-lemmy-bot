@@ -35,6 +35,7 @@ commitizen = "^3.5.2"
 poetry = "^1.5.1"
 prompt-toolkit = "^3.0.38"  # for comitizen 3.5.2
 cx-freeze = "^6.15.2"
+mypy = "^1.4.1"
 
 
 [tool.poetry.group.IDE.dependencies]

@@ -19,12 +19,14 @@
 
 import datetime
 import typer
+from typing import Optional, Union
 from typing_extensions import Annotated
 
 from .callbacks import callback_date, callback_url, callback_silence, callback_version
 
+# val_date: date = datetime.datetime.today().strftime("%Y-%m-%d")
 val_date: str = datetime.datetime.today().strftime("%Y-%m-%d")
-arg_date: Annotated = Annotated[
+arg_date = Annotated[
     str,
     typer.Argument(
         help="The date to look for ephemerides [Format: YYYY-MM-DD].",
@@ -33,8 +35,9 @@ arg_date: Annotated = Annotated[
     ),
 ]
 
+
 val_supabase_url: str = "https://stahmaxffcqankienulh.supabase.co"
-opt_supabase_url: Annotated = Annotated[
+opt_supabase_url = Annotated[
     str,
     typer.Option(
         "--sb-url",
@@ -48,8 +51,8 @@ opt_supabase_url: Annotated = Annotated[
     ),
 ]
 
-val_supabase_key: str = None
-opt_supabase_key: Annotated = Annotated[
+val_supabase_key: str = ""  # not initialized
+opt_supabase_key = Annotated[
     str,
     typer.Option(
         "--sb-key",
@@ -63,7 +66,7 @@ opt_supabase_key: Annotated = Annotated[
 ]
 
 val_base_event_url: str = "https://www.apeoplescalendar.org/calendar/events/"
-opt_base_event_url: Annotated = Annotated[
+opt_base_event_url = Annotated[
     str,
     typer.Option(
         "--ev-url",
@@ -78,7 +81,7 @@ opt_base_event_url: Annotated = Annotated[
 val_base_event_img_url: str = (
     "https://stahmaxffcqankienulh.supabase.co/storage/v1/object/public/event-photos/"
 )
-opt_base_event_img_url: Annotated = Annotated[
+opt_base_event_img_url = Annotated[
     str,
     typer.Option(
         "--ev-img-url",
@@ -91,7 +94,7 @@ opt_base_event_img_url: Annotated = Annotated[
 ]
 
 val_silence: bool = False
-opt_silence: Annotated = Annotated[
+opt_silence = Annotated[
     bool,
     typer.Option(
         "--silence",
@@ -103,7 +106,7 @@ opt_silence: Annotated = Annotated[
 ]
 
 val_version: bool = False
-opt_version: Annotated = Annotated[
+opt_version = Annotated[
     bool,
     typer.Option(
         "--version",

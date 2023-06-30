@@ -18,24 +18,17 @@
 """apc_lemmy_bot.cli __main__ module."""
 
 import typer
-from typing_extensions import Annotated
 
+# post and show required to build the typer.context
 from . import app, post, show
-from .callbacks import callback_version
+
+from .common import opt_version, val_version
 
 
 @app.callback()
 def main(
     ctx: typer.Context,
-    version: Annotated[
-        bool,
-        typer.Option(
-            "--version",
-            help="Show program version and exit.",
-            callback=callback_version,
-            is_eager=True,
-        ),
-    ] = False,
+    version: opt_version = val_version,
 ):
     """
     Post supabase events to a Lemmy instance or show them.

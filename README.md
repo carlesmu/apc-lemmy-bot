@@ -27,6 +27,8 @@ GNU Affero General Public License 3.
   [source code](https://github.com/pylint-dev/pylint).
 - [pre-commit](https://pre-commit.com/):
   [source code](https://github.com/pre-commit/pre-commit).
+- [mypy](https://www.mypy-lang.org/):
+  [source code](https://github.com/python/mypy).
 
 ### Initial clone
 Note: depending of the OS, you should use or a `Script` or a `bin` directory.
@@ -77,10 +79,11 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
 4. Merge the branch in main and, later, delete the development branch.
 
 ### Release a new version
-It will generate the changelog and create the tag. 
-1. Call (use `--dry-run` first):
+It will generate the changelog and create the tag.
+1. Test this order and modify options ( remember to remove `--dry-run`
+   when it's ok):
    ```
-   .venv/bin/poetry run cz bump -cc --increment [MAJOR|MINOR|PATCH]
+   .venv/bin/poetry run cz bump -cc --dry-run
    ```
 3. Create a pull request and get it merged with main.
 4. Create the release and tag `v0.1.0`.

@@ -25,7 +25,7 @@ import json
 import textwrap
 import warnings
 
-from typing import Optional
+from typing import List, Optional
 from urllib.parse import urlsplit
 
 # https://github.com/supabase-community/supabase-py
@@ -40,22 +40,22 @@ class Event:
     def __init__(
         self,
         event: dict,
-        base_event_url: str = None,
-        base_event_img_url: str = None,
+        base_event_url: Optional[str] = None,
+        base_event_img_url: Optional[str] = None,
     ):
-        self.id: str = None
-        self.title: str = None
-        self.slugTitle: str = None
-        self.otd: str = None
-        self.description: str = None
-        self.imgAltText: str = None
-        self.NSFW: bool = None
-        self.imgSrc: str = None
-        self.date: datetime.date = None
-        self.links: [str] = []
-        self.tags: [str] = []
-        self.day: int = None
-        self.month: int = None
+        self.id: Optional[str] = None
+        self.title: Optional[str] = None
+        self.slugTitle: Optional[str] = None
+        self.otd: Optional[str] = None
+        self.description: Optional[str] = None
+        self.imgAltText: Optional[str] = None
+        self.NSFW: Optional[bool] = None
+        self.imgSrc: Optional[str] = None
+        self.date: Optional[datetime.date] = None
+        self.links: List[Optional[str]] = []
+        self.tags: List[Optional[str]] = []
+        self.day: Optional[int] = None
+        self.month: Optional[int] = None
         self.base_event_url: str = (
             base_event_url
             if base_event_url is not None
@@ -99,24 +99,26 @@ class Event:
 
     def get_event_url(self) -> str:
         """Return the original url of the event."""
-        return self.base_event_url + self.slugTitle
+        return f"{self.base_event_url}{self.slugTitle}"
 
-    def get_image_url(self) -> str:
+    def get_image_url(self) -> Optional[str]:
         """Return the original image url."""
         if self.imgSrc:
-            return self.base_event_img_url + self.imgSrc
+            return f"{self.base_event_img_url}{self.imgSrc}"
         return None
 
     def nice_title(self, max_length: Optional[int] = None) -> str:
         """@TODO: improved description."""
         if max_length:
             return textwrap.shorten(
-                self.title + " " + self.otd, width=max_length, placeholder="..."
+                f"{self.title} {self.otd}", width=max_length, placeholder="..."
             )
-        return self.title + " " + self.otd
+        return f"{self.title} {self.otd}"
 
     def nice_description(self) -> str:
         """Improved description."""
+        if not self.description:
+            return ""
         # Replace asterisks * with heavy asterisk ✱
         nice_desc = self.description.replace("*", "✱")
         # Replace underscore _ with fullwith low line ＿
@@ -140,10 +142,11 @@ class Event:
 
     def get_content(self) -> str:
         """Return a formated missage content of the event."""
+
         ret = f"## {self.title}\n\n"
 
-        pretty_date = self.date.strftime("%a %b %d, %Y")
-        ret += f"### {pretty_date}\n"
+        if self.date:
+            ret += f"### {self.date.strftime('%a %b %d, %Y')}\n"
 
         if self.get_image_url() is not None:
             if self.NSFW:
@@ -164,7 +167,7 @@ class Event:
             ret += "- Learn More: "
             i = 0
             for link in self.links:
-                ret += f"[{urlsplit(link).netloc}]({link})"
+                ret += f"[{str(urlsplit(link).netloc)}]({link})"
                 i += 1
                 if i < len(self.links):
                     ret += ", "
@@ -191,11 +194,11 @@ class Event:
 
 def get_dated_events(
     date: datetime.date = datetime.datetime.today().date(),
-    url: str = None,
-    key: str = None,
-    base_event_url: str = None,
-    base_event_img_url: str = None,
-) -> [Event]:
+    url: Optional[str] = None,
+    key: Optional[str] = None,
+    base_event_url: Optional[str] = None,
+    base_event_img_url: Optional[str] = None,
+) -> List[Event]:
     """Get the events of a day."""
     if not url:
         url = apc_lb_conf.supabase.url

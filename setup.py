@@ -10,9 +10,9 @@ from cx_Freeze import setup, Executable
 
 # Dependencies are automatically detected, but it might need
 # fine tuning.
-build_options = {"packages": [], "excludes": []}
+build_options: dict[str, list[str]] = {"packages": [], "excludes": []}
 
-base = "console"
+base: str = "console"
 
 setup(
     executables=[

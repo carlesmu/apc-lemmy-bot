@@ -26,15 +26,15 @@ import typer
 from apc_lemmy_bot import __app__, __version__
 
 
-def callback_date(date: str) -> datetime.datetime:
+def callback_date(date: str) -> str:
     """Validate a date argument.
 
     It should have format YYYY-MM-DD
     """
     if not date:
-        return datetime.datetime.today()
+        return datetime.datetime.today().strftime("%Y-%m-%d")
     try:
-        return datetime.datetime.strptime(date, "%Y-%m-%d")
+        return datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%Y-%m-%d")
     except ValueError as err:
         raise typer.BadParameter(f"{err}")
 
