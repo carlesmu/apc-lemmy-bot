@@ -17,6 +17,7 @@
 
 """apc_lemmy_bot.cli post module."""
 
+import datetime
 import sched
 import time
 
@@ -166,10 +167,13 @@ def post(
     apc_lb_conf.delay = delay
 
     if not silence:
-        print(f"Fetching events for date {date.strftime('%d %B')}", end=" ... ")
+        print(
+            f"Fetching events for date {datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d %B')}",
+            end=" ... ",
+        )
 
     events = get_dated_events(
-        date=date,
+        date=datetime.datetime.strptime(date, "%Y-%m-%d"),
         url=supabase_url,
         key=supabase_key,
         base_event_url=base_event_url,
@@ -180,10 +184,10 @@ def post(
         print(f"{len(events)} fetched.")
 
     schedule = sched.scheduler(time.monotonic, time.sleep)
-    delay: int = 0
+    acum_delay: int = 0
     for event in events:
         schedule.enter(
-            delay,
+            acum_delay,
             1,
             _create_event_post,
             argument=(
@@ -196,6 +200,6 @@ def post(
                 lemmy_community,
             ),
         )
-        delay += apc_lb_conf.delay
+        acum_delay += apc_lb_conf.delay
 
     schedule.run()

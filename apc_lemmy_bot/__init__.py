@@ -22,6 +22,8 @@ apc_lemmy_bot __init__ module.
 
 from dataclasses import dataclass
 
+from typing import Optional
+
 __all__ = ["event", "lemmy"]
 
 __app__: str = "apc_lemmy_bot"
@@ -34,29 +36,29 @@ LEMMY_MAX_TITLE_LENGTH: int = 199
 class ApcLemmyBotSupabaseConf:
     """Dataclass for supabase data conf."""
 
-    url: str = None
-    key: str = None
-    base_event_url: str = None
-    base_event_img_url: str = None
+    url: Optional[str] = None
+    key: Optional[str] = None
+    base_event_url: Optional[str] = None
+    base_event_img_url: Optional[str] = None
 
 
 @dataclass
 class ApcLemmyBotLemmyConf:
     """Dataclass for Lemmy instances conf."""
 
-    instance: str = None
-    user: str = None
-    password: str = None
-    community: str = None
+    instance: Optional[str] = None
+    user: Optional[str] = None
+    password: Optional[str] = None
+    community: Optional[str] = None
 
 
 @dataclass
 class ApcLemmyBotConf:
     """Dataclass for apc_lemmy_conf."""
 
-    supabase: ApcLemmyBotSupabaseConf = None
-    lemmy: ApcLemmyBotLemmyConf = None
-    delay: int = None  # seconds
+    supabase: ApcLemmyBotSupabaseConf
+    lemmy: ApcLemmyBotLemmyConf
+    delay: int = 5400  # seconds
 
 
 apc_lb_conf = ApcLemmyBotConf(ApcLemmyBotSupabaseConf(), ApcLemmyBotLemmyConf())

@@ -17,6 +17,7 @@
 
 """apc_lemmy_bot.cli show module."""
 
+import datetime
 import typer
 from typing_extensions import Annotated
 
@@ -24,7 +25,7 @@ from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events
 
 from . import app
-from .callbacks import callback_output_format
+from .callbacks import callback_date, callback_output_format
 from .common import (
     arg_date,
     val_date,
@@ -61,7 +62,7 @@ def show(
         ),
     ] = "txt",
     silence: opt_silence = val_silence,
-    version: opt_version = val_silence,
+    version: opt_version = val_version,
 ):
     """Show a day's events stored in a supabase database."""
     apc_lb_conf.supabase.url = supabase_url
@@ -70,10 +71,12 @@ def show(
     apc_lb_conf.supabase.base_event_img_url = base_event_img_url
 
     if not silence:
-        print(f"Fetching events for date {date.strftime('%d %B')}:")
+        print(
+            f"Fetching events for date {datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d %B')}:"
+        )
 
     events = get_dated_events(
-        date=date,
+        date=datetime.datetime.strptime(date, "%Y-%m-%d"),
         url=supabase_url,
         key=supabase_key,
         base_event_url=base_event_url,

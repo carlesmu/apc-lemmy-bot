@@ -57,7 +57,7 @@ def create_post(
     community: str = None,
     honeypot: Optional[str] = None,
     language_id: Optional[int] = None,
-):
+) -> Optional[dict]:
     """Create a lemy post."""
     if community is None:
         community = apc_lb_conf.lemmy.community
@@ -66,7 +66,7 @@ def create_post(
     if community_id is None:
         raise LemmyException(f"Sorry, cannot find community '{community}'")
 
-    created = lemmy.post.create(
+    created: Optional[dict] = lemmy.post.create(
         community_id,
         name=title,
         url=url,
@@ -100,12 +100,12 @@ def create_event_post(
     if url is None:
         url = event.get_event_url()
 
-    create_post(
+    return create_post(
         lemmy,
         title=event.nice_title(LEMMY_MAX_TITLE_LENGTH),
         url=url,
         body=event.get_content(),
-        nsfw=event.NSFW,
+        nsfw=event.NSFW if event.NSFW else False,
         community=community,
         honeypot=honeypot,
         language_id=language_id,
