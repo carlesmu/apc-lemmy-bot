@@ -142,7 +142,6 @@ class Event:
 
     def get_content(self) -> str:
         """Return a formated missage content of the event."""
-
         ret = f"## {self.title}\n\n"
 
         if self.date:

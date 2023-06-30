@@ -19,10 +19,9 @@
 
 import datetime
 import typer
-from typing import Optional, Union
 from typing_extensions import Annotated
 
-from .callbacks import callback_date, callback_url, callback_silence, callback_version
+from .cli import callbacks
 
 # val_date: date = datetime.datetime.today().strftime("%Y-%m-%d")
 val_date: str = datetime.datetime.today().strftime("%Y-%m-%d")
@@ -30,7 +29,7 @@ arg_date = Annotated[
     str,
     typer.Argument(
         help="The date to look for ephemerides [Format: YYYY-MM-DD].",
-        callback=callback_date,
+        callback=callbacks.date,
         show_default=True,
     ),
 ]
@@ -44,7 +43,7 @@ opt_supabase_url = Annotated[
         "-u",
         rich_help_panel="Supabase options",
         help="Url of the supabase database.",
-        callback=callback_url,
+        callback=callbacks.url,
         show_default=True,
         envvar="APC_SUPABASE_URL",
         # prompt="Please we need the URL for the supabase database",
@@ -59,6 +58,7 @@ opt_supabase_key = Annotated[
         "-k",
         rich_help_panel="Supabase options",
         help="Key used to access to the database.",
+        callback=callbacks.supabase_key,
         show_default=False,
         envvar="APC_SUPABASE_KEY",
         # prompt="Please we need the KEY for the supabase database",
@@ -72,7 +72,7 @@ opt_base_event_url = Annotated[
         "--ev-url",
         rich_help_panel="Supabase options",
         help="Base URL where where the events are shown.",
-        callback=callback_url,
+        callback=callbacks.url,
         show_default=True,
         envvar="APC_BASE_EVENT_URL",
     ),
@@ -87,7 +87,7 @@ opt_base_event_img_url = Annotated[
         "--ev-img-url",
         rich_help_panel="Supabase options",
         help="Base URL where the images of the events are shown.",
-        callback=callback_url,
+        callback=callbacks.url,
         show_default=True,
         envvar="APC_BASE_EVENT_IMG_URL",
     ),
@@ -100,7 +100,7 @@ opt_silence = Annotated[
         "--silence",
         "-s",
         help="Don't print extra information.",
-        callback=callback_silence,
+        callback=callbacks.silence,
         is_eager=True,
     ),
 ]
@@ -111,7 +111,7 @@ opt_version = Annotated[
     typer.Option(
         "--version",
         help="Show program version and exit.",
-        callback=callback_version,
+        callback=callbacks.version,
         is_eager=True,
     ),
 ]

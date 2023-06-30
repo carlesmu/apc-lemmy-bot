@@ -31,23 +31,7 @@ from apc_lemmy_bot.event import get_dated_events, Event
 from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post
 
 from . import app
-from .callbacks import callback_url
-from .common import (
-    arg_date,
-    val_date,
-    opt_supabase_url,
-    val_supabase_url,
-    opt_supabase_key,
-    val_supabase_key,
-    opt_base_event_url,
-    val_base_event_url,
-    opt_base_event_img_url,
-    val_base_event_img_url,
-    opt_silence,
-    val_silence,
-    opt_version,
-    val_version,
-)
+from .cli import callbacks, common
 
 
 def _create_event_post(
@@ -98,11 +82,11 @@ def _create_event_post(
 
 @app.command()
 def post(
-    date: arg_date = val_date,
-    supabase_url: opt_supabase_url = val_supabase_url,
-    supabase_key: opt_supabase_key = val_supabase_key,
-    base_event_url: opt_base_event_url = val_base_event_url,
-    base_event_img_url: opt_base_event_img_url = val_base_event_img_url,
+    date: common.arg_date = common.val_date,
+    supabase_url: common.opt_supabase_url = common.val_supabase_url,
+    supabase_key: common.opt_supabase_key = common.val_supabase_key,
+    base_event_url: common.opt_base_event_url = common.val_base_event_url,
+    base_event_img_url: common.opt_base_event_img_url = common.val_base_event_img_url,
     lemmy_user: Annotated[
         str,
         typer.Option(
@@ -137,7 +121,7 @@ def post(
             "--lm-instance",
             rich_help_panel="Lemmy",
             help="Base URL of the lemmy instance where the events will be posted",
-            callback=callback_url,
+            callback=callbacks.url,
             show_default=True,
             envvar="APC_LEMMY_INSTANCE",
         ),
@@ -152,8 +136,8 @@ def post(
             envvar="APC_DELAY",
         ),
     ] = 5400,  # 1:30 h.
-    silence: opt_silence = val_silence,
-    version: opt_version = val_version,
+    silence: common.opt_silence = common.val_silence,
+    version: common.opt_version = common.val_version,
 ):
     """Post a day's events in a lemmy community."""
     apc_lb_conf.supabase.url = supabase_url

@@ -26,7 +26,7 @@ import typer
 from apc_lemmy_bot import __app__, __version__
 
 
-def callback_date(date: str) -> str:
+def date(date: str) -> str:
     """Validate a date argument.
 
     It should have format YYYY-MM-DD
@@ -39,7 +39,7 @@ def callback_date(date: str) -> str:
         raise typer.BadParameter(f"{err}")
 
 
-def callback_url(url: str) -> str:
+def url(url: str) -> str:
     """Validate a valid URL.
 
     It should have protocols 'file', 'http' or 'https'.
@@ -56,8 +56,8 @@ def callback_url(url: str) -> str:
     raise typer.BadParameter(f"Not recognized URL '{url}'")
 
 
-def callback_output_format(value: str) -> str:
-    """Validates the --format option.
+def output_format(value: str) -> str:
+    """Callback for the --format option.
 
     It should be 'json', 'txt' or 'none'.
     """
@@ -66,13 +66,13 @@ def callback_output_format(value: str) -> str:
     return value.lower()
 
 
-def callback_version(value: bool):
-    """Calback for the --version option."""
+def version(value: bool):
+    """CalLback for the --version option."""
     if value:
         print(f"{__app__}-v{__version__}")
         raise typer.Exit()
 
 
-def callback_silence(value: bool):
+def silence(value: bool):
     """Callback for the option --silence."""
     return value
