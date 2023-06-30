@@ -25,32 +25,16 @@ from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events
 
 from . import app
-from .callbacks import callback_date, callback_output_format
-from .common import (
-    arg_date,
-    val_date,
-    opt_supabase_url,
-    val_supabase_url,
-    opt_supabase_key,
-    val_supabase_key,
-    opt_base_event_url,
-    val_base_event_url,
-    opt_base_event_img_url,
-    val_base_event_img_url,
-    opt_silence,
-    val_silence,
-    opt_version,
-    val_version,
-)
+from .cli import callbacks, common
 
 
 @app.command()
 def show(
-    date: arg_date = val_date,
-    supabase_url: opt_supabase_url = val_supabase_url,
-    supabase_key: opt_supabase_key = val_supabase_key,
-    base_event_url: opt_base_event_url = val_base_event_url,
-    base_event_img_url: opt_base_event_img_url = val_base_event_img_url,
+    date: common.arg_date = common.val_date,
+    supabase_url: common.opt_supabase_url = common.val_supabase_url,
+    supabase_key: common.opt_supabase_key = common.val_supabase_key,
+    base_event_url: common.opt_base_event_url = common.val_base_event_url,
+    base_event_img_url: common.opt_base_event_img_url = common.val_base_event_img_url,
     output_format: Annotated[
         str,
         typer.Option(
@@ -58,11 +42,11 @@ def show(
             "-f",
             help="Output format [json | txt | none].",
             show_default=True,
-            callback=callback_output_format,
+            callback=callbacks.output_format,
         ),
     ] = "txt",
-    silence: opt_silence = val_silence,
-    version: opt_version = val_version,
+    silence: common.opt_silence = common.val_silence,
+    version: common.opt_version = common.val_version,
 ):
     """Show a day's events stored in a supabase database."""
     apc_lb_conf.supabase.url = supabase_url
