@@ -18,7 +18,6 @@ repos:
       - id: mypy
         verbose: true
         args: [--ignore-missing-imports]
-        entry: bash -c 'mypy "$@" || true' --  # don't fail if errors
 -   repo: https://github.com/commitizen-tools/commitizen
     rev: 3.5.2
     hooks:
