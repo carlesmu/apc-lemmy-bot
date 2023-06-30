@@ -39,6 +39,30 @@ def date(date: str) -> str:
         raise typer.BadParameter(f"{err}")
 
 
+def output_format(value: str) -> str:
+    """Validate the --format option.
+
+    It should be 'json', 'txt' or 'none'.
+    """
+    if not value.lower() in ["json", "txt", "none"]:
+        raise typer.BadParameter(f"Not recognized '{value}'")
+    return value.lower()
+
+
+def supabase_key(value: str) -> str:
+    """Validate the --sb-key option."""
+    if value.strip() == "":
+        raise typer.BadParameter(f"Cannot precess supabase empty key '{value}'")
+    return value
+
+
+def version(value: bool):
+    """Validate the --version option."""
+    if value:
+        print(f"{__app__}-v{__version__}")
+        raise typer.Exit()
+
+
 def url(url: str) -> str:
     """Validate a valid URL.
 
@@ -56,23 +80,6 @@ def url(url: str) -> str:
     raise typer.BadParameter(f"Not recognized URL '{url}'")
 
 
-def output_format(value: str) -> str:
-    """Callback for the --format option.
-
-    It should be 'json', 'txt' or 'none'.
-    """
-    if not value.lower() in ["json", "txt", "none"]:
-        raise typer.BadParameter(f"Not recognized '{value}'")
-    return value.lower()
-
-
-def version(value: bool):
-    """CalLback for the --version option."""
-    if value:
-        print(f"{__app__}-v{__version__}")
-        raise typer.Exit()
-
-
 def silence(value: bool):
-    """Callback for the option --silence."""
+    """Validate the option --silence."""
     return value

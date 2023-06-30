@@ -21,14 +21,13 @@ import typer
 
 # post and show required to build the typer.context
 from . import app, post, show
-
-from .common import opt_version, val_version
+from . import common
 
 
 @app.callback()
 def main(
     ctx: typer.Context,
-    version: opt_version = val_version,
+    version: common.opt_version = common.val_version,
 ):
     """
     Post supabase events to a Lemmy instance or show them.

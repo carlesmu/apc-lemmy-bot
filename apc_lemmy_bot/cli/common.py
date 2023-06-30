@@ -21,7 +21,7 @@ import datetime
 import typer
 from typing_extensions import Annotated
 
-from .cli import callbacks
+from . import callbacks
 
 # val_date: date = datetime.datetime.today().strftime("%Y-%m-%d")
 val_date: str = datetime.datetime.today().strftime("%Y-%m-%d")

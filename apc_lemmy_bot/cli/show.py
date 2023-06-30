@@ -25,7 +25,7 @@ from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events
 
 from . import app
-from .cli import callbacks, common
+from . import callbacks, common
 
 
 @app.command()

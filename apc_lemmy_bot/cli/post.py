@@ -31,7 +31,7 @@ from apc_lemmy_bot.event import get_dated_events, Event
 from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post
 
 from . import app
-from .cli import callbacks, common
+from . import callbacks, common
 
 
 def _create_event_post(
