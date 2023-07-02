@@ -53,12 +53,22 @@ class ApcLemmyBotLemmyConf:
 
 
 @dataclass
+class ApcLemmyBotDatabaseConf:
+    """Dataclass for  the database conf."""
+
+    url: Optional[str] = None
+
+
+@dataclass
 class ApcLemmyBotConf:
     """Dataclass for apc_lemmy_conf."""
 
     supabase: ApcLemmyBotSupabaseConf
     lemmy: ApcLemmyBotLemmyConf
+    database: ApcLemmyBotDatabaseConf
     delay: int = 5400  # seconds
 
 
-apc_lb_conf = ApcLemmyBotConf(ApcLemmyBotSupabaseConf(), ApcLemmyBotLemmyConf())
+apc_lb_conf = ApcLemmyBotConf(
+    ApcLemmyBotSupabaseConf(), ApcLemmyBotLemmyConf(), ApcLemmyBotDatabaseConf()
+)
