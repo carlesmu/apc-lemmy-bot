@@ -96,7 +96,7 @@ def post(
             show_default=True,
             envvar="APC_LEMMY_USER",
         ),
-    ] = "redrumBot",
+    ] = apc_lb_conf.lemmy.user,
     lemmy_password: Annotated[
         str,
         typer.Option(
@@ -105,7 +105,7 @@ def post(
             help="Password of the user of the lemmy instance",
             envvar="APC_LEMMY_PASSWORD",
         ),
-    ] = None,
+    ] = apc_lb_conf.lemmy.password,
     lemmy_community: Annotated[
         str,
         typer.Option(
@@ -114,7 +114,7 @@ def post(
             help="Lemmy comumunity of the instance where the events be posted",
             envvar="APC_LEMMY_COMMUNITY",
         ),
-    ] = "workingclasscalendar@lemmy.world",
+    ] = apc_lb_conf.lemmy.community,
     lemmy_instance: Annotated[
         str,
         typer.Option(
@@ -125,7 +125,7 @@ def post(
             show_default=True,
             envvar="APC_LEMMY_INSTANCE",
         ),
-    ] = "https://lemmy.ml",
+    ] = apc_lb_conf.lemmy.instance,
     delay: Annotated[
         int,
         typer.Option(
@@ -135,7 +135,7 @@ def post(
             help="Delay in seconds between posts",
             envvar="APC_DELAY",
         ),
-    ] = 5400,  # 1:30 h.
+    ] = apc_lb_conf.delay,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
 ):

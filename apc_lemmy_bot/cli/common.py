@@ -21,9 +21,9 @@ import datetime
 import typer
 from typing_extensions import Annotated
 
+from apc_lemmy_bot import apc_lb_conf
 from . import callbacks
 
-# val_date: date = datetime.datetime.today().strftime("%Y-%m-%d")
 val_date: str = datetime.datetime.today().strftime("%Y-%m-%d")
 arg_date = Annotated[
     str,
@@ -35,7 +35,7 @@ arg_date = Annotated[
 ]
 
 
-val_supabase_url: str = "https://stahmaxffcqankienulh.supabase.co"
+val_supabase_url: str = apc_lb_conf.supabase.url
 opt_supabase_url = Annotated[
     str,
     typer.Option(
@@ -50,7 +50,7 @@ opt_supabase_url = Annotated[
     ),
 ]
 
-val_supabase_key: str = ""  # not initialized
+val_supabase_key: str = apc_lb_conf.supabase.key
 opt_supabase_key = Annotated[
     str,
     typer.Option(
@@ -65,7 +65,7 @@ opt_supabase_key = Annotated[
     ),
 ]
 
-val_base_event_url: str = "https://www.apeoplescalendar.org/calendar/events/"
+val_base_event_url: str = apc_lb_conf.supabase.base_event_url
 opt_base_event_url = Annotated[
     str,
     typer.Option(
@@ -78,9 +78,7 @@ opt_base_event_url = Annotated[
     ),
 ]
 
-val_base_event_img_url: str = (
-    "https://stahmaxffcqankienulh.supabase.co/storage/v1/object/public/event-photos/"
-)
+val_base_event_img_url: str = apc_lb_conf.supabase.base_event_img_url
 opt_base_event_img_url = Annotated[
     str,
     typer.Option(
