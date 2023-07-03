@@ -25,7 +25,7 @@ python = ">=3.10,<3.12"
 typer = "^0.9.0"
 typing-extensions = "^4.6.3"
 supabase = "^1.0.3"
-pythorhead = "^0.9.2"
+pythorhead = "^0.10.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
