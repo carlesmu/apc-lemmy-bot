@@ -45,6 +45,7 @@ def show(
             callback=callbacks.output_format,
         ),
     ] = "txt",
+    langcode: common.opt_langcode = None,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
 ):
@@ -55,9 +56,8 @@ def show(
     apc_lb_conf.supabase.base_event_img_url = base_event_img_url
 
     if not silence:
-        print(
-            f"Fetching events for date {datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d %B')}:"
-        )
+        d_str = datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%d %B")
+        print(f"Fetching events for date {d_str}:")
 
     events = get_dated_events(
         date=datetime.datetime.strptime(date, "%Y-%m-%d"),
@@ -65,6 +65,7 @@ def show(
         key=supabase_key,
         base_event_url=base_event_url,
         base_event_img_url=base_event_img_url,
+        force_langcode=langcode,
     )
 
     for event in events:

@@ -24,7 +24,7 @@ import time
 import typer
 from typing_extensions import Annotated
 
-# https://github.com/retiolus/Lemmy.py
+from pythorhead.types import LanguageType
 
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events, Event
@@ -61,7 +61,9 @@ def _create_event_post(
         print(f"Posting {event.id}: {event.slugTitle}", end=" ... ")
 
     try:
-        create_event_post(event, lemmy, lemmy_community)
+        create_event_post(
+            event, lemmy, lemmy_community, language_id=LanguageType[event.langcode].value
+        )
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
         raise typer.Exit(1)
@@ -136,6 +138,7 @@ def post(
             envvar="APC_DELAY",
         ),
     ] = apc_lb_conf.delay,
+    langcode: common.opt_langcode = None,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
 ):
@@ -151,8 +154,9 @@ def post(
     apc_lb_conf.delay = delay
 
     if not silence:
+        d_str = datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%d %B")
         print(
-            f"Fetching events for date {datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d %B')}",
+            f"Fetching events for date {d_str}",
             end=" ... ",
         )
 
@@ -162,6 +166,7 @@ def post(
         key=supabase_key,
         base_event_url=base_event_url,
         base_event_img_url=base_event_img_url,
+        force_langcode=langcode,
     )
 
     if not silence:

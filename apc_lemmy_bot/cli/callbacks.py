@@ -23,6 +23,7 @@ from urllib.parse import urlparse
 
 import typer
 
+from pythorhead.types import LanguageType
 from apc_lemmy_bot import __app__, __version__
 
 
@@ -37,6 +38,21 @@ def date(date: str) -> str:
         return datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%Y-%m-%d")
     except ValueError as err:
         raise typer.BadParameter(f"{err}")
+
+
+def langcode(value: str) -> str:
+    """Validates a language code.
+
+    It should have format XX.
+    """
+    if value is None:
+        return
+    try:
+        return LanguageType[value.upper()].name
+    except KeyError:
+        raise typer.BadParameter(f"KeyError: Langcode '{value}' undefined in Pythorhead")
+
+    raise typer.BadParameter(f"Langcode '{value}' undefined in Pythorhead")
 
 
 def output_format(value: str) -> str:

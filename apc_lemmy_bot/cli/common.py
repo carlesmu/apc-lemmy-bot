@@ -91,6 +91,17 @@ opt_base_event_img_url = Annotated[
     ),
 ]
 
+opt_langcode = Annotated[
+    str,
+    typer.Option(
+        "--langcode",
+        help="The language code of the event in ISO 639 format",
+        callback=callbacks.langcode,
+        show_default=True,
+        envvar="APC_LANGCODE",
+    ),
+]
+
 val_silence: bool = False
 opt_silence = Annotated[
     bool,
