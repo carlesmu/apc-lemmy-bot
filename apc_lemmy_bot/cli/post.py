@@ -24,8 +24,6 @@ import time
 import typer
 from typing_extensions import Annotated
 
-from pythorhead.types import LanguageType
-
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events, Event
 from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post
@@ -61,9 +59,7 @@ def _create_event_post(
         print(f"Posting {event.id}: {event.slugTitle}", end=" ... ")
 
     try:
-        create_event_post(
-            event, lemmy, lemmy_community, language_id=LanguageType[event.langcode].value
-        )
+        create_event_post(event, lemmy, lemmy_community, langcode=event.langcode)
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
         raise typer.Exit(1)

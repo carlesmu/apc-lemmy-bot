@@ -16,8 +16,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """apc_lemmy_bot lemmy module."""
 
+import warnings
+
 from typing import Optional
 from pythorhead import Lemmy
+from pythorhead.types import LanguageType
 
 from .__init__ import apc_lb_conf, LEMMY_MAX_TITLE_LENGTH
 from .event import Event
@@ -56,11 +59,19 @@ def create_post(
     nsfw: bool,
     community: str = None,
     honeypot: Optional[str] = None,
-    language_id: Optional[int] = None,
+    langcode: Optional[str] = None,
 ) -> Optional[dict]:
     """Create a lemy post."""
     if community is None:
         community = apc_lb_conf.lemmy.community
+
+    # Look for the language_id
+    language_id = 0  # any
+    if langcode is not None:
+        try:
+            language_id = LanguageType[langcode].value
+        except Exception:
+            warnings.warn(f"Key 'Langcode '{langcode}' not defined in pythorhead.")
 
     community_id = lemmy.discover_community(community)
     if community_id is None:
@@ -89,7 +100,7 @@ def create_event_post(
     lemmy: Lemmy,
     community: Optional[str] = None,
     honeypot: Optional[str] = None,
-    language_id: Optional[int] = None,
+    langcode: Optional[str] = None,
 ) -> Optional[dict]:
     """Create a lemmy post using an event."""
     if community is None:
@@ -108,5 +119,5 @@ def create_event_post(
         nsfw=event.NSFW if event.NSFW else False,
         community=community,
         honeypot=honeypot,
-        language_id=language_id,
+        langcode=langcode,
     )
