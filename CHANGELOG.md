@@ -14,7 +14,6 @@
 - **conf**: move initial values to conf estruct
 - **lemmy.py**: don't use protecter member _requestor.nodeinfo
 - **cli**: simplified imports
-- **cli**: simplified imports
 
 ## v0.1.1 (2023-06-29)
 
