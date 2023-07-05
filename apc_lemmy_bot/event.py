@@ -42,6 +42,7 @@ class Event:
         event: dict,
         base_event_url: Optional[str] = None,
         base_event_img_url: Optional[str] = None,
+        force_langcode: Optional[str] = None,
     ):
         self.id: Optional[str] = None
         self.title: Optional[str] = None
@@ -56,11 +57,18 @@ class Event:
         self.tags: List[Optional[str]] = []
         self.day: Optional[int] = None
         self.month: Optional[int] = None
+
+        if force_langcode:
+            self.langcode = force_langcode
+        else:
+            self.langcode = ""
+
         self.base_event_url: str = (
             base_event_url
             if base_event_url is not None
             else apc_lb_conf.supabase.base_event_url
         )
+
         self.base_event_img_url: str = (
             base_event_img_url
             if base_event_img_url is not None
@@ -69,7 +77,11 @@ class Event:
 
         if event.keys() != self.__dict__.keys():
             for missed_dict in [x for x in self.__dict__ if x not in event]:
-                if missed_dict not in ["base_event_url", "base_event_img_url"]:
+                if missed_dict not in [
+                    "base_event_url",
+                    "base_event_img_url",
+                    "langcode",
+                ]:
                     warnings.warn(
                         f"Key '{missed_dict}' missed in event '{event['slugTitle']}'."
                     )
@@ -190,6 +202,11 @@ class Event:
 
         return ret
 
+    def __eq__(self, other) -> bool:
+        if not isinstance(other, Event):
+            return NotImplemented
+        return self.__dict__ == other.__dict__
+
 
 def get_dated_events(
     date: datetime.date = datetime.datetime.today().date(),
@@ -197,6 +214,7 @@ def get_dated_events(
     key: Optional[str] = None,
     base_event_url: Optional[str] = None,
     base_event_img_url: Optional[str] = None,
+    force_langcode: Optional[str] = None,
 ) -> List[Event]:
     """Get the events of a day."""
     if not url:
@@ -221,5 +239,5 @@ def get_dated_events(
 
     events = []
     for event in response.data:
-        events.append(Event(event, base_event_url, base_event_img_url))
+        events.append(Event(event, base_event_url, base_event_img_url, force_langcode))
     return events

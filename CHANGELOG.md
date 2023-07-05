@@ -1,8 +1,9 @@
-## Unreleased
+## v0.2.0 (2023-07-03)
 
 ### Feat
 
-- **event.py**: Use some markdown in the description (citation)
+- Added suport to langcode in the events and storing in lemmy
+- **event.py**: Use some markdawn in the description (citation)
 
 ### Fix
 
@@ -10,9 +11,11 @@
 
 ### Refactor
 
+- **conf**: move initial values to conf estruct
+- **lemmy.py**: don't use protecter member _requestor.nodeinfo
 - **cli**: simplified imports
 
-## v0.1.1 (2023-06-30)
+## v0.1.1 (2023-06-29)
 
 ### Fix
 

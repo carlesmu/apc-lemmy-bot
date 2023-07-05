@@ -24,8 +24,6 @@ import time
 import typer
 from typing_extensions import Annotated
 
-# https://github.com/retiolus/Lemmy.py
-
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events, Event
 from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post
@@ -61,7 +59,7 @@ def _create_event_post(
         print(f"Posting {event.id}: {event.slugTitle}", end=" ... ")
 
     try:
-        create_event_post(event, lemmy, lemmy_community)
+        create_event_post(event, lemmy, lemmy_community, langcode=event.langcode)
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
         raise typer.Exit(1)
@@ -96,7 +94,7 @@ def post(
             show_default=True,
             envvar="APC_LEMMY_USER",
         ),
-    ] = "redrumBot",
+    ] = apc_lb_conf.lemmy.user,
     lemmy_password: Annotated[
         str,
         typer.Option(
@@ -105,7 +103,7 @@ def post(
             help="Password of the user of the lemmy instance",
             envvar="APC_LEMMY_PASSWORD",
         ),
-    ] = None,
+    ] = apc_lb_conf.lemmy.password,
     lemmy_community: Annotated[
         str,
         typer.Option(
@@ -114,7 +112,7 @@ def post(
             help="Lemmy comumunity of the instance where the events be posted",
             envvar="APC_LEMMY_COMMUNITY",
         ),
-    ] = "workingclasscalendar@lemmy.world",
+    ] = apc_lb_conf.lemmy.community,
     lemmy_instance: Annotated[
         str,
         typer.Option(
@@ -125,7 +123,7 @@ def post(
             show_default=True,
             envvar="APC_LEMMY_INSTANCE",
         ),
-    ] = "https://lemmy.ml",
+    ] = apc_lb_conf.lemmy.instance,
     delay: Annotated[
         int,
         typer.Option(
@@ -135,7 +133,8 @@ def post(
             help="Delay in seconds between posts",
             envvar="APC_DELAY",
         ),
-    ] = 5400,  # 1:30 h.
+    ] = apc_lb_conf.delay,
+    langcode: common.opt_langcode = None,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
 ):
@@ -151,8 +150,9 @@ def post(
     apc_lb_conf.delay = delay
 
     if not silence:
+        d_str = datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%d %B")
         print(
-            f"Fetching events for date {datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%d %B')}",
+            f"Fetching events for date {d_str}",
             end=" ... ",
         )
 
@@ -162,6 +162,7 @@ def post(
         key=supabase_key,
         base_event_url=base_event_url,
         base_event_img_url=base_event_img_url,
+        force_langcode=langcode,
     )
 
     if not silence:

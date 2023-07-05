@@ -27,7 +27,7 @@ from typing import Optional
 __all__ = ["event", "lemmy"]
 
 __app__: str = "apc_lemmy_bot"
-__version__: str = "0.1.1"
+__version__: str = "0.2.0"
 
 LEMMY_MAX_TITLE_LENGTH: int = 199
 
@@ -36,20 +36,22 @@ LEMMY_MAX_TITLE_LENGTH: int = 199
 class ApcLemmyBotSupabaseConf:
     """Dataclass for supabase data conf."""
 
-    url: Optional[str] = None
-    key: Optional[str] = None
-    base_event_url: Optional[str] = None
-    base_event_img_url: Optional[str] = None
+    url: str = "https://stahmaxffcqankienulh.supabase.co"
+    key: str = ""  # Not initialized
+    base_event_url: str = "https://www.apeoplescalendar.org/calendar/events/"
+    base_event_img_url: str = (
+        "https://stahmaxffcqankienulh.supabase.co/storage/v1/object/public/event-photos/"
+    )
 
 
 @dataclass
 class ApcLemmyBotLemmyConf:
     """Dataclass for Lemmy instances conf."""
 
-    instance: Optional[str] = None
-    user: Optional[str] = None
-    password: Optional[str] = None
-    community: Optional[str] = None
+    instance: str = "https://lemmy.world"
+    user: str = "roig"
+    password: str = ""  # Not initialized
+    community: str = "workingclasscalendar@lemmy.world"
 
 
 @dataclass
