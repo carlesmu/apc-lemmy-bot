@@ -37,7 +37,8 @@ poetry = "^1.5.1"
 prompt-toolkit = "^3.0.38"  # for comitizen 3.5.2
 cx-freeze = "^6.15.2"
 mypy = "^1.4.1"
-
+sqlalchemy = {extras = ["mypy"], version = "^2.0.18"}
+taskipy = "^1.11.0"
 
 [tool.poetry.group.IDE.dependencies]
 spyder = {version="^5.4.3", optional = true}
@@ -79,3 +80,6 @@ line-length = 89
 
 [tool.pylint.messages_control]
 max-line-length = 89
+
+[tool.mypy]
+plugins = "sqlalchemy.ext.mypy.plugin"
