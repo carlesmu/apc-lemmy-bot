@@ -14,15 +14,9 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""
-apc_lemmy_bot __init__ module.
-
-@author: Carles Muñoz Gorriz <carlesmu@internautas.org>
-"""
+"""apc_lemmy_bot __init__ module."""
 
 from dataclasses import dataclass
-
-__all__: list[str] = ["event", "lemmy"]
 
 __app__: str = "apc_lemmy_bot"
 __version__: str = "0.2.0"
@@ -32,7 +26,7 @@ LEMMY_MAX_TITLE_LENGTH: int = 199
 
 @dataclass
 class ApcLemmyBotSupabaseConf:
-    """Dataclass for supabase data conf."""
+    """A data class for Supabase data conf."""
 
     url: str = "https://stahmaxffcqankienulh.supabase.co"
     key: str = ""  # Not initialized
@@ -44,7 +38,7 @@ class ApcLemmyBotSupabaseConf:
 
 @dataclass
 class ApcLemmyBotLemmyConf:
-    """Dataclass for Lemmy instances conf."""
+    """A data class for Lemmy instances conf."""
 
     instance: str = "https://lemmy.world"
     user: str = "roig"
@@ -54,7 +48,7 @@ class ApcLemmyBotLemmyConf:
 
 @dataclass
 class ApcLemmyBotConf:
-    """Dataclass for apc_lemmy_conf."""
+    """A data class for apc_lemmy_conf."""
 
     supabase: ApcLemmyBotSupabaseConf
     lemmy: ApcLemmyBotLemmyConf
