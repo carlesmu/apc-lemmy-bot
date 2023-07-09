@@ -22,9 +22,7 @@ apc_lemmy_bot __init__ module.
 
 from dataclasses import dataclass
 
-from typing import Optional
-
-__all__ = ["event", "lemmy"]
+__all__: list[str] = ["event", "lemmy"]
 
 __app__: str = "apc_lemmy_bot"
 __version__: str = "0.2.0"
@@ -63,4 +61,7 @@ class ApcLemmyBotConf:
     delay: int = 5400  # seconds
 
 
-apc_lb_conf = ApcLemmyBotConf(ApcLemmyBotSupabaseConf(), ApcLemmyBotLemmyConf())
+# The configuration and shared data structure:
+apc_lb_conf: ApcLemmyBotConf = ApcLemmyBotConf(
+    ApcLemmyBotSupabaseConf(), ApcLemmyBotLemmyConf()
+)
