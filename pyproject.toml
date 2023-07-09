@@ -99,6 +99,7 @@ max-line-length = 89
 logging-format-style = "new"
 
 [tool.pylint."messages control"]
+disable = "empty-comment"  # show errors with the license header
 
 [tool.pylint.method_args]
 
