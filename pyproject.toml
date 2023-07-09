@@ -12,13 +12,19 @@ authors = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
-packages = [{include = "apc_lemmy_bot"}]
-include = ["CHANGELOG.md"]
 keywords = ["lemmy"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Operating System :: OS Independent",
 ]
+packages = [
+    {include = "apc_lemmy_bot"}
+]
+include = [
+    "CHANGELOG.md",
+    { path = "scripts", format = ["sdist"] },
+]
+exclude = []
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
@@ -29,7 +35,7 @@ pythorhead = "^0.12.3"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
-pylint = "^2.17.4"
+pylint = {extras = ["spelling"], version = "^2.17.4"}
 pydocstyle = "^6.3.0"
 pre-commit = "^3.3.3"
 trove-classifiers = "^2023.7.6"  # for classifiers in this file
@@ -72,6 +78,7 @@ line-length = 89
 recursive = true
 suggestion-mode = true
 exit-zero = true
+load-plugins="pylint.extensions.docparams"
 
 [tool.pylint.basic]
 docstring-min-length = 5
@@ -105,6 +112,9 @@ score = true
 [tool.pylint.similarities]
 
 [tool.pylint.spelling]
+spelling-dict = "en_US"
+spelling-private-dict-file = "scripts/extended-dictionary.txt"
+spelling-ignore-words = "bool, datetime"
 
 [tool.pylint.typecheck]
 
@@ -142,3 +152,6 @@ lint = {cmd = "task lint-doc && task lint-src && task lint-mypy", help = "runs a
 lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
 lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
 lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
+lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
+lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
+lintf-mypy = {cmd = "mypy ", help = "runs mypy in a file (argument)"}
