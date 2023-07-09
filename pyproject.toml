@@ -138,7 +138,7 @@ t_src = "*.py scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-lint = {cmd = "task lint-doc && (task lint-src || true) && task lint-mypy", help = "runs all lint-* tests"}
+lint = {cmd = "task lint-doc && task lint-src && task lint-mypy", help = "runs all lint-* tests"}
 lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
 lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
 lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
