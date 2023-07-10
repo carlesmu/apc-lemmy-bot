@@ -155,4 +155,5 @@ lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocsty
 lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
-lintf-mypy = {cmd = "mypy ", help = "runs mypy in a file (argument)"}
+lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
+clean = {cmd ="python scripts/clean.py", help = "runs scripts/clean.py" }
