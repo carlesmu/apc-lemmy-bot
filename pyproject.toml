@@ -33,6 +33,7 @@ typing-extensions = "^4.7.1"
 supabase = "^1.0.3"
 pythorhead = "^0.12.3"
 sqlalchemy = "^2.0.18"
+sphinx-autoapi = "^2.1.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
@@ -149,7 +150,7 @@ t_src = "*.py scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-lint = {cmd = "task lint-doc && task lint-src && task lint-mypy", help = "runs all lint-* tests"}
+lint = {cmd = "task lint-mypy && task lint-src && task lint-doc", help = "runs all lint-* tests"}
 lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
 lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
 lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
