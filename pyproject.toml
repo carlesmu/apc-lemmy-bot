@@ -48,6 +48,7 @@ cx-freeze = "^6.15.3"
 mypy = "^1.4.1"
 sqlalchemy = {extras = ["mypy"], version = "^2.0.18"}
 taskipy = "^1.11.0"
+types-sqlalchemy-utils = "^1.0.1"
 
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
