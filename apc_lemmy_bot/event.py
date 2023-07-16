@@ -25,13 +25,13 @@ import json
 import textwrap
 import warnings
 
-from typing import List, Optional
+from typing import Optional
 from urllib.parse import urlsplit
 
 # https://github.com/supabase-community/supabase-py
 from supabase import create_client, Client
 
-from .__init__ import apc_lb_conf
+from apc_lemmy_bot import apc_lb_conf
 
 
 class Event:
@@ -74,8 +74,8 @@ class Event:
         self.NSFW: Optional[bool] = None
         self.imgSrc: Optional[str] = None
         self.date: Optional[datetime.date] = None
-        self.links: List[Optional[str]] = []
-        self.tags: List[Optional[str]] = []
+        self.links: list[Optional[str]] = []
+        self.tags: list[Optional[str]] = []
         self.day: Optional[int] = None
         self.month: Optional[int] = None
 
@@ -297,7 +297,7 @@ def get_dated_events(
     base_event_url: Optional[str] = apc_lb_conf.supabase.base_event_url,
     base_event_img_url: Optional[str] = apc_lb_conf.supabase.base_event_img_url,
     force_langcode: Optional[str] = None,
-) -> List[Event]:
+) -> list[Event]:
     """Get the dated events of a day looking for them in a *Supabase* database.
 
     Parameters
@@ -321,13 +321,15 @@ def get_dated_events(
 
     Returns
     -------
-    List[Event]
+    list[Event]
         A list of events.
     """
     apc_lb_conf.supabase.url = url if url else ""
     apc_lb_conf.supabase.key = key if key else ""
-    apc_lb_conf.supabase.base_event_url = base_event_url
-    apc_lb_conf.supabase.base_event_img_url = base_event_img_url
+    apc_lb_conf.supabase.base_event_url = base_event_url if base_event_url else ""
+    apc_lb_conf.supabase.base_event_img_url = (
+        base_event_img_url if base_event_img_url else ""
+    )
 
     supabase: Client = create_client(apc_lb_conf.supabase.url, apc_lb_conf.supabase.key)
     response = (
