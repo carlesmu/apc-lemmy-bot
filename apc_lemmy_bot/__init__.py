@@ -18,6 +18,7 @@
 
 from dataclasses import dataclass
 
+
 __app__: str = "apc_lemmy_bot"
 __version__: str = "0.2.0"
 
@@ -52,6 +53,7 @@ class ApcLemmyBotConf:
 
     supabase: ApcLemmyBotSupabaseConf
     lemmy: ApcLemmyBotLemmyConf
+    database: str = "sqlite:///apc_database.db"
     delay: int = 5400  # seconds
 
 
