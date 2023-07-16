@@ -18,6 +18,7 @@
 """apc_lemmy_bot.cli common module."""
 
 import datetime
+
 import typer
 from typing_extensions import Annotated
 
@@ -91,6 +92,7 @@ opt_base_event_img_url = Annotated[
     ),
 ]
 
+val_langcode: str = ""
 opt_langcode = Annotated[
     str,
     typer.Option(

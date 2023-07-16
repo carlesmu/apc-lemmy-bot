@@ -12,43 +12,43 @@ authors = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
-packages = [{include = "apc_lemmy_bot"}]
-include = ["CHANGELOG.md"]
 keywords = ["lemmy"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Operating System :: OS Independent",
 ]
+packages = [
+    {include = "apc_lemmy_bot"}
+]
+include = [
+    "CHANGELOG.md",
+    { path = "scripts", format = ["sdist"] },
+]
+exclude = []
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
 typer = "^0.9.0"
-typing-extensions = "^4.6.3"
+typing-extensions = "^4.7.1"
 supabase = "^1.0.3"
-pythorhead = "^0.10.2"
+pythorhead = "^0.14.0"
+sqlalchemy = "^2.0.19"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3.0"
-pylint = "^2.17.4"
+black = "^23.7.0"
+pylint = {extras = ["spelling"], version = "^2.17.4"}
+pydocstyle = "^6.3.0"
 pre-commit = "^3.3.3"
-trove-classifiers = "^2023.5.24"  # for classifiers in this file
-commitizen = "^3.5.2"
+trove-classifiers = "^2023.7.6"  # for classifiers in this file
+commitizen = "^3.5.3"
 poetry = "^1.5.1"
-prompt-toolkit = "^3.0.38"  # for comitizen 3.5.2
-cx-freeze = "^6.15.2"
+prompt-toolkit = "^3.0.39"  # for comitizen 3.5.2
+cx-freeze = "^6.15.4"
 mypy = "^1.4.1"
-
-
-[tool.poetry.group.IDE.dependencies]
-spyder = {version="^5.4.3", optional = true}
-python-lsp-black = {version = "^1.3.0", optional = true}
-docstring-to-markdown = {version = "^0.12", optional = true}
-jedi = {version = "^0.18.2", optional = true}
-parso = {version = "^0.8.3", optional = true}
-pluggy = {version = "^1.2.0", optional = true}
-python-lsp-jsonrpc = {version = "^1.0.0", optional = true}
-python-lsp-server = {version = "^1.7.3", optional = true}
-
+sqlalchemy = {extras = ["mypy"], version = "^2.0.19"}
+taskipy = "^1.11.0"
+types-sqlalchemy-utils = "^1.0.1"
+sphinx-autoapi = "^2.1.1"
 
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
@@ -77,5 +77,85 @@ script = "scripts/build.py"
 [tool.black]
 line-length = 89
 
-[tool.pylint.messages_control]
+[tool.pylint.main]
+recursive = true
+suggestion-mode = true
+exit-zero = true
+load-plugins="pylint.extensions.docparams"
+
+[tool.pylint.basic]
+docstring-min-length = 5
+
+[tool.pylint.design]
+
+[tool.pylint.exceptions]
+
+[tool.pylint.format]
 max-line-length = 89
+
+[tool.pylint.messages_control]
+
+[tool.pylint.imports]
+
+[tool.pylint.logging]
+logging-format-style = "new"
+
+[tool.pylint."messages control"]
+disable = "empty-comment"  # show errors with the license header
+
+[tool.pylint.method_args]
+
+[tool.pylint.miscellaneous]
+
+[tool.pylint.refactoring]
+
+[tool.pylint.reports]
+reports = true
+score = true
+
+[tool.pylint.similarities]
+
+[tool.pylint.spelling]
+spelling-dict = "en_US"
+spelling-private-dict-file = "scripts/extended-dictionary.txt"
+spelling-ignore-words = "bool, datetime"
+
+[tool.pylint.typecheck]
+
+[tool.pylint.variables]
+
+
+[tool.mypy]
+namespace_packages = false
+show_error_context = true
+show_column_numbers = true
+pretty = true
+error_summary = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = "cx_Freeze.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pythorhead.*"
+ignore_missing_imports = true
+
+[tool.taskipy.settings]
+use_vars = true
+
+[tool.taskipy.variables]
+t_src = "*.py scripts/*.py apc_lemmy_bot"
+
+[tool.taskipy.tasks]
+# These tasks can be run with .venv/bin/poetry run task
+lint = {cmd = "task lint-mypy && task lint-src && task lint-doc", help = "runs all lint-* tests"}
+lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
+lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
+lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
+lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
+lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
+lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
+clean = {cmd ="python scripts/clean.py", help = "runs scripts/clean.py" }
