@@ -22,22 +22,23 @@ from typing import Optional
 from pythorhead import Lemmy
 from pythorhead.types import LanguageType
 
-from .__init__ import apc_lb_conf, LEMMY_MAX_TITLE_LENGTH
-from .event import Event
+from apc_lemmy_bot import apc_lb_conf, LEMMY_MAX_TITLE_LENGTH
+from apc_lemmy_bot.event import Event
 
 
 class LemmyException(Exception):
     """Exception rised fot errors connection to the lemmy instance."""
 
 
-def login(instance: str = None, user: str = None, password: str = None) -> Lemmy:
+def login(
+    instance: str = apc_lb_conf.lemmy.user,
+    user: str = apc_lb_conf.lemmy.user,
+    password: str = apc_lb_conf.lemmy.password,
+) -> Lemmy:
     """Login into a lemmy instance."""
-    if instance is None:
-        instance = apc_lb_conf.lemmy.instance
-    if user is None:
-        user = apc_lb_conf.lemmy.user
-    if password is None:
-        password = apc_lb_conf.lemmy.password
+    apc_lb_conf.lemmy.instance = instance
+    apc_lb_conf.lemmy.user = user
+    apc_lb_conf.lemmy.password = password
 
     lemmy = Lemmy(instance)
     if not lemmy.nodeinfo:
@@ -51,19 +52,17 @@ def login(instance: str = None, user: str = None, password: str = None) -> Lemmy
     return lemmy
 
 
-def create_post(
+def _create_post(
     lemmy: Lemmy,
     title: str,
     url: str,
     body: str,
     nsfw: bool,
-    community: str = None,
+    community: str,
     honeypot: Optional[str] = None,
     langcode: Optional[str] = None,
 ) -> Optional[dict]:
     """Create a lemy post."""
-    if community is None:
-        community = apc_lb_conf.lemmy.community
 
     # Look for the language_id
     language_id = 0  # any
@@ -98,20 +97,19 @@ def create_post(
 def create_event_post(
     event: Event,
     lemmy: Lemmy,
-    community: Optional[str] = None,
+    community: str = apc_lb_conf.lemmy.community,
     honeypot: Optional[str] = None,
     langcode: Optional[str] = None,
 ) -> Optional[dict]:
     """Create a lemmy post using an event."""
-    if community is None:
-        community = apc_lb_conf.lemmy.community
+    apc_lb_conf.lemmy.community = community
 
     # We post the image, if it not exists, the link to the event:
     url = event.get_image_url()
     if url is None:
         url = event.get_event_url()
 
-    return create_post(
+    return _create_post(
         lemmy,
         title=event.nice_title(LEMMY_MAX_TITLE_LENGTH),
         url=url,
