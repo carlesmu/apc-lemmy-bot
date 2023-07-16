@@ -33,7 +33,6 @@ typing-extensions = "^4.7.1"
 supabase = "^1.0.3"
 pythorhead = "^0.12.3"
 sqlalchemy = "^2.0.18"
-sphinx-autoapi = "^2.1.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
@@ -49,6 +48,7 @@ mypy = "^1.4.1"
 sqlalchemy = {extras = ["mypy"], version = "^2.0.18"}
 taskipy = "^1.11.0"
 types-sqlalchemy-utils = "^1.0.1"
+sphinx-autoapi = "^2.1.1"
 
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
