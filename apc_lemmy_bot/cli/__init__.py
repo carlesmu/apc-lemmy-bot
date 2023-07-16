@@ -19,7 +19,7 @@
 
 import typer
 
-__all__ = ["post", "show", "app"]
+__all__ = ["app", "db", "post", "show"]
 
 app = typer.Typer(
     context_settings={"help_option_names": ["--help", "-h"]},

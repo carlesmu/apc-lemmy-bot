@@ -22,6 +22,7 @@ import datetime
 from urllib.parse import urlparse
 
 import typer
+from typing import Optional
 
 from pythorhead.types import LanguageType
 from apc_lemmy_bot import __app__, __version__
@@ -40,15 +41,35 @@ def date(date: str) -> str:
         raise typer.BadParameter(f"{err}")
 
 
-def langcode(value: str) -> str:
-    """Validates a language code.
+def from_(value: str) -> str:
+    """Validate the FROM argument.
+
+    Parameters
+    ----------
+    value : str
+        the origen of the events. Valida values are: **SUPABASE** and **DATABASE**.
+
+    Returns
+    -------
+    str
+        The FROM argument in upper case.
+    """
+    val = value.upper()
+    if val in ["SUPABASE", "DATABASE"]:
+        return val
+    else:
+        raise typer.BadParameter(f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'")
+
+
+def langcode(value: str) -> Optional[str]:
+    """Validate a language code.
 
     It should have format XX.
     """
     if value is None:
         return
     try:
-        return LanguageType[value.upper()].name
+        return str(LanguageType[value.upper()].name)
     except KeyError:
         raise typer.BadParameter(f"KeyError: Langcode '{value}' undefined in Pythorhead")
 
@@ -70,6 +91,29 @@ def supabase_key(value: str) -> str:
     if value.strip() == "":
         raise typer.BadParameter(f"Cannot precess supabase empty key '{value}'")
     return value
+
+
+def to_(value: str) -> str:
+    """Validate the TO argument.
+
+    Parameters
+    ----------
+    value : str
+        the destination of the events. Valida values are: **DATABASE**, **LEMMY** or
+        **SHOW**
+
+    Returns
+    -------
+    str
+        The TO argument in upper case.
+    """
+    val = value.upper()
+    if val in ["DATABASE", "LEMMY", "SHOW"]:
+        return val
+    else:
+        raise typer.BadParameter(
+            f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'"
+        )
 
 
 def version(value: bool):

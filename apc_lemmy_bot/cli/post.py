@@ -134,7 +134,7 @@ def post(
             envvar="APC_DELAY",
         ),
     ] = apc_lb_conf.delay,
-    langcode: common.opt_langcode = None,
+    langcode: common.opt_langcode = common.val_langcode,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
 ):
@@ -162,7 +162,7 @@ def post(
         key=supabase_key,
         base_event_url=base_event_url,
         base_event_img_url=base_event_img_url,
-        force_langcode=langcode,
+        force_langcode=None if langcode == "" else langcode,
     )
 
     if not silence:
