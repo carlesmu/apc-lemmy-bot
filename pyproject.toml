@@ -1,12 +1,12 @@
 [project]
 # Used by cx_Freeze
 name = "apc-lemmy-bot"
-version = "0.2.0"
+version = "0.3.0"
 description = "Post supabase events to a Lemmy instance or show them."
 
 [tool.poetry]
 name = "apc-lemmy-bot"
-version = "0.2.0"
+version = "0.3.0"
 description = "Post supabase events to a Lemmy instance or show them."
 authors = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
@@ -60,7 +60,7 @@ update_changelog_on_bump = true
 major_version_zero = true  # TODO: change it when version >= 1.0.0
 version_files = [
     "apc_lemmy_bot/__init__.py:^__version__",
-    "docs/source/conf.py:^release"
+    "docs/source/conf.py:^release",
     "pyproject.toml:^version",
 ]
 

@@ -1,3 +1,21 @@
+## v0.3.0 (2023-07-16)
+
+### Feat
+
+- **docs**: create documentation using sphinx
+- **local-database**: added a new module and cli option to use a local database to track events
+- added a local database config file name
+
+### Fix
+
+- **langcode**: corrected wrong type
+
+### Refactor
+
+- **mypy**: more typing compilant
+- **mypy**: more typing compilant
+- added py.typed hint file
+
 ## v0.2.0 (2023-07-03)
 
 ### Feat
