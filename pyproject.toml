@@ -78,6 +78,7 @@ script = "scripts/build.py"
 
 [tool.black]
 line-length = 89
+include = '\.pyi?$'
 
 [tool.pylint.main]
 recursive = true
