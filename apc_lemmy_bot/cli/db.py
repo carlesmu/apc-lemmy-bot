@@ -122,7 +122,14 @@ def db(
     ] = "SHOW",
     date: common.arg_date = common.val_date,
     database: Annotated[
-        str, typer.Option(help="Local database url")
+        str,
+        typer.Option(
+            help=(
+                "Local database url (Note: use a extra '/' if you want "
+                "to use an absolute path)"
+            ),
+            envvar="APC_LOCAL_DATABASE",
+        ),
     ] = apc_lb_conf.database,
     supabase_url: common.opt_supabase_url = common.val_supabase_url,
     supabase_key: common.opt_supabase_key = common.val_supabase_key,
