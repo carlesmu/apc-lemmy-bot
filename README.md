@@ -15,20 +15,30 @@ GNU Affero General Public License 3.
   [source code](https://github.com/db0/pythorhead).
 - [typing-extension](https://typing-extensions.readthedocs.io/):
   [source code](https://github.com/python/typing_extensions).
+- [sqlalchemy](https://www.sqlalchemy.org/):
+  [source code](https://github.com/sqlalchemy/sqlalchemy).
+- sqlalchemy-utils:
+  [source code](https://github.com/kvesteri/sqlalchemy-utils)
+
 
 ### Development dependencies
-- [poetry](https://python-poetry.org/):
-  [source](https://github.com/python-poetry/poetry)
-- [commitizen](https://commitizen-tools.github.io/commitizen/):
-  [source code](https://github.com/commitizen-tools/commitizen).
 - [black](https://black.readthedocs.io/):
   [source code](https://github.com/psf/black).
-- [pylint](https://pylint.org/):
-  [source code](https://github.com/pylint-dev/pylint).
-- [pre-commit](https://pre-commit.com/):
-  [source code](https://github.com/pre-commit/pre-commit).
+- [commitizen](https://commitizen-tools.github.io/commitizen/):
+  [source code](https://github.com/commitizen-tools/commitizen).
 - [mypy](https://www.mypy-lang.org/):
   [source code](https://github.com/python/mypy).
+- [poetry](https://python-poetry.org/):
+  [source](https://github.com/python-poetry/poetry)
+- [pre-commit](https://pre-commit.com/):
+  [source code](https://github.com/pre-commit/pre-commit).
+- [pydocstyle](http://www.pydocstyle.org/):
+  [source code](https://github.com/PyCQA/pydocstyle).
+- [pylint](https://pylint.org/):
+  [source code](https://github.com/pylint-dev/pylint).
+- taskipy:
+  [source code](https://github.com/taskipy/taskipy).
+
 
 ### Initial clone
 Note: depending of the OS, you should use or a `Script` or a `bin` directory.
