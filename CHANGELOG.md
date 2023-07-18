@@ -1,3 +1,11 @@
+## v0.3.1 (2023-07-18)
+
+### Fix
+
+- **cli**: added envbar for --database option and improved description
+- **dependencies**: added missed dependency in sqlalchemy-utils
+- **network**: retry to access remote image when we get a URLError
+
 ## v0.3.0 (2023-07-16)
 
 ### Feat
