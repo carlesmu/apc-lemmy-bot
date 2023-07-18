@@ -384,8 +384,17 @@ class Database:
                     )
                 },
             )
-            with urllib.request.urlopen(req) as response:
-                _img = response.read()
+
+            # Some times we get this error:
+            # urllib.error.URLError: <urlopen error [SSL:CERTIFICATE_VERIFY_FAILED]
+            # certificate verify failed: unable to get local issuer certificate
+            try:
+                with urllib.request.urlopen(req) as response:
+                    _img = response.read()
+            except urllib.error.URLError as err:
+                print(f"Warning: Error {err}. We try again ...")
+                with urllib.request.urlopen(req) as response:
+                    _img = response.read()
 
         if event.imgAltText or _img:
             view.images.append(
