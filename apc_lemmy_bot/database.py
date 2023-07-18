@@ -31,7 +31,7 @@ from apc_lemmy_bot.event import Event
 
 
 class Base(saorm.DeclarativeBase):  # pylint: disable=R0903  # Too few public methods
-    """Declarative base class fot the database tables."""
+    """Declarative base class for the database tables."""
 
 
 class Info(Base):  # pylint: disable=R0903  # Too few public methods
@@ -220,7 +220,7 @@ class EventsPosted(Base):  # pylint: disable=R0903  # Too few public methods
 
 
 class Database:
-    """Main class of the databasa module."""
+    """Main class of the database module."""
 
     database_url: str
     engine: sa.Engine
@@ -494,21 +494,21 @@ class Database:
 
         if view is None:
             raise BaseException(f"View/row not found f{id_uuid}")
-        else:
-            with saorm.sessionmaker(self.engine)() as session:
-                session.execute(
-                    sa.insert(EventsPosted),
-                    [
-                        {
-                            "event_id_int": view.id_int,
-                            "event_id_uuid": view.id_uuid,
-                            "url": url,
-                            "date": timestamp.date(),
-                            "timestamp": timestamp,
-                        }
-                    ],
-                )
-                session.commit()
+
+        with saorm.sessionmaker(self.engine)() as session:
+            session.execute(
+                sa.insert(EventsPosted),
+                [
+                    {
+                        "event_id_int": view.id_int,
+                        "event_id_uuid": view.id_uuid,
+                        "url": url,
+                        "date": timestamp.date(),
+                        "timestamp": timestamp,
+                    }
+                ],
+            )
+            session.commit()
 
     def get_view_by_id(self, id_uuid: UUID) -> Optional[Events]:
         """Get a tuple with event row of the database and a Event object.
@@ -541,6 +541,7 @@ class Database:
             # Parent instance <Events at 0x7f08f99b4c90> is not bound to a Session;
             # lazy load operation of attribute 'images' cannot proceed (Background on
             # this error at: https://sqlalche.me/e/20/bhk3)
+            # pylint: disable=pointless-statement
             view
             view.images,
             view.links,
@@ -567,21 +568,12 @@ class Database:
         -------
         None
         """
-        # It's in the database ?
-        view_from_database = self.get_view_by_id(UUID(event.id))
-        event_from_database = (
-            None
-            if not view_from_database
-            else self._get_event_from_view(view_from_database)
-        )
 
-        if event_from_database == event:
-            # It was stored
+        def _ignore():
             if not silence:
                 print("It was stored. Pass")
 
-        elif view_from_database:
-            # Stored but with changes -> update:
+        def _update():
             if not silence:
                 print("It was stored. Updating")
             view = self._create_view_from_event(event)
@@ -609,8 +601,25 @@ class Database:
 
             self._update_event_view(view_from_database)
 
-        else:
-            # new:
+        def _store():
             if not silence:
                 print("It's new. Inserting")
             self._insert_event_view(self._create_view_from_event(event))
+
+        # It's in the database ?
+        view_from_database = self.get_view_by_id(UUID(event.id))
+        event_from_database = (
+            None
+            if not view_from_database
+            else self._get_event_from_view(view_from_database)
+        )
+
+        if event_from_database == event:
+            # It was stored
+            _ignore()
+        elif view_from_database:
+            # Stored but with changes -> update:
+            _update()
+        else:
+            # new:
+            _store()
