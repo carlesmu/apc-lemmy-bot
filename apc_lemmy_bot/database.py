@@ -130,7 +130,7 @@ class Images(Base):  # pylint: disable=R0903  # Too few public methods
         return (
             f"<Images>("
             f"event_id_uuid={self.event_id_uuid!r}, img={bool(self.img)!r}, "
-            "imgSrc={self.imgSrc!r}, imgAltText={self.imgAltText!r})"
+            f"imgSrc={self.imgSrc!r}, imgAltText={self.imgAltText!r})"
         )
 
 
