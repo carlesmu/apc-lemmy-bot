@@ -1,12 +1,12 @@
 [project]
 # Used by cx_Freeze
 name = "apc-lemmy-bot"
-version = "0.3.1"
+version = "0.4.0"
 description = "Post supabase events to a Lemmy instance or show them."
 
 [tool.poetry]
 name = "apc-lemmy-bot"
-version = "0.3.1"
+version = "0.4.0"
 description = "Post supabase events to a Lemmy instance or show them."
 authors = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
 maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
