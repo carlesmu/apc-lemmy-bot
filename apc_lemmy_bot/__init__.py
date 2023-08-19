@@ -20,7 +20,7 @@ from dataclasses import dataclass
 
 
 __app__: str = "apc_lemmy_bot"
-__version__: str = "0.3.1"
+__version__: str = "0.4.0"
 
 LEMMY_MAX_TITLE_LENGTH: int = 199
 
@@ -29,12 +29,10 @@ LEMMY_MAX_TITLE_LENGTH: int = 199
 class ApcLemmyBotSupabaseConf:
     """A data class for Supabase data conf."""
 
-    url: str = "https://stahmaxffcqankienulh.supabase.co"
+    url: str = ""  # Not initialized
     key: str = ""  # Not initialized
-    base_event_url: str = "https://www.apeoplescalendar.org/calendar/events/"
-    base_event_img_url: str = (
-        "https://stahmaxffcqankienulh.supabase.co/storage/v1/object/public/event-photos/"
-    )
+    base_event_url: str = ""  # Not initialized
+    base_event_img_url: str = ""  # Not initialized
 
 
 @dataclass

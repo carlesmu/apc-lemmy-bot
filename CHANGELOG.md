@@ -1,3 +1,15 @@
+## v0.4.0 (2023-08-19)
+
+### Feat
+
+- We can now upload images to lemmy when they are not online
+- **callbacks**: The supabase options are not required in all cases
+
+### Fix
+
+- **__init__**: No initialize some of the config vars
+- **Image**: Missed f" quoted repr
+
 ## v0.3.1 (2023-07-18)
 
 ### Fix
@@ -40,8 +52,9 @@
 - **conf**: move initial values to conf estruct
 - **lemmy.py**: don't use protecter member _requestor.nodeinfo
 - **cli**: simplified imports
+- **cli**: simplified imports
 
-## v0.1.1 (2023-06-29)
+## v0.1.1 (2023-06-30)
 
 ### Fix
 

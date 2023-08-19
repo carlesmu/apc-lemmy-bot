@@ -18,20 +18,26 @@
 """apc_lemmy_bot.cli db module."""
 
 import datetime
+import os
+import tempfile
 
 from uuid import UUID
 
-import typer
-from typing import Optional
+from typing import Any
 from typing_extensions import Annotated
+import typer
 
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events, Event
-from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post
+from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post, upload_img
 import apc_lemmy_bot.database
 
 from . import app
 from . import callbacks, common
+
+
+def _large_binary_to_binary(val: Any) -> bytes:
+    return bytes(val)
 
 
 def _create_event_post(
@@ -41,8 +47,9 @@ def _create_event_post(
     lemmy_user: str,
     lemmy_password: str,
     lemmy_community: str,
-) -> Optional[dict]:
-    """Creates a post in a lemmy instance.
+    database_obj: apc_lemmy_bot.database.Database,
+) -> dict | None:
+    """Create a post in a lemmy instance.
 
     Parameters
     ----------
@@ -58,10 +65,13 @@ def _create_event_post(
         The lemmy user password.
     lemmy_community : str
         The community where it will be posted.
+    database_obj : apc_lemmy_bot.database.Database
+        The database object where the events are stored
+
 
     Raises
     ------
-    typer
+    typer.Exit
         If the Event cannot be posted.
 
     Returns
@@ -86,6 +96,44 @@ def _create_event_post(
 
     if not silence:
         print(f"Posting {event.id}: {event.slugTitle}", end=" ... ")
+
+    # We check if we must upload the image to the lemmy instance
+    view = database_obj.get_view_by_id(UUID(event.id))
+    if (
+        view is not None
+        and "extended" in view.__dict__
+        and "images" in view.__dict__
+        and "imgSrc" in event.__dict__
+        and (view.extended.img_url is None or not view.extended.img_url)
+    ):
+        if view.images[0] and view.images[0].img:
+            # We upload the img from the database to the instance and we
+            # update the url of the image in the event.
+            if not silence:
+                print("Uploading image", end=" ... ")
+
+            _suffix: str = (
+                event.imgSrc.replace("/", "_").replace("\\", "_")
+                if event.imgSrc is not None
+                else ""
+            )
+            with tempfile.NamedTemporaryFile(suffix=_suffix, delete=False) as tmp_file:
+                tmp_file.write(
+                    apc_lemmy_bot.database.large_binary_to_bytes(view.images[0].img)
+                )
+            tmp_file.close()
+            img_url = ""
+            try:
+                img_url = upload_img(lemmy, tmp_file.name)
+            except LemmyException as err:
+                os.unlink(tmp_file.name)  # the tmp file should be removed
+                print(f"\nLemmyException: {err}")
+                raise typer.Exit(1)
+
+            os.unlink(tmp_file.name)  # the tmp file should be removed
+
+            event.base_event_img_url = ""
+            event.imgSrc = img_url
 
     try:
         ret = create_event_post(event, lemmy, lemmy_community, langcode=event.langcode)
@@ -130,7 +178,7 @@ def db(
             ),
             envvar="APC_LOCAL_DATABASE",
         ),
-    ] = apc_lb_conf.database,
+    ] = common.val_local_database,
     supabase_url: common.opt_supabase_url = common.val_supabase_url,
     supabase_key: common.opt_supabase_key = common.val_supabase_key,
     base_event_url: common.opt_base_event_url = common.val_base_event_url,
@@ -144,7 +192,7 @@ def db(
             show_default=True,
             envvar="APC_LEMMY_USER",
         ),
-    ] = apc_lb_conf.lemmy.user,
+    ] = common.val_lemmy_user,
     lemmy_password: Annotated[
         str,
         typer.Option(
@@ -153,7 +201,7 @@ def db(
             help="Password of the user of the lemmy instance",
             envvar="APC_LEMMY_PASSWORD",
         ),
-    ] = apc_lb_conf.lemmy.password,
+    ] = common.val_lemmy_password,
     lemmy_community: Annotated[
         str,
         typer.Option(
@@ -162,7 +210,7 @@ def db(
             help="Lemmy comumunity of the instance where the events be posted",
             envvar="APC_LEMMY_COMMUNITY",
         ),
-    ] = apc_lb_conf.lemmy.community,
+    ] = common.val_lemmy_community,
     lemmy_instance: Annotated[
         str,
         typer.Option(
@@ -173,8 +221,7 @@ def db(
             show_default=True,
             envvar="APC_LEMMY_INSTANCE",
         ),
-    ] = apc_lb_conf.lemmy.instance,
-    langcode: common.opt_langcode = common.val_langcode,
+    ] = common.val_lemmy_instance,
     output_format: Annotated[
         str,
         typer.Option(
@@ -185,11 +232,11 @@ def db(
             callback=callbacks.output_format,
         ),
     ] = "txt",
+    langcode: common.opt_langcode = common.val_langcode,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
 ):
     """Store events in the database or post or show them."""
-
     # Some validations
     if from_ == to_:
         raise typer.BadParameter(
@@ -225,7 +272,7 @@ def db(
                 key=supabase_key,
                 base_event_url=base_event_url,
                 base_event_img_url=base_event_img_url,
-                force_langcode=None if langcode == "" else langcode,
+                force_langcode=None if not langcode else langcode,
             )
             if not silence:
                 print(f"{len(events)} fetched.")
@@ -264,6 +311,7 @@ def db(
                     lemmy_user,
                     lemmy_password,
                     lemmy_community,
+                    database_obj,
                 )
                 if post:
                     url_ = f"{post['post_view']['post']['ap_id']}"

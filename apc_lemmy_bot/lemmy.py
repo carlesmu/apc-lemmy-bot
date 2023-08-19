@@ -16,6 +16,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """apc_lemmy_bot lemmy module."""
 
+import tempfile
 import warnings
 
 from typing import Optional
@@ -52,6 +53,42 @@ def login(
     return lemmy
 
 
+def upload_img(lemmy: Lemmy, file_name: str) -> str:
+    """
+    Upload a image to a Lemmy instance.
+
+    Parameters
+    ----------
+    lemmy : Lemmy
+        The lemmy instance that we get after login to it.
+    file_name : str
+        The image path to uplod to the lemmy instance.
+
+    Raises
+    ------
+    LemmyException
+        If the upload has failed.
+
+    Returns
+    -------
+    str
+        The url of the uploaded image.
+
+    """
+    uploaded = lemmy.image.upload(file_name)
+    if not uploaded:
+        raise LemmyException(f"Sorry, cannot upload {file_name}.")
+
+    if (
+        len(uploaded) != 1
+        or "image_url" not in uploaded[0]
+        or "delete_url" not in uploaded[0]
+    ):
+        raise LemmyException(f"Sorry, cannot upload {file_name}: {uploaded}")
+    print(uploaded)
+    return f"{uploaded[0]['image_url']}"
+
+
 def _create_post(
     lemmy: Lemmy,
     title: str,
@@ -63,7 +100,6 @@ def _create_post(
     langcode: Optional[str] = None,
 ) -> Optional[dict]:
     """Create a lemy post."""
-
     # Look for the language_id
     language_id = 0  # any
     if langcode is not None:
@@ -101,18 +137,20 @@ def create_event_post(
     honeypot: Optional[str] = None,
     langcode: Optional[str] = None,
 ) -> Optional[dict]:
-    """Create a lemmy post using an event."""
+    """Create a lemmy post using an event.
+
+    When we don't have a link to the event, we upload the image to the lemmy instance.
+    """
     apc_lb_conf.lemmy.community = community
 
     # We post the image, if it not exists, the link to the event:
-    url = event.get_image_url()
-    if url is None:
-        url = event.get_event_url()
-
+    _url = event.get_image_url()
+    if _url is None:
+        _url = event.get_event_url()
     return _create_post(
         lemmy,
         title=event.nice_title(LEMMY_MAX_TITLE_LENGTH),
-        url=url,
+        url=_url,
         body=event.get_content(),
         nsfw=event.NSFW if event.NSFW else False,
         community=community,

@@ -130,7 +130,7 @@ class Images(Base):  # pylint: disable=R0903  # Too few public methods
         return (
             f"<Images>("
             f"event_id_uuid={self.event_id_uuid!r}, img={bool(self.img)!r}, "
-            "imgSrc={self.imgSrc!r}, imgAltText={self.imgAltText!r})"
+            f"imgSrc={self.imgSrc!r}, imgAltText={self.imgAltText!r})"
         )
 
 
@@ -233,7 +233,6 @@ class Database:
     ):
         """Initialize a database object.
 
-
         Parameters
         ----------
         database_url : Optional[str], optional
@@ -241,7 +240,6 @@ class Database:
         echo : Optional[bool], optional
             It will be passed to the engine. The default is True.
         """
-
         if database_url:
             apc_lb_conf.database = database_url
         self.database_url = apc_lb_conf.database
@@ -289,7 +287,7 @@ class Database:
 
     @classmethod
     def _get_event_from_view(cls, view: Events) -> Event:
-        """Creates a apc_lemmy_bot.Event from a view/row
+        """Create a apc_lemmy_bot.Event from a view/row.
 
         Parameters
         ----------
@@ -511,7 +509,7 @@ class Database:
             session.commit()
 
     def get_view_by_id(self, id_uuid: UUID) -> Optional[Events]:
-        """Get a tuple with event row of the database and a Event object.
+        """Get a the database Event object associated with a id.
 
         Parameters
         ----------
@@ -623,3 +621,20 @@ class Database:
         else:
             # new:
             _store()
+
+
+def large_binary_to_bytes(val: sa.LargeBinary) -> bytes:
+    """Return a binary from a large binary.
+
+    Parameters
+    ----------
+    val : sa.LargeBinary
+        The large binary.
+
+    Returns
+    -------
+    bytes
+        The binary value.
+
+    """
+    return bytes(val)
