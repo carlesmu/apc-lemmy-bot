@@ -84,7 +84,6 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
 4. If you want to add this change to the changelog, generate it:
    ```
    .venv/bin/poetry run cz changelog
-   git commit -all
    ```
 4. Merge the branch in main and, later, delete the development branch.
 
