@@ -124,7 +124,7 @@ def _create_post(
 
     if not created:
         raise LemmyException(
-            f"Sorry, cannot creat post {title} in community_id={community_id}"
+            f"Sorry, cannot create post {title} in community_id={community_id}"
         )
 
     return created
