@@ -24,7 +24,7 @@ sys.path.insert(0, pathlib.Path(PROJECT).as_posix())
 project = "apc-lemmy-bot"
 copyright = "2023, Carles Muñoz Gorriz"
 author = "Carles Muñoz Gorriz"
-release = "0.4.0"
+release = "0.4.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
