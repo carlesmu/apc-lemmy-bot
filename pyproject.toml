@@ -28,26 +28,25 @@ exclude = []
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
-typer = "^0.9.0"
-typing-extensions = "^4.7.1"
-supabase = "^1.0.3"
-pythorhead = "^0.22.0"
-sqlalchemy = "^2.0.19"
-sqlalchemy-utils = "^0.41.1"
+typer = "^0.9.4"
+typing-extensions = "^4.11.0"
+supabase = "^2.4.3"
+pythorhead = "^0.24.0"
+sqlalchemy = "^2.0.29"
+sqlalchemy-utils = "^0.41.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.7.0"
-pylint = {extras = ["spelling"], version = "^2.17.4"}
+black = "^23.12.1"
+pylint = {extras = ["spelling"], version = "^2.17.7"}
 pydocstyle = "^6.3.0"
-pre-commit = "^3.3.3"
-trove-classifiers = "^2023.7.6"  # for classifiers in this file
-commitizen = "^3.5.3"
-poetry = "^1.5.1"
-prompt-toolkit = "^3.0.39"  # for comitizen 3.5.2
-cx-freeze = "^6.15.4"
-mypy = "^1.4.1"
-sqlalchemy = {extras = ["mypy"], version = "^2.0.19"}
-taskipy = "^1.11.0"
+pre-commit = "^3.7.0"
+trove-classifiers = "^2023.11.29"  # for classifiers in this file
+commitizen = "^3.24.0"
+poetry = "^1.8.2"
+cx-freeze = "^6.15.16"
+mypy = "^1.10.0"
+sqlalchemy = {extras = ["mypy"], version = "^2.0.29"}
+taskipy = "^1.12.2"
 types-sqlalchemy-utils = "^1.0.1"
 sphinx-autoapi = "^2.1.1"
 
