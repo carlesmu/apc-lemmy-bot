@@ -1,3 +1,9 @@
+## Unreleased
+
+### Perf
+
+- **Lemmy**: use raise_exceptions=True to create the Lemmy object
+
 ## v0.4.1 (2024-03-05)
 
 ## v0.4.0 (2023-08-19)
