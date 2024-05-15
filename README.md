@@ -95,4 +95,15 @@ It will generate the changelog and create the tag.
    .venv/bin/poetry run cz bump -cc --dry-run
    ```
 3. Create a pull request and get it merged with main.
-4. Create the release and tag `v0.1.0`.
+   You can use the *CLI* to do it, if you are working in the branch
+   `dev`, you can do:
+   ```
+   git switch main
+   git merge dev
+   git push
+   ```
+4. Create the release and tag it, e.g.:`v0.1.0`. You can use call it
+   from *CLI* using:
+   ```
+   gh release create v0.1.0 -F CHANGELOG.md --target main
+   ```
