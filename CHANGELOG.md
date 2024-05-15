@@ -1,3 +1,9 @@
+## Unreleased
+
+### Perf
+
+- **post-timeout**: increased from 3 seconds to 10
+
 ## v0.4.2 (2024-04-28)
 
 ### Perf
