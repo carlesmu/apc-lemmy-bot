@@ -29,25 +29,25 @@ exclude = []
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
 typer = "^0.9.4"
-typing-extensions = "^4.11.0"
-supabase = "^2.4.3"
-pythorhead = "^0.24.0"
-sqlalchemy = "^2.0.29"
+typing-extensions = "^4.12.2"
+supabase = "^2.11.0"
+pythorhead = "^0.28.0"
+sqlalchemy = "^2.0.37"
 sqlalchemy-utils = "^0.41.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.1"
 pylint = {extras = ["spelling"], version = "^2.17.7"}
 pydocstyle = "^6.3.0"
-pre-commit = "^3.7.0"
+pre-commit = "^3.8.0"
 trove-classifiers = "^2023.11.29"  # for classifiers in this file
-commitizen = "^3.24.0"
-poetry = "^1.8.2"
+commitizen = "^3.31.0"
+poetry = "^2.0.1"
 cx-freeze = "^6.15.16"
-mypy = "^1.10.0"
-sqlalchemy = {extras = ["mypy"], version = "^2.0.29"}
-taskipy = "^1.12.2"
-types-sqlalchemy-utils = "^1.0.1"
+mypy = "^1.14.1"
+sqlalchemy = {extras = ["mypy"], version = "^2.0.37"}
+taskipy = "^1.14.1"
+types-sqlalchemy-utils = "^1.1.0"
 sphinx-autoapi = "^2.1.1"
 
 [tool.commitizen]
