@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Fix
+
+- Check that a image have imageSrc informed
+
 ### Perf
 
 - **post-timeout**: increased from 3 seconds to 10
