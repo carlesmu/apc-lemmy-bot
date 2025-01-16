@@ -14,7 +14,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-"""apc_lemmy_bot lemmy module."""
+"""apc_lemmy_bot Lemmy module."""
 
 import tempfile
 import warnings
@@ -28,7 +28,7 @@ from apc_lemmy_bot.event import Event
 
 
 class LemmyException(Exception):
-    """Exception rised fot errors connection to the lemmy instance."""
+    """Exception raised for errors connecting to the Lemmy instance."""
 
 
 def login(
@@ -36,14 +36,14 @@ def login(
     user: str = apc_lb_conf.lemmy.user,
     password: str = apc_lb_conf.lemmy.password,
 ) -> Lemmy:
-    """Login into a lemmy instance."""
+    """Login into a Lemmy instance."""
     apc_lb_conf.lemmy.instance = instance
     apc_lb_conf.lemmy.user = user
     apc_lb_conf.lemmy.password = password
 
     lemmy = Lemmy(instance, raise_exceptions=True, request_timeout=10)
     if not lemmy.nodeinfo:
-        raise LemmyException(f"Sorry, cannot connect to lemmy instance {instance}.")
+        raise LemmyException(f"Sorry, cannot connect to the Lemmy instance {instance}.")
 
     if not lemmy.log_in(user, password):
         raise LemmyException(
@@ -60,9 +60,9 @@ def upload_img(lemmy: Lemmy, file_name: str) -> str:
     Parameters
     ----------
     lemmy : Lemmy
-        The lemmy instance that we get after login to it.
+        The Lemmy instance that we get after login to it.
     file_name : str
-        The image path to uplod to the lemmy instance.
+        The image path to upload to the Lemmy instance.
 
     Raises
     ------
@@ -99,7 +99,7 @@ def _create_post(
     honeypot: Optional[str] = None,
     langcode: Optional[str] = None,
 ) -> Optional[dict]:
-    """Create a lemy post."""
+    """Create a Lemmy post."""
     # Look for the language_id
     language_id = 0  # any
     if langcode is not None:
@@ -137,9 +137,9 @@ def create_event_post(
     honeypot: Optional[str] = None,
     langcode: Optional[str] = None,
 ) -> Optional[dict]:
-    """Create a lemmy post using an event.
+    """Create a Lemmy post using an event.
 
-    When we don't have a link to the event, we upload the image to the lemmy instance.
+    When we don't have a link to the event, we upload the image to the Lemmy instance.
     """
     apc_lb_conf.lemmy.community = community
 
