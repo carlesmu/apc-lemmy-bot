@@ -104,6 +104,7 @@ def _create_event_post(
         and "extended" in view.__dict__
         and "images" in view.__dict__
         and "imgSrc" in event.__dict__
+        and event.imgSrc is not None
         and (view.extended.img_url is None or not view.extended.img_url)
     ):
         if view.images[0] and view.images[0].img:
