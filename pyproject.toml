@@ -3,13 +3,12 @@
 name = "apc-lemmy-bot"
 version = "0.4.3"
 description = "Post supabase events to a Lemmy instance or show them."
-
-[tool.poetry]
-name = "apc-lemmy-bot"
-version = "0.4.3"
-description = "Post supabase events to a Lemmy instance or show them."
-authors = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
-maintainers = ["Carles Muñoz Gorriz <carlesmu@internautas.org>"]
+maintainers = [
+    {name="Carles Muñoz Gorriz", email="carlesmu@internautas.org"}
+]
+authors = [
+    {name="Carles Muñoz Gorriz", email="carlesmu@internautas.org"}
+]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
 keywords = ["lemmy"]
@@ -17,6 +16,20 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Operating System :: OS Independent",
 ]
+requires-python = ">=3.10,<3.12"
+dependencies = [
+    "typer (>=0.9.4,<1.0.0)",
+    "typing-extensions (>=4.12.2,<5.0.0)",
+    "supabase (>=2.11.0,<2.12.0)",
+    "pythorhead (>=0.28.0,<1.0.0)",
+    "sqlalchemy (>=2.0.37,<2.1.0)",
+    "sqlalchemy-utils (>=0.41.2,<0.42.0)"
+]
+
+[project.scripts]
+apc_lemmy_bot = "apc_lemmy_bot.__main__:main"
+
+[tool.poetry]
 packages = [
     {include = "apc_lemmy_bot"}
 ]
@@ -28,12 +41,6 @@ exclude = []
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.12"
-typer = "^0.9.4"
-typing-extensions = "^4.12.2"
-supabase = "^2.11.0"
-pythorhead = "^0.28.0"
-sqlalchemy = "^2.0.37"
-sqlalchemy-utils = "^0.41.2"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.12.1"
@@ -67,9 +74,6 @@ version_files = [
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-apc_lemmy_bot = "apc_lemmy_bot.__main__:main"
 
 [tool.poetry.build]
 generate-setup-file = false
