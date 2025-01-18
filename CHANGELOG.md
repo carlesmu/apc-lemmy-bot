@@ -1,3 +1,9 @@
+## v0.4.4 (2025-01-18)
+
+### Fix
+
+- updated commitizen version_provider: "poetry" -> "pep621"
+
 ## v0.4.3 (2025-01-16)
 
 ### Fix
