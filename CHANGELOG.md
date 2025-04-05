@@ -1,3 +1,9 @@
+## v0.4.5 (2025-04-05)
+
+### Fix
+
+- Try 3 times to post a message
+
 ## v0.4.4 (2025-01-18)
 
 ### Fix
