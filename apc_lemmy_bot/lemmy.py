@@ -136,6 +136,7 @@ def create_event_post(
     community: str = apc_lb_conf.lemmy.community,
     honeypot: Optional[str] = None,
     langcode: Optional[str] = None,
+    retries: int = 3,
 ) -> Optional[dict]:
     """Create a Lemmy post using an event.
 
@@ -147,13 +148,23 @@ def create_event_post(
     _url = event.get_image_url()
     if _url is None:
         _url = event.get_event_url()
-    return _create_post(
-        lemmy,
-        title=event.nice_title(LEMMY_MAX_TITLE_LENGTH),
-        url=_url,
-        body=event.get_content(),
-        nsfw=event.NSFW if event.NSFW else False,
-        community=community,
-        honeypot=honeypot,
-        langcode=langcode,
-    )
+    for try_num in range(retries):
+        try:
+            return _create_post(
+                lemmy,
+                title=event.nice_title(LEMMY_MAX_TITLE_LENGTH),
+                url=_url,
+                body=event.get_content(),
+                nsfw=event.NSFW if event.NSFW else False,
+                community=community,
+                honeypot=honeypot,
+                langcode=langcode,
+            )
+        except Exception as err:
+            warnings.warn(
+                f"[{try_num}/{retries}] Error '{err=}/{type(err)=}' \
+                creating post '{event}'."
+            )
+            if try_num == retries:
+                raise err
+    raise LemmyException(f"This code cannot be executed. Contacts devs.")
