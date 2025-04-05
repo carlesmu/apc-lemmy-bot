@@ -1,3 +1,8 @@
+# Locale files from this project
+apc_*.db
+docs/source/api/*
+docs/source/generated/*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
