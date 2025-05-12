@@ -85,7 +85,8 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    ```
    .venv/bin/poetry run cz changelog
    ```
-4. Merge the branch in main and, later, delete the development branch.
+5. Merge the branch in main and, later, delete the development branch (see
+   points 2 and 3 of the next section).
 
 ### Release a new version
 It will generate the changelog and create the tag.
@@ -94,7 +95,7 @@ It will generate the changelog and create the tag.
    ```
    .venv/bin/poetry run cz bump -cc --dry-run
    ```
-3. Create a pull request and get it merged with main.
+2. Create a pull request and get it merged with main.
    You can use the *CLI* to do it, if you are working in the branch
    `dev`, you can do:
    ```
@@ -102,7 +103,7 @@ It will generate the changelog and create the tag.
    git merge dev
    git push
    ```
-4. Create the release and tag it, e.g.:`v0.1.0`. You can use call it
+3. Create the release and tag it, e.g.:`v0.1.0`. You can use call it
    from *CLI* using:
    ```
    gh release create v0.1.0 -F CHANGELOG.md --target main
