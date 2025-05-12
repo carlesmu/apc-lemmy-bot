@@ -58,9 +58,7 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
     id_uuid: saorm.Mapped[UUID] = saorm.mapped_column(
         index=True, unique=True, nullable=False
     )
-    slugTitle: saorm.Mapped[str] = saorm.mapped_column(
-        index=True, unique=True, nullable=False
-    )
+    slugTitle: saorm.Mapped[str] = saorm.mapped_column(index=True, nullable=False)
     date: saorm.Mapped[datetime.date] = saorm.mapped_column(index=True)
     month: saorm.Mapped[int] = saorm.mapped_column(sa.SmallInteger)
     day: saorm.Mapped[int] = saorm.mapped_column(sa.SmallInteger)
