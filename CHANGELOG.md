@@ -1,5 +1,9 @@
 ## Unreleased
 
+### Fix
+
+- **database**: remove the uniqueness of the slugTitle index of the table events
+
 ## v0.4.5 (2025-04-05)
 
 ### Fix
