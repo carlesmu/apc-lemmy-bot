@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2023  Carles Muñoz Gorriz <carlesmu@internautas.org>
+#    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -257,7 +257,7 @@ class Event:
             ret += "- Tags: "
             i = 0
             for tag in self.tags:
-                ret += f"#{tag}"
+                ret += f"#[{tag}](/search?q=%23{tag}&type=Posts&listingType=All&page=1&sort=New)"
                 i += 1
                 if i < len(self.tags):
                     ret += ", "
