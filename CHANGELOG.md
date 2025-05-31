@@ -1,4 +1,8 @@
-## Unreleased
+## v0.5.0 (2025-05-31)
+
+### Feat
+
+- add a link to the tags to search in the current instance other posts with this tag
 
 ### Fix
 
@@ -32,8 +36,6 @@
 
 - **Lemmy**: use raise_exceptions=True to create the Lemmy object
 
-## v0.4.1 (2024-03-05)
-
 ## v0.4.0 (2023-08-19)
 
 ### Feat
@@ -48,14 +50,6 @@
 
 ## v0.3.1 (2023-07-18)
 
-### Fix
-
-- **cli**: added envbar for --database option and improved description
-- **dependencies**: added missed dependency in sqlalchemy-utils
-- **network**: retry to access remote image when we get a URLError
-
-## v0.3.0 (2023-07-16)
-
 ### Feat
 
 - **docs**: create documentation using sphinx
@@ -64,6 +58,9 @@
 
 ### Fix
 
+- **cli**: added envbar for --database option and improved description
+- **dependencies**: added missed dependency in sqlalchemy-utils
+- **network**: retry to access remote image when we get a URLError
 - **langcode**: corrected wrong type
 
 ### Refactor
@@ -90,7 +87,7 @@
 - **cli**: simplified imports
 - **cli**: simplified imports
 
-## v0.1.1 (2023-06-30)
+## v0.1.1 (2023-06-29)
 
 ### Fix
 
