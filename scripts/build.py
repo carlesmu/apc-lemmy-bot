@@ -9,7 +9,7 @@ import os
 
 POETRY_EXE = ".venv/bin/poetry"
 if not os.path.isfile(POETRY_EXE):
-    POETRY_EXE = ".venv/Scripts/poetry.exe"
+    POETRY_EXE = ".venv/bin/poetry.exe"
 
 
 def make_cx_Freeze_build(setup_kwargs):
