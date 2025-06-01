@@ -173,3 +173,4 @@ lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a fi
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
 clean = {cmd ="python scripts/clean.py", help = "runs scripts/clean.py" }
+docs = {cmd ="cd docs && make html", help = "creates html docs" }
