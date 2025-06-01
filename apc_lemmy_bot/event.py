@@ -257,7 +257,7 @@ class Event:
             ret += "- Tags: "
             i = 0
             for tag in self.tags:
-                ret += f"#[{tag}](/search?q=%23{tag}&type=Posts&listingType=All&page=1&sort=New)"
+                ret += f"[#{tag}](/search?q=%23{tag}&type=Posts&listingType=All&page=1&sort=New)"
                 i += 1
                 if i < len(self.tags):
                     ret += ", "
