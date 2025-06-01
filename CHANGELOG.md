@@ -1,3 +1,9 @@
+## v0.5.1 (2025-06-01)
+
+### Fix
+
+- add # 'to' the linked text in tags
+
 ## v0.5.0 (2025-05-31)
 
 ### Feat
