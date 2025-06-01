@@ -55,7 +55,15 @@ trove-classifiers = "^2025.3.19.19"  # for classifiers in this file
 sqlalchemy = {extras = ["mypy"], version = ">=2.0.41,<2.1.0"}  # same version that dependencies=...
 taskipy = ">=1.14.1,<2.0.0"
 types-sqlalchemy-utils = "^1.1.0"
+
+
+[tool.poetry.group."dev.docs".dependencies]
+make = "^0.1.6.post2"
+numpy = "^2.2.6"
+sphinx = "^8.2.3"
 sphinx-autoapi = ">=3.6.0,<4.0.0"
+sphinx-rtd-theme = "^3.0.2"
+sphinx-sitemap = "^2.6.0"
 
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
