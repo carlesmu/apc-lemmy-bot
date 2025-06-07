@@ -276,7 +276,7 @@ class Event:
 
         if len(self.tags) > 0:
             ret += "- Tags: "
-            for tag in enumerate(self.tags):
+            for i, tag in enumerate(self.tags):
                 ret += (
                     f"[#{tag}](/search?q=%23{tag}&type=Posts"
                     "&listingType=All&page=1&sort=New)"
