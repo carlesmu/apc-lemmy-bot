@@ -21,7 +21,9 @@ base: str = "console"
 setup(
     executables=[
         Executable(
-            "apc_lemmy_bot/__main__.py", base=base, target_name="apc-lemmy-bot"
+            "apc_lemmy_bot/__main__.py",
+            base=base,
+            target_name="apc-lemmy-bot",
         )
     ]
 )

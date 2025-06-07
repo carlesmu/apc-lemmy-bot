@@ -120,7 +120,9 @@ def post(
         typer.Option(
             "--lm-instance",
             rich_help_panel="Lemmy",
-            help="Base URL of the lemmy instance where the events will be posted",
+            help=(
+                "Base URL of the lemmy instance where the events will be posted"
+            ),
             callback=callbacks.url,
             show_default=True,
             envvar="APC_LEMMY_INSTANCE",

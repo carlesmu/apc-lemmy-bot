@@ -101,7 +101,7 @@ docstring-min-length = 5
 [tool.pylint.exceptions]
 
 [tool.pylint.format]
-max-line-length = 80
+max-line-length = 79
 
 [tool.pylint.messages_control]
 
@@ -155,9 +155,12 @@ ignore_missing_imports = true
 
 
 [tool.ruff]
-line-length = 80
+line-length = 79
 indent-width = 4
 
+[tool.ruff.lint.pycodestyle]
+# E501 reports lines that exceed the length of 100.
+max-line-length = 100
 
 [tool.taskipy.settings]
 use_vars = true

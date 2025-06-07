@@ -63,7 +63,8 @@ def from_(value: str) -> str:
     Parameters
     ----------
     value : str
-        the source of the events. Right values are: **SUPABASE** and **DATABASE**.
+        the source of the events. Right values are: **SUPABASE** and
+        **DATABASE**.
 
     Raises
     ------
@@ -162,17 +163,20 @@ def supabase_key(ctx: typer.Context, value: str) -> str:
         The SUPABASE key.
 
     """
-    # In the db option not originated from SUPABASE the SUPABASE parameters are optional:
+    # In the db option not originated from SUPABASE the SUPABASE parameters are
+    # optional:
     if (
         ctx.info_name == "db"  # pylint: disable=R2004  # magic-value-comparison
-        and ctx.params["from_"]  # pylint: disable=R2004  # magic-value-comparison
-        != "SUPABASE"  # pylint: disable=R2004  # magic-value-comparison
+        # pylint: disable=R2004  # magic-value-comparison
+        and ctx.params["from_"] != "SUPABASE"
         and not value
     ):
         return value
 
     if not value.strip():
-        raise typer.BadParameter(f"Cannot precess supabase empty key '{value}'")
+        raise typer.BadParameter(
+            f"Cannot precess supabase empty key '{value}'"
+        )
     return value
 
 
@@ -182,8 +186,8 @@ def to_(value: str) -> str:
     Parameters
     ----------
     value : str
-        the destination of the events. Right values are: **DATABASE**, **LEMMY** or
-        **SHOW**
+        the destination of the events. Right values are: **DATABASE**,
+        **LEMMY** or **SHOW**
 
     Raises
     ------
@@ -203,7 +207,7 @@ def to_(value: str) -> str:
 
 
 def version(value: bool) -> None:
-    """Validate the --version option and if it's true it shows the version and exit.
+    """Validate the --version option and shows the version and exit.
 
     Parameters
     ----------
@@ -247,11 +251,12 @@ def url(ctx: typer.Context, input_url: str) -> str:
     value : str
         The url.
     """
-    # In the db option not originated from SUPABASE the SUPABASE parameters are optional:
+    # In the db option not originated from SUPABASE the SUPABASE parameters are
+    # optional:
     if (
         ctx.info_name == "db"  # pylint: disable=R2004  # magic-value-comparison
-        and ctx.params["from_"]  # pylint: disable=R2004  # magic-value-comparison
-        != "SUPABASE"  # pylint: disable=R2004  # magic-value-comparison
+        # pylint: disable=R2004  # magic-value-comparison
+        and ctx.params["from_"] != "SUPABASE"
         and not input_url
     ):
         return input_url

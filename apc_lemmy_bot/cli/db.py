@@ -228,7 +228,9 @@ def db(
         typer.Option(
             "--lm-instance",
             rich_help_panel="Lemmy",
-            help="Base URL of the lemmy instance where the events will be posted",
+            help=(
+                "Base URL of the lemmy instance where the events will be posted"
+            ),
             callback=callbacks.url,
             show_default=True,
             envvar="APC_LEMMY_INSTANCE",
@@ -291,7 +293,10 @@ def db(
             for event in events:
                 if not silence:
                     print(
-                        f"- {apc_lb_conf.database} {event.id}: {event.slugTitle}",
+                        (
+                            f"- {apc_lb_conf.database} {event.id}: "
+                            f"{event.slugTitle}"
+                        ),
                         end="... ",
                     )
                 database_obj.add_event(event, silence)

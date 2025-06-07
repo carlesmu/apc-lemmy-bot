@@ -30,7 +30,8 @@ from apc_lemmy_bot import apc_lb_conf, __version__
 from apc_lemmy_bot.event import Event
 
 
-class Base(saorm.DeclarativeBase):  # pylint: disable=R0903  # Too few public methods
+# pylint: disable=R0903  # Too few public methods
+class Base(saorm.DeclarativeBase):
     """Declarative base class for the database tables."""
 
 
@@ -46,7 +47,10 @@ class Info(Base):  # pylint: disable=R0903  # Too few public methods
     value: saorm.Mapped[str] = saorm.mapped_column(sa.String(200))
 
     def __repr__(self) -> str:
-        return f"<Info>(id_int={self.id_int!r}, key={self.key!r}, value={self.value!r}"
+        return (
+            f"<Info>(id_int={self.id_int!r}, key={self.key!r}, "
+            f"value={self.value!r}"
+        )
 
 
 class Events(Base):  # pylint: disable=R0903  # Too few public methods
@@ -109,7 +113,10 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
     )
 
     def __repr__(self) -> str:
-        return f"<Events>(id_uuid={self.id_uuid!r}, slugTitle={self.slugTitle!r} ...)"
+        return (
+            f"<Events>(id_uuid={self.id_uuid!r}, "
+            f"slugTitle={self.slugTitle!r} ...)"
+        )
 
 
 class Images(Base):  # pylint: disable=R0903  # Too few public methods
@@ -146,7 +153,8 @@ class Links(Base):  # pylint: disable=R0903  # Too few public methods
 
     def __repr__(self) -> str:
         return (
-            f"<Links>(event_id_uuid={self.event_id_uuid!r}, link={self.link!r})"
+            f"<Links>(event_id_uuid={self.event_id_uuid!r}, "
+            f"link={self.link!r})"
         )
 
 
@@ -161,7 +169,7 @@ class Tags(Base):  # pylint: disable=R0903  # Too few public methods
     tag: saorm.Mapped[str]
 
     def __repr__(self) -> str:
-        return f"<Tags>(event_id_uuid={self.event_id_uuid!r}, tag={self.tag!r})"
+        return f"<Tags>(event_id_uuid={self.event_id_uuid!r}, tag={self.tag!r}"
 
 
 class EventsExtended(Base):  # pylint: disable=R0903  # Too few public methods
@@ -227,7 +235,8 @@ class EventsPosted(Base):  # pylint: disable=R0903  # Too few public methods
         return (
             f"<EventsPosted>("
             f"event_id_uuid={self.event_id_uuid!r}, "
-            f"url={self.url!r}, date={self.date!r}, timestamp={self.timestamp!r})"
+            f"url={self.url!r}, date={self.date!r}, "
+            f"timestamp={self.timestamp!r})"
         )
 
 
@@ -389,14 +398,16 @@ class Database:
                 headers={
                     "User-Agent": (
                         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) "
-                        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 "
+                        "AppleWebKit/537.36 (KHTML, like Gecko) "
+                        "Chrome/35.0.1916.47 "
                         "Safari/537.36"
                     )
                 },
             )
 
             # Some times we get this error:
-            # urllib.error.URLError: <urlopen error [SSL:CERTIFICATE_VERIFY_FAILED]
+            # urllib.error.URLError: <urlopen error
+            # [SSL:CERTIFICATE_VERIFY_FAILED]
             # certificate verify failed: unable to get local issuer certificate
             try:
                 with urllib.request.urlopen(req) as response:
@@ -409,7 +420,9 @@ class Database:
         if event.imgAltText or _img:
             view.images.append(
                 Images(
-                    img=_img, imgSrc=event.imgSrc, imgAltText=event.imgAltText
+                    img=_img,
+                    imgSrc=event.imgSrc,
+                    imgAltText=event.imgAltText,
                 )
             )
 
@@ -555,9 +568,9 @@ class Database:
             # TODO:
             # Without this, I get:
             # sqlalchemy.orm.exc.DetachedInstanceError:
-            # Parent instance <Events at 0x7f08f99b4c90> is not bound to a Session;
-            # lazy load operation of attribute 'images' cannot proceed (Background on
-            # this error at: https://sqlalche.me/e/20/bhk3)
+            # Parent instance <Events at 0x7f08f99b4c90> is not bound to a
+            # Session; lazy load operation of attribute 'images' cannot proceed
+            # (Background on this error at: https://sqlalche.me/e/20/bhk3)
             _ = view
             _ = (view.images,)
             _ = (view.links,)
@@ -570,8 +583,8 @@ class Database:
     def add_event(self, event: Event, silence: bool = True) -> None:
         """Add a event object to the database.
 
-        If it exists and it's not the same that is stored in the database, it updated
-        it.
+        If it exists and it's not the same that is stored in the database, it
+        updated it.
 
         Parameters
         ----------

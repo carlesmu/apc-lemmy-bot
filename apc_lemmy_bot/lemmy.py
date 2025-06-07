@@ -48,7 +48,10 @@ def login(
 
     if not lemmy.log_in(user, password):
         raise LemmyException(
-            f"Sorry, cannot login {user} into {instance}. Bad user or wrong password."
+            (
+                f"Sorry, cannot login {user} into {instance}. Bad user "
+                "or wrong password."
+            )
         )
 
     return lemmy
@@ -144,7 +147,8 @@ def create_event_post(
 ) -> Optional[dict]:
     """Create a Lemmy post using an event.
 
-    When we don't have a link to the event, we upload the image to the Lemmy instance.
+    When we don't have a link to the event, we upload the image to the Lemmy
+    instance.
     """
     apc_lb_conf.lemmy.community = community
 

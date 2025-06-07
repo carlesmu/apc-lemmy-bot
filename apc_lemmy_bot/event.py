@@ -57,8 +57,8 @@ class Event:
         base_event_img_url : Optional[str], optional
             The base/common URLs shared for the images. The default is None.
         force_langcode : Optional[str], optional
-            The ISO 639-2 language code in which the event has been written. The
-            default is None.
+            The ISO 639-2 language code in which the event has been written.
+            The default is None.
          : TYPE
             DESCRIPTION.
 
@@ -106,13 +106,19 @@ class Event:
                     "langcode",
                 ]:
                     warnings.warn(
-                        f"Key '{missed_dict}' missed in event '{event['slugTitle']}'.",
+                        (
+                            f"Key '{missed_dict}' missed in event "
+                            f"'{event['slugTitle']}'."
+                        ),
                         stacklevel=2,
                     )
 
             for missed_key in [x for x in event if x not in self.__dict__]:
                 warnings.warn(
-                    f"Unexpected key '{missed_key}' in event '{event['slugTitle']}'.",
+                    (
+                        f"Unexpected key '{missed_key}' in event "
+                        f"'{event['slugTitle']}'."
+                    ),
                     stacklevel=2,
                 )
 
@@ -123,7 +129,9 @@ class Event:
                     setattr(
                         self,
                         e_key,
-                        datetime.date(int(dstr[0]), int(dstr[1]), int(dstr[2])),
+                        datetime.date(
+                            int(dstr[0]), int(dstr[1]), int(dstr[2])
+                        ),
                     )
                 case "month" | "day":
                     setattr(self, e_key, int(e_value))
@@ -169,8 +177,8 @@ class Event:
         Parameters
         ----------
         max_length : Optional[int], optional
-            The max length of the string to return. When not informed, it return the
-            `self.title` + `self.otd`. The default is None.
+            The max length of the string to return. When not informed, it
+            return the `self.title` + `self.otd`. The default is None.
 
         Returns
         -------
@@ -179,7 +187,9 @@ class Event:
         """
         if max_length:
             return textwrap.shorten(
-                f"{self.title} {self.otd}", width=max_length, placeholder="..."
+                f"{self.title} {self.otd}",
+                width=max_length,
+                placeholder="...",
             )
         return f"{self.title} {self.otd}"
 
@@ -261,7 +271,10 @@ class Event:
             ret += "- Tags: "
             i = 0
             for tag in self.tags:
-                ret += f"[#{tag}](/search?q=%23{tag}&type=Posts&listingType=All&page=1&sort=New)"
+                ret += (
+                    f"[#{tag}](/search?q=%23{tag}&type=Posts"
+                    "&listingType=All&page=1&sort=New)"
+                )
                 i += 1
                 if i < len(self.tags):
                     ret += ", "
@@ -299,7 +312,9 @@ def get_dated_events(
     url: Optional[str] = apc_lb_conf.supabase.url,
     key: Optional[str] = apc_lb_conf.supabase.key,
     base_event_url: Optional[str] = apc_lb_conf.supabase.base_event_url,
-    base_event_img_url: Optional[str] = apc_lb_conf.supabase.base_event_img_url,
+    base_event_img_url: Optional[
+        str
+    ] = apc_lb_conf.supabase.base_event_img_url,
     force_langcode: Optional[str] = None,
 ) -> list[Event]:
     """Get the dated events of a day looking for them in a *Supabase* database.
@@ -312,7 +327,8 @@ def get_dated_events(
     url : Optional[str], optional
         The URL of the database. The default is apc_lb_conf.supabase.url.
     key : Optional[str], optional
-        The access key to the database. The default is apc_lb_conf.supabase.key.
+        The access key to the database. The default is
+        apc_lb_conf.supabase.key.
     base_event_url : Optional[str], optional
         The base/common URL where the event can be shown. The default is
         apc_lb_conf.supabase.base_event_url.
@@ -320,8 +336,8 @@ def get_dated_events(
         The base/common URL where the event image can be shown. The default is
         apc_lb_conf.supabase.base_event_img_url.
     force_langcode : Optional[str], optional
-        The ISO 639-2 `langcode` in which the event has been written. The default is
-        None.
+        The ISO 639-2 `langcode` in which the event has been written. The
+        default is None.
 
     Returns
     -------
