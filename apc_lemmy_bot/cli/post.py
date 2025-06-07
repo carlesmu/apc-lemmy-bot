@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2023  Carles Muñoz Gorriz <carlesmu@internautas.org>
+#    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -25,7 +25,7 @@ from typing_extensions import Annotated
 
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import Event, get_dated_events
-from apc_lemmy_bot.lemmy import LemmyException, create_event_post, login
+from apc_lemmy_bot.lemmy import LemmyError, create_event_post, login
 
 from . import app, callbacks, common
 
@@ -46,8 +46,8 @@ def _create_event_post(
         )
     try:
         lemmy = login(lemmy_instance, lemmy_user, lemmy_password)
-    except LemmyException as err:
-        print(f"\nLemmyException: {err}")
+    except LemmyError as err:
+        print(f"\nLemmyError: {err}")
         raise typer.Exit(1) from err
 
     if not silence:
@@ -63,8 +63,8 @@ def _create_event_post(
             lemmy_community,
             langcode=event.langcode,
         )
-    except LemmyException as err:
-        print(f"\nLemmyException: {err}")
+    except LemmyError as err:
+        print(f"\nLemmyError: {err}")
         raise typer.Exit(1) from err
 
     if not silence:

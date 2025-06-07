@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2023  Carles Muñoz Gorriz <carlesmu@internautas.org>
+#    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -25,7 +25,7 @@ from apc_lemmy_bot import LEMMY_MAX_TITLE_LENGTH, apc_lb_conf
 from apc_lemmy_bot.event import Event
 
 
-class LemmyException(Exception):
+class LemmyError(Exception):
     """Exception raised for errors connecting to the Lemmy instance."""
 
 
@@ -42,14 +42,14 @@ def login(
     lemmy = Lemmy(instance, raise_exceptions=True, request_timeout=10)
     if not lemmy.nodeinfo:
         msg = f"Sorry, cannot connect to the Lemmy instance {instance}."
-        raise LemmyException(msg)
+        raise LemmyError(msg)
 
     if not lemmy.log_in(user, password):
         msg = (
             f"Sorry, cannot login {user} into {instance}. Bad user "
             "or wrong password."
         )
-        raise LemmyException(msg)
+        raise LemmyError(msg)
 
     return lemmy
 
@@ -67,7 +67,7 @@ def upload_img(lemmy: Lemmy, file_name: str) -> str:
 
     Raises
     ------
-    LemmyException
+    LemmyError
         If the upload has failed.
 
     Returns
@@ -79,7 +79,7 @@ def upload_img(lemmy: Lemmy, file_name: str) -> str:
     uploaded = lemmy.image.upload(file_name)
     if not uploaded:
         msg = f"Sorry, cannot upload {file_name}."
-        raise LemmyException(msg)
+        raise LemmyError(msg)
 
     if (
         len(uploaded) != 1
@@ -87,7 +87,7 @@ def upload_img(lemmy: Lemmy, file_name: str) -> str:
         or "delete_url" not in uploaded[0]
     ):
         msg = f"Sorry, cannot upload {file_name}: {uploaded}"
-        raise LemmyException(msg)
+        raise LemmyError(msg)
     print(uploaded)
     return f"{uploaded[0]['image_url']}"
 
@@ -117,7 +117,7 @@ def _create_post(
     community_id = lemmy.discover_community(community)
     if community_id is None:
         msg = f"Sorry, cannot find community '{community}'"
-        raise LemmyException(msg)
+        raise LemmyError(msg)
 
     created: Optional[dict] = lemmy.post.create(
         community_id,
@@ -133,7 +133,7 @@ def _create_post(
         msg = (
             f"Sorry, cannot create post {title} in community_id={community_id}"
         )
-        raise LemmyException(msg)
+        raise LemmyError(msg)
 
     return created
 
@@ -179,4 +179,4 @@ def create_event_post(
             if try_num == retries:
                 raise err
     msg = "This code cannot be executed. Contacts devs."
-    raise LemmyException(msg)
+    raise LemmyError(msg)
