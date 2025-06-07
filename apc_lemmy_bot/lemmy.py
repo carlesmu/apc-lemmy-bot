@@ -145,7 +145,8 @@ def create_event_post(
     langcode: Optional[str] = None,
     retries: int = 3,
 ) -> Optional[dict]:
-    """Create a Lemmy post using an event.
+    """
+    Create a Lemmy post using an event.
 
     When we don't have a link to the event, we upload the image to the Lemmy
     instance.

@@ -54,7 +54,8 @@ def _create_event_post(
     lemmy_community: str,
     database_obj: apc_lemmy_bot.database.Database,
 ) -> dict | None:
-    """Create a post in a lemmy instance.
+    """
+    Create a post in a lemmy instance.
 
     Parameters
     ----------

@@ -47,6 +47,7 @@ class Info(Base):  # pylint: disable=R0903  # Too few public methods
     value: saorm.Mapped[str] = saorm.mapped_column(sa.String(200))
 
     def __repr__(self) -> str:
+        """Return a string representation of a Info object."""
         return (
             f"<Info>(id_int={self.id_int!r}, key={self.key!r}, "
             f"value={self.value!r}"
@@ -113,6 +114,7 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
     )
 
     def __repr__(self) -> str:
+        """Return a string representation of a Events object."""
         return (
             f"<Events>(id_uuid={self.id_uuid!r}, "
             f"slugTitle={self.slugTitle!r} ...)"
@@ -134,6 +136,7 @@ class Images(Base):  # pylint: disable=R0903  # Too few public methods
     imgAltText: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
 
     def __repr__(self) -> str:
+        """Return a string representation of a Image object."""
         return (
             f"<Images>("
             f"event_id_uuid={self.event_id_uuid!r}, img={bool(self.img)!r}, "
@@ -152,6 +155,7 @@ class Links(Base):  # pylint: disable=R0903  # Too few public methods
     link: saorm.Mapped[str]
 
     def __repr__(self) -> str:
+        """Return a string representation of a Links object."""
         return (
             f"<Links>(event_id_uuid={self.event_id_uuid!r}, "
             f"link={self.link!r})"
@@ -169,6 +173,7 @@ class Tags(Base):  # pylint: disable=R0903  # Too few public methods
     tag: saorm.Mapped[str]
 
     def __repr__(self) -> str:
+        """Return a string representation of a Tags object."""
         return f"<Tags>(event_id_uuid={self.event_id_uuid!r}, tag={self.tag!r}"
 
 
@@ -205,6 +210,7 @@ class EventsExtended(Base):  # pylint: disable=R0903  # Too few public methods
     apc_version: saorm.Mapped[str]
 
     def __repr__(self) -> str:
+        """Return a string representation of a EventsExtended object."""
         return (
             f"<EventsExtended>("
             f"event_id_uuid={self.event_id_uuid!r}, "
@@ -232,6 +238,7 @@ class EventsPosted(Base):  # pylint: disable=R0903  # Too few public methods
     )
 
     def __repr__(self) -> str:
+        """Return a string representation of a EventsPosted object."""
         return (
             f"<EventsPosted>("
             f"event_id_uuid={self.event_id_uuid!r}, "
@@ -252,7 +259,8 @@ class Database:
         database_url: Optional[str] = apc_lb_conf.database,
         echo: Optional[bool] = True,
     ):
-        """Initialize a database object.
+        """
+        Initialize a database object.
 
         Parameters
         ----------
@@ -260,6 +268,7 @@ class Database:
             The database url. The default is `apc_lb_conf.database`.
         echo : Optional[bool], optional
             It will be passed to the engine. The default is True.
+
         """
         if database_url:
             apc_lb_conf.database = database_url
@@ -270,7 +279,8 @@ class Database:
             self.create_database()
 
     def create_database(self) -> None:
-        """Create the database.
+        """
+        Create the database.
 
         Returns
         -------
@@ -290,7 +300,8 @@ class Database:
 
     @classmethod
     def _update_last_change(cls, session: saorm.Session) -> None:
-        """Update the *extended.last_change* row.
+        """
+        Update the *extended.last_change* row.
 
         Parameters
         ----------
@@ -300,6 +311,7 @@ class Database:
         Returns
         -------
         None
+
         """
         last_change = session.execute(
             sa.select(Info).filter_by(key="last_change")
@@ -308,7 +320,8 @@ class Database:
 
     @classmethod
     def _get_event_from_view(cls, view: Events) -> Event:
-        """Create a apc_lemmy_bot.Event from a view/row.
+        """
+        Create a apc_lemmy_bot.Event from a view/row.
 
         Parameters
         ----------
@@ -319,6 +332,7 @@ class Database:
         -------
         Event
             The apc_lemmy_bot.Event object created.
+
         """
         img_src: Optional[str] = None
         img_alt_txt: Optional[str] = None
@@ -350,7 +364,8 @@ class Database:
 
     @classmethod
     def _create_view_from_event(cls, event: Event) -> Events:
-        """Create a view/row of a event.
+        """
+        Create a view/row of a event.
 
         Parameters
         ----------
@@ -361,6 +376,7 @@ class Database:
         -------
         Events
             A view/row of the event.
+
         """
         view = Events(
             id_uuid=UUID(event.id),
@@ -434,7 +450,8 @@ class Database:
         return view
 
     def _insert_event_view(self, view: Events) -> None:
-        """Insert a view/row in the database.
+        """
+        Insert a view/row in the database.
 
         Parameters
         ----------
@@ -444,6 +461,7 @@ class Database:
         Returns
         -------
         None
+
         """
         with saorm.sessionmaker(self.engine)() as session:
             session.add(view)
@@ -451,7 +469,8 @@ class Database:
             session.commit()
 
     def _update_event_view(self, view: Events) -> None:
-        """Update a view/row in the database.
+        """
+        Update a view/row in the database.
 
         Parameters
         ----------
@@ -461,6 +480,7 @@ class Database:
         Returns
         -------
         None
+
         """
         with saorm.sessionmaker(self.engine)() as session:
             session.add(view)
@@ -470,6 +490,7 @@ class Database:
     def get_views_by_month_day(
         self, month: int, day: int
     ) -> Optional[List[Events]]:
+        """Get a list of all events in the same day and month."""
         with saorm.sessionmaker(self.engine)() as session:
             stmt_uuids = (
                 sa.select(Events.id_uuid)
@@ -492,6 +513,23 @@ class Database:
     def get_random_dated_event(
         self, views: List[Events], date: datetime.datetime
     ) -> Optional[Event]:
+        """
+        Get a random event for a date and a list of events.
+
+        Parameters
+        ----------
+        views : List[Events]
+            A list of events.
+
+        date : datetime.datetime
+            The date requested.
+
+        Return
+        ------
+        Optional[Event]
+            A random event from the list, or None.
+
+        """
         not_posted_recent = []
         not_posted = []
 
@@ -519,6 +557,7 @@ class Database:
             return None
 
     def update_posted_event(self, id_uuid: UUID, url) -> None:
+        """Update a posted event in the database."""
         view = self.get_view_by_id(id_uuid)
         timestamp = datetime.datetime.now()
 
@@ -541,7 +580,8 @@ class Database:
             session.commit()
 
     def get_view_by_id(self, id_uuid: UUID) -> Optional[Events]:
-        """Get a the database Event object associated with a id.
+        """
+        Get a the database Event object associated with a id.
 
         Parameters
         ----------
@@ -552,6 +592,7 @@ class Database:
         -------
         Tuple[Union[Events | None], Union[Event | None]]
             The event view/row and the event object.
+
         """
         with saorm.sessionmaker(self.engine)() as session:
             # Event:
@@ -581,7 +622,8 @@ class Database:
             return view
 
     def add_event(self, event: Event, silence: bool = True) -> None:
-        """Add a event object to the database.
+        """
+        Add a event object to the database.
 
         If it exists and it's not the same that is stored in the database, it
         updated it.
@@ -596,6 +638,7 @@ class Database:
         Returns
         -------
         None
+
         """
 
         def _ignore():
@@ -659,7 +702,8 @@ class Database:
 
 
 def large_binary_to_bytes(val: sa.LargeBinary) -> bytes:
-    """Return a binary from a large binary.
+    """
+    Return a binary from a large binary.
 
     Parameters
     ----------

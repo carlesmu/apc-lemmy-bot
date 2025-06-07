@@ -27,7 +27,8 @@ from apc_lemmy_bot import __app__, __version__
 
 
 def date(input_date: str) -> str:
-    """Validate a date argument.
+    """
+    Validate a date argument.
 
     It should have format YYYY-MM-DD
 
@@ -58,7 +59,8 @@ def date(input_date: str) -> str:
 
 
 def from_(value: str) -> str:
-    """Validate the FROM argument.
+    """
+    Validate the FROM argument.
 
     Parameters
     ----------
@@ -75,6 +77,7 @@ def from_(value: str) -> str:
     -------
     str
         The FROM argument in upper case.
+
     """
     if (val := value.upper()) in {"SUPABASE", "DATABASE"}:
         return val
@@ -84,7 +87,8 @@ def from_(value: str) -> str:
 
 
 def langcode(value: str | None) -> str | None:
-    """Validate the --langcode option.
+    """
+    Validate the --langcode option.
 
     It should have format XX or None.
 
@@ -117,7 +121,8 @@ def langcode(value: str | None) -> str | None:
 
 
 def output_format(value: str) -> str:
-    """Validate the --format option.
+    """
+    Validate the --format option.
 
     It should be 'json', 'txt' or 'none'.
 
@@ -143,7 +148,8 @@ def output_format(value: str) -> str:
 
 
 def supabase_key(ctx: typer.Context, value: str) -> str:
-    """Validate the --sb-key option.
+    """
+    Validate the --sb-key option.
 
     Parameters
     ----------
@@ -181,7 +187,8 @@ def supabase_key(ctx: typer.Context, value: str) -> str:
 
 
 def to_(value: str) -> str:
-    """Validate the TO argument.
+    """
+    Validate the TO argument.
 
     Parameters
     ----------
@@ -198,6 +205,7 @@ def to_(value: str) -> str:
     -------
     str
         The TO argument in upper case.
+
     """
     if (val := value.upper()) in {"DATABASE", "LEMMY", "SHOW"}:
         return val
@@ -207,7 +215,8 @@ def to_(value: str) -> str:
 
 
 def version(value: bool) -> None:
-    """Validate the --version option and shows the version and exit.
+    """
+    Validate the --version option and shows the version and exit.
 
     Parameters
     ----------
@@ -230,7 +239,8 @@ def version(value: bool) -> None:
 
 
 def url(ctx: typer.Context, input_url: str) -> str:
-    """Validate a valid URL.
+    """
+    Validate a valid URL.
 
     It should have protocols 'file', 'http' or 'https'.
 
@@ -250,6 +260,7 @@ def url(ctx: typer.Context, input_url: str) -> str:
     -------
     value : str
         The url.
+
     """
     # In the db option not originated from SUPABASE the SUPABASE parameters are
     # optional:
@@ -274,7 +285,8 @@ def url(ctx: typer.Context, input_url: str) -> str:
 
 
 def silence(value: bool) -> bool:
-    """Validate the option --silence.
+    """
+    Validate the option --silence.
 
     Parameters
     ----------

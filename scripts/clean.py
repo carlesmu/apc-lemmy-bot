@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""scripts/build.py utility.
+"""
+scripts/build.py utility.
 
 See: https://github.com/python-poetry/poetry/issues/5539
 """

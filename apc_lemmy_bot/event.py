@@ -46,7 +46,8 @@ class Event:
         base_event_img_url: Optional[str] = None,
         force_langcode: Optional[str] = None,
     ):
-        """Initialize a Event object.
+        """
+        Initialize a Event object.
 
         Parameters
         ----------
@@ -139,7 +140,8 @@ class Event:
                     setattr(self, e_key, e_value)
 
     def json(self) -> str:
-        """Get a serialization of the event.
+        """
+        Get a serialization of the event.
 
         Returns
         -------
@@ -150,29 +152,34 @@ class Event:
         return json.dumps(self.__dict__, indent=4, default=str)
 
     def get_event_url(self) -> str:
-        """Return the original URL of the event.
+        """
+        Return the original URL of the event.
 
         Returns
         -------
         str
             The URL of the event.
+
         """
         return f"{self.base_event_url}{self.slugTitle}"
 
     def get_image_url(self) -> Optional[str]:
-        """Return the original image URL.
+        """
+        Return the original image URL.
 
         Returns
         -------
         Optional[str]
             The original URL of the image, or `None` if there were not image.
+
         """
         if self.imgSrc:
             return f"{self.base_event_img_url}{self.imgSrc}"
         return None
 
     def nice_title(self, max_length: Optional[int] = None) -> str:
-        """Return a title with part of the short description `self.otd`.
+        """
+        Return a title with part of the short description `self.otd`.
 
         Parameters
         ----------
@@ -184,6 +191,7 @@ class Event:
         -------
         str
             A nice title.
+
         """
         if max_length:
             return textwrap.shorten(
@@ -194,12 +202,14 @@ class Event:
         return f"{self.title} {self.otd}"
 
     def nice_description(self) -> str:
-        """Improved description to be added in a Lemmy post.
+        """
+        Improved description to be added in a Lemmy post.
 
         Returns
         -------
         str
             The description to be posted.
+
         """
         if not self.description:
             return ""
@@ -225,7 +235,8 @@ class Event:
         return nice_desc
 
     def get_content(self) -> str:
-        """Return a formatted message content of the event.
+        """
+        Return a formatted message content of the event.
 
         It contains markdown formatted text.
 
@@ -290,7 +301,8 @@ class Event:
         return ret
 
     def __eq__(self, other: object) -> bool:
-        """Compare 2 event objects.
+        """
+        Compare 2 event objects.
 
         Parameters
         ----------
@@ -301,6 +313,7 @@ class Event:
         -------
         bool
             True if they share the same content.
+
         """
         if not isinstance(other, Event):
             return NotImplemented
@@ -317,7 +330,8 @@ def get_dated_events(
     ] = apc_lb_conf.supabase.base_event_img_url,
     force_langcode: Optional[str] = None,
 ) -> list[Event]:
-    """Get the dated events of a day looking for them in a *Supabase* database.
+    """
+    Get the dated events of a day looking for them in a *Supabase* database.
 
     Parameters
     ----------
@@ -343,6 +357,7 @@ def get_dated_events(
     -------
     list[Event]
         A list of events.
+
     """
     apc_lb_conf.supabase.url = url if url else ""
     apc_lb_conf.supabase.key = key if key else ""
