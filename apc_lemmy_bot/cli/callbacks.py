@@ -62,7 +62,8 @@ def date(input_date: str) -> str:
             )
         )
     except ValueError as err:
-        raise typer.BadParameter(f"{err}") from err
+        msg = f"{err}"
+        raise typer.BadParameter(msg) from err
 
 
 def from_(value: str) -> str:
@@ -88,9 +89,8 @@ def from_(value: str) -> str:
     """
     if (val := value.upper()) in {"SUPABASE", "DATABASE"}:
         return val
-    raise typer.BadParameter(
-        f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'",
-    )
+    msg = f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'"
+    raise typer.BadParameter(msg)
 
 
 def langcode(value: str | None) -> str | None:
@@ -120,11 +120,11 @@ def langcode(value: str | None) -> str | None:
     try:
         return str(LanguageType[value.upper()].name)
     except KeyError as exc:
-        raise typer.BadParameter(
-            f"KeyError: Langcode '{value}' undefined in Pythorhead",
-        ) from exc
+        msg = f"KeyError: Langcode '{value}' undefined in Pythorhead"
+        raise typer.BadParameter(msg) from exc
 
-    raise typer.BadParameter(f"Langcode '{value}' undefined in Pythorhead")
+    msg = f"Langcode '{value}' undefined in Pythorhead"
+    raise typer.BadParameter(msg)
 
 
 def output_format(value: str) -> str:
@@ -150,7 +150,8 @@ def output_format(value: str) -> str:
 
     """
     if value.lower() not in {"json", "txt", "none"}:
-        raise typer.BadParameter(f"Not recognized '{value}'")
+        msg = f"Not recognized '{value}'"
+        raise typer.BadParameter(msg)
     return value.lower()
 
 
@@ -187,9 +188,8 @@ def supabase_key(ctx: typer.Context, value: str) -> str:
         return value
 
     if not value.strip():
-        raise typer.BadParameter(
-            f"Cannot precess supabase empty key '{value}'",
-        )
+        msg = f"Cannot precess supabase empty key '{value}'"
+        raise typer.BadParameter(msg)
     return value
 
 
@@ -216,9 +216,8 @@ def to_(value: str) -> str:
     """
     if (val := value.upper()) in {"DATABASE", "LEMMY", "SHOW"}:
         return val
-    raise typer.BadParameter(
-        f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'",
-    )
+    msg = f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'"
+    raise typer.BadParameter(msg)
 
 
 def version(value: bool) -> None:
@@ -288,7 +287,8 @@ def url(ctx: typer.Context, input_url: str) -> str:
         ],
     ):
         return input_url
-    raise typer.BadParameter(f"Not recognized URL '{input_url}'")
+    msg = f"Not recognized URL '{input_url}'"
+    raise typer.BadParameter(msg)
 
 
 def silence(value: bool) -> bool:

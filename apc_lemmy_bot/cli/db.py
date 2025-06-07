@@ -250,9 +250,8 @@ def db(
     """Store events in the database or post or show them."""
     # Some validations
     if from_ == to_:
-        raise typer.BadParameter(
-            f"Error: FROM '{from_}' and TO '{to_}' cannot be equals",
-        )
+        msg = f"Error: FROM '{from_}' and TO '{to_}' cannot be equals"
+        raise typer.BadParameter(msg)
 
     # The configuration:
     apc_lb_conf.supabase.url = supabase_url
@@ -303,7 +302,8 @@ def db(
             pass
 
         case _:
-            raise typer.BadParameter(f"Error: unexpected FROM '{from_}'")
+            msg = f"Error: unexpected FROM '{from_}'"
+            raise typer.BadParameter(msg)
 
     match to_:
         case "DATABASE":
@@ -368,9 +368,9 @@ def db(
                     case "none":
                         pass
                     case _:
-                        raise typer.BadParameter(
-                            "Non recognized -f {output_format}",
-                        )
+                        msg = "Non recognized -f {output_format}"
+                        raise typer.BadParameter(msg)
 
         case _:
-            raise typer.BadParameter(f"Error: unexpected TO '{to_}'")
+            msg = f"Error: unexpected TO '{to_}'"
+            raise typer.BadParameter(msg)

@@ -80,7 +80,8 @@ def show(
             case "none":
                 pass
             case _:
-                raise typer.BadParameter("Non recognized -f {output_format}")
+                msg = "Non recognized -f {output_format}"
+                raise typer.BadParameter(msg)
 
     if not silence:
         print(f"{len(events)} fetched.")

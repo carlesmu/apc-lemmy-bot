@@ -574,7 +574,8 @@ class Database:
         timestamp = datetime.datetime.now(tz=datetime.UTC)
 
         if view is None:
-            raise BaseException(f"View/row not found f{id_uuid}")
+            msg = f"View/row not found f{id_uuid}"
+            raise BaseException(msg)
 
         with saorm.sessionmaker(self.engine)() as session:
             session.execute(

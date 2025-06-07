@@ -41,17 +41,15 @@ def login(
 
     lemmy = Lemmy(instance, raise_exceptions=True, request_timeout=10)
     if not lemmy.nodeinfo:
-        raise LemmyException(
-            f"Sorry, cannot connect to the Lemmy instance {instance}.",
-        )
+        msg = f"Sorry, cannot connect to the Lemmy instance {instance}."
+        raise LemmyException(msg)
 
     if not lemmy.log_in(user, password):
-        raise LemmyException(
-            (
-                f"Sorry, cannot login {user} into {instance}. Bad user "
-                "or wrong password."
-            ),
+        msg = (
+            f"Sorry, cannot login {user} into {instance}. Bad user "
+            "or wrong password."
         )
+        raise LemmyException(msg)
 
     return lemmy
 
@@ -80,14 +78,16 @@ def upload_img(lemmy: Lemmy, file_name: str) -> str:
     """
     uploaded = lemmy.image.upload(file_name)
     if not uploaded:
-        raise LemmyException(f"Sorry, cannot upload {file_name}.")
+        msg = f"Sorry, cannot upload {file_name}."
+        raise LemmyException(msg)
 
     if (
         len(uploaded) != 1
         or "image_url" not in uploaded[0]
         or "delete_url" not in uploaded[0]
     ):
-        raise LemmyException(f"Sorry, cannot upload {file_name}: {uploaded}")
+        msg = f"Sorry, cannot upload {file_name}: {uploaded}"
+        raise LemmyException(msg)
     print(uploaded)
     return f"{uploaded[0]['image_url']}"
 
@@ -116,7 +116,8 @@ def _create_post(
 
     community_id = lemmy.discover_community(community)
     if community_id is None:
-        raise LemmyException(f"Sorry, cannot find community '{community}'")
+        msg = f"Sorry, cannot find community '{community}'"
+        raise LemmyException(msg)
 
     created: Optional[dict] = lemmy.post.create(
         community_id,
@@ -129,9 +130,10 @@ def _create_post(
     )
 
     if not created:
-        raise LemmyException(
-            f"Sorry, cannot create post {title} in community_id={community_id}",
+        msg = (
+            f"Sorry, cannot create post {title} in community_id={community_id}"
         )
+        raise LemmyException(msg)
 
     return created
 
@@ -176,4 +178,5 @@ def create_event_post(
             )
             if try_num == retries:
                 raise err
-    raise LemmyException("This code cannot be executed. Contacts devs.")
+    msg = "This code cannot be executed. Contacts devs."
+    raise LemmyException(msg)
