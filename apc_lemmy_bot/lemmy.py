@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -16,7 +15,6 @@
 """apc_lemmy_bot Lemmy module."""
 
 import warnings
-from typing import Optional
 
 from pythorhead import Lemmy
 from pythorhead.types import LanguageType
@@ -99,9 +97,9 @@ def _create_post(
     body: str,
     nsfw: bool,
     community: str,
-    honeypot: Optional[str] = None,
-    langcode: Optional[str] = None,
-) -> Optional[dict]:
+    honeypot: str | None = None,
+    langcode: str | None = None,
+) -> dict | None:
     """Create a Lemmy post."""
     # Look for the language_id
     language_id = 0  # any
@@ -119,7 +117,7 @@ def _create_post(
         msg = f"Sorry, cannot find community '{community}'"
         raise LemmyError(msg)
 
-    created: Optional[dict] = lemmy.post.create(
+    created: dict | None = lemmy.post.create(
         community_id,
         name=title,
         url=url,
@@ -142,10 +140,10 @@ def create_event_post(
     event: Event,
     lemmy: Lemmy,
     community: str = apc_lb_conf.lemmy.community,
-    honeypot: Optional[str] = None,
-    langcode: Optional[str] = None,
+    honeypot: str | None = None,
+    langcode: str | None = None,
     retries: int = 3,
-) -> Optional[dict]:
+) -> dict | None:
     """
     Create a Lemmy post using an event.
 

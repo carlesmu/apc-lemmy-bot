@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,10 +18,10 @@
 import datetime
 import tempfile
 from pathlib import Path
+from typing import Annotated
 from uuid import UUID
 
 import typer
-from typing_extensions import Annotated
 
 import apc_lemmy_bot.database
 from apc_lemmy_bot import apc_lb_conf

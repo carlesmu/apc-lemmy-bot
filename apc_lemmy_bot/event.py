@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -23,7 +22,6 @@ import datetime
 import json
 import textwrap
 import warnings
-from typing import Optional
 from urllib.parse import urlsplit
 
 # https://github.com/supabase-community/supabase-py
@@ -40,9 +38,9 @@ class Event:
     def __init__(
         self,
         event: dict,
-        base_event_url: Optional[str] = None,
-        base_event_img_url: Optional[str] = None,
-        force_langcode: Optional[str] = None,
+        base_event_url: str | None = None,
+        base_event_img_url: str | None = None,
+        force_langcode: str | None = None,
     ) -> None:
         """
         Initialize a Event object.
@@ -66,19 +64,19 @@ class Event:
         None.
 
         """
-        self.id: Optional[str] = None
-        self.title: Optional[str] = None
-        self.slugTitle: Optional[str] = None
-        self.otd: Optional[str] = None
-        self.description: Optional[str] = None
-        self.imgAltText: Optional[str] = None
-        self.NSFW: Optional[bool] = None
-        self.imgSrc: Optional[str] = None
-        self.date: Optional[datetime.date] = None
-        self.links: list[Optional[str]] = []
-        self.tags: list[Optional[str]] = []
-        self.day: Optional[int] = None
-        self.month: Optional[int] = None
+        self.id: str | None = None
+        self.title: str | None = None
+        self.slugTitle: str | None = None
+        self.otd: str | None = None
+        self.description: str | None = None
+        self.imgAltText: str | None = None
+        self.NSFW: bool | None = None
+        self.imgSrc: str | None = None
+        self.date: datetime.date | None = None
+        self.links: list[str | None] = []
+        self.tags: list[str | None] = []
+        self.day: int | None = None
+        self.month: int | None = None
 
         if force_langcode:
             self.langcode = force_langcode
@@ -163,7 +161,7 @@ class Event:
         """
         return f"{self.base_event_url}{self.slugTitle}"
 
-    def get_image_url(self) -> Optional[str]:
+    def get_image_url(self) -> str | None:
         """
         Return the original image URL.
 
@@ -177,7 +175,7 @@ class Event:
             return f"{self.base_event_img_url}{self.imgSrc}"
         return None
 
-    def nice_title(self, max_length: Optional[int] = None) -> str:
+    def nice_title(self, max_length: int | None = None) -> str:
         """
         Return a title with part of the short description `self.otd`.
 
@@ -318,13 +316,11 @@ class Event:
 
 def get_dated_events(
     date: datetime.date = TODAY,
-    url: Optional[str] = apc_lb_conf.supabase.url,
-    key: Optional[str] = apc_lb_conf.supabase.key,
-    base_event_url: Optional[str] = apc_lb_conf.supabase.base_event_url,
-    base_event_img_url: Optional[
-        str
-    ] = apc_lb_conf.supabase.base_event_img_url,
-    force_langcode: Optional[str] = None,
+    url: str | None = apc_lb_conf.supabase.url,
+    key: str | None = apc_lb_conf.supabase.key,
+    base_event_url: str | None = apc_lb_conf.supabase.base_event_url,
+    base_event_img_url: str | None = apc_lb_conf.supabase.base_event_img_url,
+    force_langcode: str | None = None,
 ) -> list[Event]:
     """
     Get the dated events of a day looking for them in a *Supabase* database.

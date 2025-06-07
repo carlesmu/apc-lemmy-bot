@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,7 +17,6 @@
 import datetime
 import random
 import urllib.request
-from typing import List, Optional
 from uuid import UUID
 
 import sqlalchemy as sa
@@ -83,21 +81,21 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
     # Add composed index:
     __table_args__ = (sa.Index("monthDay", "month", "day"),)
 
-    images: saorm.Mapped[List["Images"]] = saorm.relationship(
+    images: saorm.Mapped[list["Images"]] = saorm.relationship(
         # back_populates="Events",
         primaryjoin="and_(Events.id_int==Images.event_id_int,"
         "Events.id_uuid==Images.event_id_uuid)",
         backref="event",
     )
 
-    links: saorm.Mapped[List["Links"]] = saorm.relationship(
+    links: saorm.Mapped[list["Links"]] = saorm.relationship(
         # back_populates="event",
         primaryjoin="and_(Events.id_int==Links.event_id_int,"
         "Events.id_uuid==Links.event_id_uuid)",
         backref="event",
     )
 
-    tags: saorm.Mapped[List["Tags"]] = saorm.relationship(
+    tags: saorm.Mapped[list["Tags"]] = saorm.relationship(
         # back_populates="Events",
         primaryjoin="and_(Events.id_int==Tags.event_id_int,"
         "Events.id_uuid==Tags.event_id_uuid)",
@@ -111,7 +109,7 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
         backref="event",
     )
 
-    posted: saorm.Mapped[List["EventsPosted"]] = saorm.relationship(
+    posted: saorm.Mapped[list["EventsPosted"]] = saorm.relationship(
         # back_populates="Events",
         primaryjoin="and_(Events.id_int==EventsPosted.event_id_int,"
         "Events.id_uuid==EventsPosted.event_id_uuid)",
@@ -264,8 +262,8 @@ class Database:
 
     def __init__(
         self,
-        database_url: Optional[str] = apc_lb_conf.database,
-        echo: Optional[bool] = True,
+        database_url: str | None = apc_lb_conf.database,
+        echo: bool | None = True,
     ) -> None:
         """
         Initialize a database object.
@@ -342,8 +340,8 @@ class Database:
             The apc_lemmy_bot.Event object created.
 
         """
-        img_src: Optional[str] = None
-        img_alt_txt: Optional[str] = None
+        img_src: str | None = None
+        img_alt_txt: str | None = None
 
         if view.images:
             img_src = view.images[0].imgSrc if view.images[0] else None
@@ -399,7 +397,7 @@ class Database:
             langcode=event.langcode,
         )
 
-        img_url_: Optional[str] = event.get_image_url()
+        img_url_: str | None = event.get_image_url()
         img_url: str = img_url_ if img_url_ else ""
 
         view.extended = EventsExtended(
@@ -499,7 +497,7 @@ class Database:
         self,
         month: int,
         day: int,
-    ) -> Optional[List[Events]]:
+    ) -> list[Events] | None:
         """Get a list of all events in the same day and month."""
         with saorm.sessionmaker(self.engine)() as session:
             stmt_uuids = (
@@ -522,9 +520,9 @@ class Database:
 
     def get_random_dated_event(
         self,
-        views: List[Events],
+        views: list[Events],
         date: datetime.datetime,
-    ) -> Optional[Event]:
+    ) -> Event | None:
         """
         Get a random event for a date and a list of events.
 
@@ -591,7 +589,7 @@ class Database:
             )
             session.commit()
 
-    def get_view_by_id(self, id_uuid: UUID) -> Optional[Events]:
+    def get_view_by_id(self, id_uuid: UUID) -> Events | None:
         """
         Get a the database Event object associated with a id.
 
@@ -608,7 +606,7 @@ class Database:
         """
         with saorm.sessionmaker(self.engine)() as session:
             # Event:
-            view: Optional[Events] = None
+            view: Events | None = None
 
             stmt_events = sa.select(Events).where(Events.id_uuid == id_uuid)
             try:

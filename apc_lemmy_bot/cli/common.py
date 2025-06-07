@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #    Copyright (C) 2023  Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,9 +17,9 @@
 
 import datetime
 import os
+from typing import Annotated
 
 import typer
-from typing_extensions import Annotated
 
 from apc_lemmy_bot import apc_lb_conf
 
