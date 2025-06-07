@@ -17,8 +17,8 @@
 """apc_lemmy_bot.cli db module."""
 
 import datetime
-import os
 import tempfile
+from pathlib import Path
 from uuid import UUID
 
 import typer
@@ -131,11 +131,11 @@ def _create_event_post(
         try:
             img_url = upload_img(lemmy, tmp_file.name)
         except LemmyException as err:
-            os.unlink(tmp_file.name)  # the tmp file should be removed
+            Path(tmp_file.name).unlink()  # the tmp file should be removed
             print(f"\nLemmyException: {err}")
             raise typer.Exit(1) from err
 
-        os.unlink(tmp_file.name)  # the tmp file should be removed
+        Path(tmp_file.name).unlink()  # the tmp file should be removed
 
         event.base_event_img_url = ""
         event.imgSrc = img_url
