@@ -378,9 +378,7 @@ def get_dated_events(
     # Assert we pulled real data.
     assert len(response.data) > 0
 
-    events = []
-    for event in response.data:
-        events.append(
-            Event(event, base_event_url, base_event_img_url, force_langcode),
-        )
-    return events
+    return [
+        Event(ev, base_event_url, base_event_img_url, force_langcode)
+        for ev in response.data
+    ]
