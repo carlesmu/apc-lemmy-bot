@@ -23,7 +23,6 @@ import tempfile
 
 from uuid import UUID
 
-from typing import Any
 from typing_extensions import Annotated
 import typer
 
@@ -39,10 +38,6 @@ import apc_lemmy_bot.database
 
 from . import app
 from . import callbacks, common
-
-
-def _large_binary_to_binary(val: Any) -> bytes:
-    return bytes(val)
 
 
 def _create_event_post(
@@ -250,7 +245,7 @@ def db(
     langcode: common.opt_langcode = common.val_langcode,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
-):
+) -> None:
     """Store events in the database or post or show them."""
     # Some validations
     if from_ == to_:
