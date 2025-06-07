@@ -41,7 +41,10 @@ class Info(Base):  # pylint: disable=R0903  # Too few public methods
 
     id_int: saorm.Mapped[int] = saorm.mapped_column(primary_key=True)
     key: saorm.Mapped[str] = saorm.mapped_column(
-        sa.String(30), index=True, unique=True, nullable=False
+        sa.String(30),
+        index=True,
+        unique=True,
+        nullable=False,
     )
     value: saorm.Mapped[str] = saorm.mapped_column(sa.String(200))
 
@@ -60,10 +63,13 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
 
     id_int: saorm.Mapped[int] = saorm.mapped_column(primary_key=True)
     id_uuid: saorm.Mapped[UUID] = saorm.mapped_column(
-        index=True, unique=True, nullable=False
+        index=True,
+        unique=True,
+        nullable=False,
     )
     slugTitle: saorm.Mapped[str] = saorm.mapped_column(
-        index=True, nullable=False
+        index=True,
+        nullable=False,
     )
     date: saorm.Mapped[datetime.date] = saorm.mapped_column(index=True)
     month: saorm.Mapped[int] = saorm.mapped_column(sa.SmallInteger)
@@ -129,7 +135,8 @@ class Images(Base):  # pylint: disable=R0903  # Too few public methods
     event_id_int = saorm.mapped_column(sa.ForeignKey("events.id_int"))
     event_id_uuid = saorm.mapped_column(sa.ForeignKey("events.id_uuid"))
     img: saorm.Mapped[sa.LargeBinary] = saorm.mapped_column(
-        sa.LargeBinary, nullable=True
+        sa.LargeBinary,
+        nullable=True,
     )
     imgSrc: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     imgAltText: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
@@ -185,26 +192,28 @@ class EventsExtended(Base):  # pylint: disable=R0903  # Too few public methods
 
     # We use unique = try in the foreigns keys to force a 1 to 1 relation
     event_id_int = saorm.mapped_column(
-        sa.ForeignKey("events.id_int"), unique=True
+        sa.ForeignKey("events.id_int"),
+        unique=True,
     )
     event_id_uuid = saorm.mapped_column(
-        sa.ForeignKey("events.id_uuid"), unique=True
+        sa.ForeignKey("events.id_uuid"),
+        unique=True,
     )
     base_event_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     event_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     base_event_img_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     img_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     first_stored_date: saorm.Mapped[datetime.date] = saorm.mapped_column(
-        nullable=True
+        nullable=True,
     )
     first_stored_timestamp: saorm.Mapped[datetime.datetime] = (
         saorm.mapped_column(nullable=True)
     )
     stored_date: saorm.Mapped[datetime.date] = saorm.mapped_column(
-        nullable=True
+        nullable=True,
     )
     stored_timestamp: saorm.Mapped[datetime.datetime] = saorm.mapped_column(
-        nullable=True
+        nullable=True,
     )
     apc_version: saorm.Mapped[str]
 
@@ -233,7 +242,7 @@ class EventsPosted(Base):  # pylint: disable=R0903  # Too few public methods
     url: saorm.Mapped[str] = saorm.mapped_column(nullable=True, unique=True)
     date: saorm.Mapped[datetime.date] = saorm.mapped_column(nullable=True)
     timestamp: saorm.Mapped[datetime.datetime] = saorm.mapped_column(
-        nullable=True
+        nullable=True,
     )
 
     def __repr__(self) -> str:
@@ -290,8 +299,8 @@ class Database:
         with saorm.sessionmaker(self.engine)() as session:
             for key, value in [
                 ("apl_lemmy_bot_version", f"{__version__}"),
-                ("creation_date", f"{datetime.datetime.today()}"),
-                ("last_change", f"{datetime.datetime.today()}"),
+                ("creation_date", f"{datetime.datetime.now(tz=datetime.UTC)}"),
+                ("last_change", f"{datetime.datetime.now(tz=datetime.UTC)}"),
             ]:
                 info: Info = Info(key=key, value=value)
                 session.add(info)
@@ -313,9 +322,9 @@ class Database:
 
         """
         last_change = session.execute(
-            sa.select(Info).filter_by(key="last_change")
+            sa.select(Info).filter_by(key="last_change"),
         ).scalar_one()
-        last_change.value = f"{datetime.datetime.today()}"
+        last_change.value = f"{datetime.datetime.now(tz=datetime.UTC)}"
 
     @classmethod
     def _get_event_from_view(cls, view: Events) -> Event:
@@ -399,10 +408,10 @@ class Database:
             event_url=event.get_event_url(),
             base_event_img_url=event.base_event_img_url,
             img_url=img_url,
-            first_stored_date=datetime.date.today(),
-            first_stored_timestamp=datetime.datetime.today(),
-            stored_date=datetime.date.today(),
-            stored_timestamp=datetime.datetime.today(),
+            first_stored_date=datetime.datetime.now(tz=datetime.UTC).date(),
+            first_stored_timestamp=datetime.datetime.now(tz=datetime.UTC),
+            stored_date=datetime.datetime.now(tz=datetime.UTC).date(),
+            stored_timestamp=datetime.datetime.now(tz=datetime.UTC),
         )
 
         _img = None
@@ -416,7 +425,7 @@ class Database:
                         "AppleWebKit/537.36 (KHTML, like Gecko) "
                         "Chrome/35.0.1916.47 "
                         "Safari/537.36"
-                    )
+                    ),
                 },
             )
 
@@ -438,7 +447,7 @@ class Database:
                     img=_img,
                     imgSrc=event.imgSrc,
                     imgAltText=event.imgAltText,
-                )
+                ),
             )
 
         for _link in event.links:
@@ -487,7 +496,9 @@ class Database:
             session.commit()
 
     def get_views_by_month_day(
-        self, month: int, day: int
+        self,
+        month: int,
+        day: int,
     ) -> Optional[List[Events]]:
         """Get a list of all events in the same day and month."""
         with saorm.sessionmaker(self.engine)() as session:
@@ -510,7 +521,9 @@ class Database:
             return ret
 
     def get_random_dated_event(
-        self, views: List[Events], date: datetime.datetime
+        self,
+        views: List[Events],
+        date: datetime.datetime,
     ) -> Optional[Event]:
         """
         Get a random event for a date and a list of events.
@@ -558,7 +571,7 @@ class Database:
     def update_posted_event(self, id_uuid: UUID, url: str) -> None:
         """Update a posted event in the database."""
         view = self.get_view_by_id(id_uuid)
-        timestamp = datetime.datetime.now()
+        timestamp = datetime.datetime.now(tz=datetime.UTC)
 
         if view is None:
             raise BaseException(f"View/row not found f{id_uuid}")
@@ -573,7 +586,7 @@ class Database:
                         "url": url,
                         "date": timestamp.date(),
                         "timestamp": timestamp,
-                    }
+                    },
                 ],
             )
             session.commit()

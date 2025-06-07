@@ -43,7 +43,7 @@ def login(
     lemmy = Lemmy(instance, raise_exceptions=True, request_timeout=10)
     if not lemmy.nodeinfo:
         raise LemmyException(
-            f"Sorry, cannot connect to the Lemmy instance {instance}."
+            f"Sorry, cannot connect to the Lemmy instance {instance}.",
         )
 
     if not lemmy.log_in(user, password):
@@ -51,7 +51,7 @@ def login(
             (
                 f"Sorry, cannot login {user} into {instance}. Bad user "
                 "or wrong password."
-            )
+            ),
         )
 
     return lemmy
@@ -131,7 +131,7 @@ def _create_post(
 
     if not created:
         raise LemmyException(
-            f"Sorry, cannot create post {title} in community_id={community_id}"
+            f"Sorry, cannot create post {title} in community_id={community_id}",
         )
 
     return created

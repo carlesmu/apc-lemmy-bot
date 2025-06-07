@@ -32,7 +32,7 @@ from supabase import Client, create_client
 
 from apc_lemmy_bot import apc_lb_conf
 
-TODAY: datetime.date = datetime.datetime.today().date()
+TODAY: datetime.date = datetime.datetime.now(tz=datetime.UTC).date()
 
 
 class Event:
@@ -130,7 +130,9 @@ class Event:
                         self,
                         e_key,
                         datetime.date(
-                            int(dstr[0]), int(dstr[1]), int(dstr[2])
+                            int(dstr[0]),
+                            int(dstr[1]),
+                            int(dstr[2]),
                         ),
                     )
                 case "month" | "day":
@@ -336,7 +338,7 @@ def get_dated_events(
     ----------
     date : datetime.date, optional
         The date to use to look for events. The default is
-        `datetime.datetime.today().date()`.
+        `datetime.datetime.now(tz=datetime.UTC).date()`.
     url : Optional[str], optional
         The URL of the database. The default is apc_lb_conf.supabase.url.
     key : Optional[str], optional
@@ -368,7 +370,8 @@ def get_dated_events(
     )
 
     supabase: Client = create_client(
-        apc_lb_conf.supabase.url, apc_lb_conf.supabase.key
+        apc_lb_conf.supabase.url,
+        apc_lb_conf.supabase.key,
     )
     response = (
         supabase.table("events")
@@ -383,6 +386,6 @@ def get_dated_events(
     events = []
     for event in response.data:
         events.append(
-            Event(event, base_event_url, base_event_img_url, force_langcode)
+            Event(event, base_event_url, base_event_img_url, force_langcode),
         )
     return events

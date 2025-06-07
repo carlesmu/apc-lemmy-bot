@@ -25,6 +25,6 @@ setup(
             "apc_lemmy_bot/__main__.py",
             base=base,
             target_name="apc-lemmy-bot",
-        )
-    ]
+        ),
+    ],
 )

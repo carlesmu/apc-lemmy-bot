@@ -56,5 +56,6 @@ class ApcLemmyBotConf:
 
 # The configuration and shared data structure:
 apc_lb_conf: ApcLemmyBotConf = ApcLemmyBotConf(
-    ApcLemmyBotSupabaseConf(), ApcLemmyBotLemmyConf()
+    ApcLemmyBotSupabaseConf(),
+    ApcLemmyBotLemmyConf(),
 )

@@ -118,12 +118,13 @@ def _create_event_post(
                 else ""
             )
             with tempfile.NamedTemporaryFile(
-                suffix=_suffix, delete=False
+                suffix=_suffix,
+                delete=False,
             ) as tmp_file:
                 tmp_file.write(
                     apc_lemmy_bot.database.large_binary_to_bytes(
-                        view.images[0].img
-                    )
+                        view.images[0].img,
+                    ),
                 )
             tmp_file.close()
             img_url = ""
@@ -141,7 +142,10 @@ def _create_event_post(
 
     try:
         ret = create_event_post(
-            event, lemmy, lemmy_community, langcode=event.langcode
+            event,
+            lemmy,
+            lemmy_community,
+            langcode=event.langcode,
         )
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
@@ -248,7 +252,7 @@ def db(
     # Some validations
     if from_ == to_:
         raise typer.BadParameter(
-            f"Error: FROM '{from_}' and TO '{to_}' cannot be equals"
+            f"Error: FROM '{from_}' and TO '{to_}' cannot be equals",
         )
 
     # The configuration:
@@ -263,10 +267,11 @@ def db(
     apc_lb_conf.database = database
 
     database_obj = apc_lemmy_bot.database.Database(
-        database_url=apc_lb_conf.database, echo=False
+        database_url=apc_lb_conf.database,
+        echo=False,
     )
 
-    date_dt = datetime.datetime.strptime(date, "%Y-%m-%d")
+    date_dt = datetime.datetime.strptime(date, "%Y-%m-%d").astimezone(None)
 
     match from_:
         case "SUPABASE":
@@ -307,16 +312,18 @@ def db(
 
         case "LEMMY":
             views = database_obj.get_views_by_month_day(
-                date_dt.month, date_dt.day
+                date_dt.month,
+                date_dt.day,
             )
             if not silence:
                 print(
-                    f"{0 if not views else len(views)} found in the database."
+                    f"{0 if not views else len(views)} found in the database.",
                 )
             random_event = None
             if views:
                 random_event = database_obj.get_random_dated_event(
-                    views, date_dt
+                    views,
+                    date_dt,
                 )
             if not random_event:
                 print("There are not events for today or all has been posted.")
@@ -338,16 +345,18 @@ def db(
 
         case "SHOW":
             views = database_obj.get_views_by_month_day(
-                date_dt.month, date_dt.day
+                date_dt.month,
+                date_dt.day,
             )
             if not silence:
                 print(
-                    f"{0 if not views else len(views)} found in the database."
+                    f"{0 if not views else len(views)} found in the database.",
                 )
             random_event = None
             if views:
                 random_event = database_obj.get_random_dated_event(
-                    views, date_dt
+                    views,
+                    date_dt,
                 )
             if not random_event:
                 print("There are not events for today or all has been posted.")
@@ -361,7 +370,7 @@ def db(
                         pass
                     case _:
                         raise typer.BadParameter(
-                            "Non recognized -f {output_format}"
+                            "Non recognized -f {output_format}",
                         )
 
         case _:

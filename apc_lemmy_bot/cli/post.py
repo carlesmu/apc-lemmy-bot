@@ -59,7 +59,10 @@ def _create_event_post(
 
     try:
         create_event_post(
-            event, lemmy, lemmy_community, langcode=event.langcode
+            event,
+            lemmy,
+            lemmy_community,
+            langcode=event.langcode,
         )
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
@@ -153,14 +156,18 @@ def post(
     apc_lb_conf.delay = delay
 
     if not silence:
-        d_str = datetime.datetime.strptime(date, "%Y-%m-%d").strftime("%d %B")
+        d_str = (
+            datetime.datetime.strptime(date, "%Y-%m-%d")
+            .astimezone(None)
+            .strftime("%d %B")
+        )
         print(
             f"Fetching events for date {d_str}",
             end=" ... ",
         )
 
     events = get_dated_events(
-        date=datetime.datetime.strptime(date, "%Y-%m-%d"),
+        date=datetime.datetime.strptime(date, "%Y-%m-%d").astimezone(None),
         url=supabase_url,
         key=supabase_key,
         base_event_url=base_event_url,

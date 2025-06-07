@@ -27,7 +27,11 @@ from apc_lemmy_bot import apc_lb_conf
 
 from . import callbacks
 
-val_date: str = datetime.datetime.today().strftime("%Y-%m-%d")
+val_date: str = (
+    datetime.datetime.now(tz=datetime.UTC)
+    .astimezone(None)
+    .strftime("%Y-%m-%d")
+)
 arg_date = Annotated[
     str,
     typer.Argument(

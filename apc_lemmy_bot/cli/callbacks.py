@@ -49,10 +49,18 @@ def date(input_date: str) -> str:
 
     """
     if not input_date:
-        return datetime.datetime.today().strftime("%Y-%m-%d")
+        return (
+            datetime.datetime.now(tz=datetime.UTC)
+            .astimezone(None)
+            .strftime("%Y-%m-%d")
+        )
     try:
-        return datetime.datetime.strptime(input_date, "%Y-%m-%d").strftime(
-            "%Y-%m-%d"
+        return (
+            datetime.datetime.strptime(input_date, "%Y-%m-%d")
+            .astimezone(None)
+            .strftime(
+                "%Y-%m-%d",
+            )
         )
     except ValueError as err:
         raise typer.BadParameter(f"{err}") from err
@@ -82,7 +90,7 @@ def from_(value: str) -> str:
     if (val := value.upper()) in {"SUPABASE", "DATABASE"}:
         return val
     raise typer.BadParameter(
-        f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'"
+        f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'",
     )
 
 
@@ -114,7 +122,7 @@ def langcode(value: str | None) -> str | None:
         return str(LanguageType[value.upper()].name)
     except KeyError as exc:
         raise typer.BadParameter(
-            f"KeyError: Langcode '{value}' undefined in Pythorhead"
+            f"KeyError: Langcode '{value}' undefined in Pythorhead",
         ) from exc
 
     raise typer.BadParameter(f"Langcode '{value}' undefined in Pythorhead")
@@ -181,7 +189,7 @@ def supabase_key(ctx: typer.Context, value: str) -> str:
 
     if not value.strip():
         raise typer.BadParameter(
-            f"Cannot precess supabase empty key '{value}'"
+            f"Cannot precess supabase empty key '{value}'",
         )
     return value
 
@@ -210,7 +218,7 @@ def to_(value: str) -> str:
     if (val := value.upper()) in {"DATABASE", "LEMMY", "SHOW"}:
         return val
     raise typer.BadParameter(
-        f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'"
+        f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'",
     )
 
 
@@ -278,7 +286,7 @@ def url(ctx: typer.Context, input_url: str) -> str:
             result.scheme in {"file", "http", "https"},
             result.scheme,
             result.netloc,
-        ]
+        ],
     ):
         return input_url
     raise typer.BadParameter(f"Not recognized URL '{input_url}'")
