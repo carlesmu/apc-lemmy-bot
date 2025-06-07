@@ -104,40 +104,41 @@ def _create_event_post(
         and "imgSrc" in event.__dict__
         and event.imgSrc is not None
         and (view.extended.img_url is None or not view.extended.img_url)
+        and view.images[0]
+        and view.images[0].img
     ):
-        if view.images[0] and view.images[0].img:
-            # We upload the img from the database to the instance and we
-            # update the url of the image in the event.
-            if not silence:
-                print("Uploading image", end=" ... ")
+        # We upload the img from the database to the instance and we
+        # update the url of the image in the event.
+        if not silence:
+            print("Uploading image", end=" ... ")
 
-            _suffix: str = (
-                event.imgSrc.replace("/", "_").replace("\\", "_")
-                if event.imgSrc is not None
-                else ""
+        _suffix: str = (
+            event.imgSrc.replace("/", "_").replace("\\", "_")
+            if event.imgSrc is not None
+            else ""
+        )
+        with tempfile.NamedTemporaryFile(
+            suffix=_suffix,
+            delete=False,
+        ) as tmp_file:
+            tmp_file.write(
+                apc_lemmy_bot.database.large_binary_to_bytes(
+                    view.images[0].img,
+                ),
             )
-            with tempfile.NamedTemporaryFile(
-                suffix=_suffix,
-                delete=False,
-            ) as tmp_file:
-                tmp_file.write(
-                    apc_lemmy_bot.database.large_binary_to_bytes(
-                        view.images[0].img,
-                    ),
-                )
-            tmp_file.close()
-            img_url = ""
-            try:
-                img_url = upload_img(lemmy, tmp_file.name)
-            except LemmyException as err:
-                os.unlink(tmp_file.name)  # the tmp file should be removed
-                print(f"\nLemmyException: {err}")
-                raise typer.Exit(1) from err
-
+        tmp_file.close()
+        img_url = ""
+        try:
+            img_url = upload_img(lemmy, tmp_file.name)
+        except LemmyException as err:
             os.unlink(tmp_file.name)  # the tmp file should be removed
+            print(f"\nLemmyException: {err}")
+            raise typer.Exit(1) from err
 
-            event.base_event_img_url = ""
-            event.imgSrc = img_url
+        os.unlink(tmp_file.name)  # the tmp file should be removed
+
+        event.base_event_img_url = ""
+        event.imgSrc = img_url
 
     try:
         ret = create_event_post(
@@ -283,7 +284,7 @@ def db(
                 key=supabase_key,
                 base_event_url=base_event_url,
                 base_event_img_url=base_event_img_url,
-                force_langcode=None if not langcode else langcode,
+                force_langcode=langcode if langcode else None,
             )
             if not silence:
                 print(f"{len(events)} fetched.")
@@ -336,10 +337,11 @@ def db(
                     lemmy_community,
                     database_obj,
                 )
-                if post:
-                    url_ = f"{post['post_view']['post']['ap_id']}"
-                else:
-                    url_ = f"url:{random_event.id}"
+                url_ = (
+                    f"{post['post_view']['post']['ap_id']}"
+                    if post
+                    else f"url:{random_event.id}"
+                )
                 database_obj.update_posted_event(UUID(random_event.id), url_)
 
         case "SHOW":

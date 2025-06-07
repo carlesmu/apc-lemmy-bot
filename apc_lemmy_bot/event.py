@@ -268,11 +268,9 @@ class Event:
 
         if len(self.links) > 0:
             ret += "- Learn More: "
-            i = 0
-            for link in self.links:
+            for i, link in enumerate(self.links):
                 ret += f"[{str(urlsplit(link).netloc)}]({link})"
-                i += 1
-                if i < len(self.links):
+                if i < len(self.links) - 1:
                     ret += ", "
                 else:
                     ret += "."
@@ -280,14 +278,12 @@ class Event:
 
         if len(self.tags) > 0:
             ret += "- Tags: "
-            i = 0
-            for tag in self.tags:
+            for tag in enumerate(self.tags):
                 ret += (
                     f"[#{tag}](/search?q=%23{tag}&type=Posts"
                     "&listingType=All&page=1&sort=New)"
                 )
-                i += 1
-                if i < len(self.tags):
+                if i < len(self.tags) - 1:
                     ret += ", "
                 else:
                     ret += "."
