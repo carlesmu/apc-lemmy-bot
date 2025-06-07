@@ -109,7 +109,7 @@ def _create_post(
     if langcode is not None:
         try:
             language_id = LanguageType[langcode].value
-        except Exception:
+        except KeyError:
             warnings.warn(
                 f"Key 'Langcode '{langcode}' not defined in pythorhead.",
                 stacklevel=2,
