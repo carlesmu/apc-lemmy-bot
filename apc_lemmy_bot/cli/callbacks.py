@@ -132,7 +132,7 @@ def output_format(value: str) -> str:
         the output format in lower case.
 
     """
-    if not value.lower() in {"json", "txt", "none"}:
+    if value.lower() not in {"json", "txt", "none"}:
         raise typer.BadParameter(f"Not recognized '{value}'")
     return value.lower()
 
