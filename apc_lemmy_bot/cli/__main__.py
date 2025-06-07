@@ -19,9 +19,16 @@
 
 import typer
 
-# post and show required to build the typer.context
-from . import app
+from typing import Any
+
+from . import app, db, post, show
 from . import common
+
+# db, post and show required to build the typer.context
+_: Any
+_ = db
+_ = post
+_ = show
 
 
 @app.callback()
