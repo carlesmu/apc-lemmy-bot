@@ -7,10 +7,9 @@ It's executed with `.venv/bin/poetry build`
 See: https://cx-freeze.readthedocs.io/en/latest/setup_script.html
 """
 import sys
+from cx_Freeze import setup, Executable
 
 sys.setrecursionlimit(2000)  # make cz_freeze don't fail with recursion limit
-
-from cx_Freeze import setup, Executable
 
 # Dependencies are automatically detected, but it might need
 # fine tuning.
