@@ -58,7 +58,6 @@ opt_supabase_url = Annotated[
         callback=callbacks.url,
         show_default=True,
         envvar="APC_SUPABASE_URL",
-        # prompt="Please we need the URL for the supabase database",
     ),
 ]
 
@@ -81,7 +80,6 @@ opt_supabase_key = Annotated[
         callback=callbacks.supabase_key,
         show_default=False,
         envvar="APC_SUPABASE_KEY",
-        # prompt="Please we need the KEY for the supabase database",
     ),
 ]
 

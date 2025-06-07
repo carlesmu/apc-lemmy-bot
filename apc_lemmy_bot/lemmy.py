@@ -175,6 +175,6 @@ def create_event_post(
                 stacklevel=2,
             )
             if try_num == retries:
-                raise err
+                raise
     msg = "This code cannot be executed. Contacts devs."
     raise LemmyError(msg)

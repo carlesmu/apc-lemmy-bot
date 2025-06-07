@@ -27,6 +27,10 @@ from apc_lemmy_bot import __version__, apc_lb_conf
 from apc_lemmy_bot.event import Event
 
 
+class DatabaseError(Exception):
+    """Exception raised for errors connecting to the database."""
+
+
 # pylint: disable=R0903  # Too few public methods
 class Base(saorm.DeclarativeBase):
     """Declarative base class for the database tables."""
@@ -82,35 +86,30 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
     __table_args__ = (sa.Index("monthDay", "month", "day"),)
 
     images: saorm.Mapped[list["Images"]] = saorm.relationship(
-        # back_populates="Events",
         primaryjoin="and_(Events.id_int==Images.event_id_int,"
         "Events.id_uuid==Images.event_id_uuid)",
         backref="event",
     )
 
     links: saorm.Mapped[list["Links"]] = saorm.relationship(
-        # back_populates="event",
         primaryjoin="and_(Events.id_int==Links.event_id_int,"
         "Events.id_uuid==Links.event_id_uuid)",
         backref="event",
     )
 
     tags: saorm.Mapped[list["Tags"]] = saorm.relationship(
-        # back_populates="Events",
         primaryjoin="and_(Events.id_int==Tags.event_id_int,"
         "Events.id_uuid==Tags.event_id_uuid)",
         backref="event",
     )
 
     extended: saorm.Mapped["EventsExtended"] = saorm.relationship(
-        # back_populates="Events",
         primaryjoin="and_(Events.id_int==EventsExtended.event_id_int,"
         "Events.id_uuid==EventsExtended.event_id_uuid)",
         backref="event",
     )
 
     posted: saorm.Mapped[list["EventsPosted"]] = saorm.relationship(
-        # back_populates="Events",
         primaryjoin="and_(Events.id_int==EventsPosted.event_id_int,"
         "Events.id_uuid==EventsPosted.event_id_uuid)",
         backref="event",
@@ -572,7 +571,7 @@ class Database:
 
         if view is None:
             msg = f"View/row not found f{id_uuid}"
-            raise BaseException(msg)
+            raise DatabaseError(msg)
 
         with saorm.sessionmaker(self.engine)() as session:
             session.execute(

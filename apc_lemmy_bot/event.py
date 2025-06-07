@@ -213,8 +213,8 @@ class Event:
             return ""
         # Replace asterisks * with heavy asterisk ✱
         nice_desc = self.description.replace("*", "✱")
-        # Replace underscore _ with full-with low line ＿
-        nice_desc = nice_desc.replace("_", "＿")
+        # Replace underscore _ with full-with low line: U+FF3F
+        nice_desc = nice_desc.replace("_", chr(0xFF3F))
         # Replace grave accent ` with apostrophe '
         nice_desc = nice_desc.replace("`", "'")
 
@@ -267,7 +267,7 @@ class Event:
         if len(self.links) > 0:
             ret += "- Learn More: "
             for i, link in enumerate(self.links):
-                ret += f"[{str(urlsplit(link).netloc)}]({link})"
+                ret += f"[{urlsplit(link).netloc!s}]({link})"
                 if i < len(self.links) - 1:
                     ret += ", "
                 else:
