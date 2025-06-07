@@ -563,10 +563,9 @@ class Database:
 
         if len(not_posted) > 0:
             return self._get_event_from_view(random.choice(not_posted))
-        elif len(not_posted_recent) > 0:
+        if len(not_posted_recent) > 0:
             return self._get_event_from_view(random.choice(not_posted_recent))
-        else:
-            return None
+        return None
 
     def update_posted_event(self, id_uuid: UUID, url: str) -> None:
         """Update a posted event in the database."""
