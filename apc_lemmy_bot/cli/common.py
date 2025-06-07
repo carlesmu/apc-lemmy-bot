@@ -24,6 +24,7 @@ import typer
 from typing_extensions import Annotated
 
 from apc_lemmy_bot import apc_lb_conf
+
 from . import callbacks
 
 val_date: str = datetime.datetime.today().strftime("%Y-%m-%d")

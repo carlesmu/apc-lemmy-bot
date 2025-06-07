@@ -17,12 +17,11 @@
 
 """apc_lemmy_bot.cli __main__ module."""
 
-import typer
-
 from typing import Any
 
-from . import app, db, post, show
-from . import common
+import typer
+
+from . import app, common, db, post, show
 
 # db, post and show required to build the typer.context
 _: Any

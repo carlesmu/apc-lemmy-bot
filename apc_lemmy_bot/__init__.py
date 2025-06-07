@@ -18,7 +18,6 @@
 
 from dataclasses import dataclass
 
-
 __app__: str = "apc_lemmy_bot"
 __version__: str = "0.5.1"
 

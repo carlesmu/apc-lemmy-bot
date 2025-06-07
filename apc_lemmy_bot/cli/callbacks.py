@@ -21,8 +21,8 @@ import datetime
 from urllib.parse import urlparse
 
 import typer
-
 from pythorhead.types import LanguageType
+
 from apc_lemmy_bot import __app__, __version__
 
 

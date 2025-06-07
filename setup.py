@@ -8,7 +8,8 @@ See: https://cx-freeze.readthedocs.io/en/latest/setup_script.html
 """
 
 import sys
-from cx_Freeze import setup, Executable
+
+from cx_Freeze import Executable, setup
 
 sys.setrecursionlimit(2000)  # make cz_freeze don't fail with recursion limit
 

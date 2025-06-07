@@ -18,14 +18,14 @@
 """apc_lemmy_bot.cli show module."""
 
 import datetime
+
 import typer
 from typing_extensions import Annotated
 
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events
 
-from . import app
-from . import callbacks, common
+from . import app, callbacks, common
 
 
 @app.command()

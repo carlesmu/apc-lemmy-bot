@@ -17,12 +17,12 @@
 """apc_lemmy_bot Lemmy module."""
 
 import warnings
-
 from typing import Optional
+
 from pythorhead import Lemmy
 from pythorhead.types import LanguageType
 
-from apc_lemmy_bot import apc_lb_conf, LEMMY_MAX_TITLE_LENGTH
+from apc_lemmy_bot import LEMMY_MAX_TITLE_LENGTH, apc_lb_conf
 from apc_lemmy_bot.event import Event
 
 

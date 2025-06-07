@@ -25,11 +25,10 @@ import typer
 from typing_extensions import Annotated
 
 from apc_lemmy_bot import apc_lb_conf
-from apc_lemmy_bot.event import get_dated_events, Event
-from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post
+from apc_lemmy_bot.event import Event, get_dated_events
+from apc_lemmy_bot.lemmy import LemmyException, create_event_post, login
 
-from . import app
-from . import callbacks, common
+from . import app, callbacks, common
 
 
 def _create_event_post(

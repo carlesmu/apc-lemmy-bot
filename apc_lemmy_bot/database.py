@@ -18,7 +18,6 @@
 import datetime
 import random
 import urllib.request
-
 from typing import List, Optional
 from uuid import UUID
 
@@ -26,7 +25,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as saorm
 from sqlalchemy_utils import database_exists
 
-from apc_lemmy_bot import apc_lb_conf, __version__
+from apc_lemmy_bot import __version__, apc_lb_conf
 from apc_lemmy_bot.event import Event
 
 

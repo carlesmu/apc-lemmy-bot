@@ -6,9 +6,8 @@ scripts/build.py utility.
 See: https://github.com/python-poetry/poetry/issues/5539
 """
 
-import subprocess
 import os
-
+import subprocess
 from typing import Any
 
 POETRY_EXE = ".venv/bin/poetry"

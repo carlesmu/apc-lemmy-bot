@@ -24,12 +24,11 @@ import datetime
 import json
 import textwrap
 import warnings
-
 from typing import Optional
 from urllib.parse import urlsplit
 
 # https://github.com/supabase-community/supabase-py
-from supabase import create_client, Client
+from supabase import Client, create_client
 
 from apc_lemmy_bot import apc_lb_conf
 
