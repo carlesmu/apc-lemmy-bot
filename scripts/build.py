@@ -18,7 +18,9 @@ if not Path(POETRY_EXE).is_file():
 def make_cx_freeze_build(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
     """Build a cx_Freeze executable."""
     print("- Creating cx_Freeze build")
-    foo = subprocess.run([POETRY_EXE, "run", "python", "setup.py", "build"])
+    foo = subprocess.run(
+        [POETRY_EXE, "run", "python", "setup.py", "build"], check=False
+    )
     print(f"  - {foo}")
     return setup_kwargs
 
