@@ -1,3 +1,40 @@
+## v0.5.2 (2025-06-08)
+
+### Fix
+
+- restore required imports
+
+### Refactor
+
+- refactor code
+- upgrade the code with `ruff check --select UP --fix`
+- add explicit `check` argument to `subprocess.run`
+- use list comprehension
+- use lowercase function names
+- replace LemmyException with LemmyError
+- use required argument for the cli
+- use pathlib module instead of os
+- use unlink from module pathlib
+- simplify code
+- remove unnecessary else and elif after return
+- use a intermediate variable to raise errorsy
+- improve dates usage and add missed commas
+- use KeyError instead of Exception
+- use isort to sort imports
+- improve annotations
+- remove unused function and improve annotations
+- improve documentation
+- short long lines
+- use the alias project_copyright instead of copyright
+- use annonymous variable to explicit ignore returns values
+- don't use function call in default function argument
+- use 'from' in raised exceptions
+- add explicit stacklevel
+- move imports at the start of file
+- change 'not foo in boo' to 'foo not in boo'
+- remove unneeded f-string
+- remove unused imports
+
 ## v0.5.1 (2025-06-01)
 
 ### Fix
