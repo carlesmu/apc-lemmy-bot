@@ -6,12 +6,12 @@ scripts/build.py utility.
 See: https://github.com/python-poetry/poetry/issues/5539
 """
 
-import os
 import shutil
+from pathlib import Path
 from typing import Any
 
 POETRY_EXE = ".venv/bin/poetry"
-if not os.path.isfile(POETRY_EXE):
+if not Path(POETRY_EXE).is_file():
     POETRY_EXE = ".venv/Scripts/poetry.exe"
 
 

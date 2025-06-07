@@ -7,13 +7,12 @@
 # -- Path setup --------------------------------------------------------------
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here.
-import os
 import pathlib
 import sys
 
 PROJECT = pathlib.Path(__file__).parents[2].resolve().as_posix()
 print(f"- Project: {PROJECT}")
-PROJECT_SRC = pathlib.Path(os.path.join(PROJECT, "apc_lemmy_bot")).as_posix()
+PROJECT_SRC = pathlib.Path(PROJECT) / "apc_lemmy_bot"
 print(f"- Source code: {PROJECT_SRC}")
 
 sys.path.insert(0, pathlib.Path(PROJECT).as_posix())
