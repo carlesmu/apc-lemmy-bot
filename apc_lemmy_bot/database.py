@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#    Copyright (C) 2023  Carles Muñoz Gorriz <carlesmu@internautas.org>
+#    Copyright (C) 2023-2025 Carles Muñoz Gorriz <carlesmu@internautas.org>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -558,13 +558,12 @@ class Database:
             # Parent instance <Events at 0x7f08f99b4c90> is not bound to a Session;
             # lazy load operation of attribute 'images' cannot proceed (Background on
             # this error at: https://sqlalche.me/e/20/bhk3)
-            # pylint: disable=pointless-statement
-            view
-            (view.images,)
-            (view.links,)
-            (view.tags,)
-            (view.extended,)
-            view.posted
+            _ = view
+            _ = (view.images,)
+            _ = (view.links,)
+            _ = (view.tags,)
+            _ = (view.extended,)
+            _ = view.posted
 
             return view
 
