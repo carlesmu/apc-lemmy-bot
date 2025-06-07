@@ -16,7 +16,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """apc_lemmy_bot Lemmy module."""
 
-import tempfile
 import warnings
 
 from typing import Optional

@@ -20,7 +20,7 @@
 import typer
 
 # post and show required to build the typer.context
-from . import app, db, post, show
+from . import app
 from . import common
 
 
