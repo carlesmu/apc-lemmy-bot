@@ -101,7 +101,7 @@ docstring-min-length = 5
 [tool.pylint.exceptions]
 
 [tool.pylint.format]
-max-line-length = 79
+max-line-length = 80
 
 [tool.pylint.messages_control]
 
