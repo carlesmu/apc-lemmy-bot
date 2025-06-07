@@ -50,7 +50,7 @@ def _create_event_post(
         lemmy = login(lemmy_instance, lemmy_user, lemmy_password)
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from err
 
     if not silence:
         print("Logued.")
@@ -64,7 +64,7 @@ def _create_event_post(
         )
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
-        raise typer.Exit(1)
+        raise typer.Exit(1) from err
 
     if not silence:
         print("Posted.")

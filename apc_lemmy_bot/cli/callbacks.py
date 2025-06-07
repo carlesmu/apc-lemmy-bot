@@ -54,7 +54,7 @@ def date(input_date: str) -> str:
             "%Y-%m-%d"
         )
     except ValueError as err:
-        raise typer.BadParameter(f"{err}")
+        raise typer.BadParameter(f"{err}") from err
 
 
 def from_(value: str) -> str:
