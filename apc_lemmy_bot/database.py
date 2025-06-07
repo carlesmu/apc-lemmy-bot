@@ -58,7 +58,9 @@ class Events(Base):  # pylint: disable=R0903  # Too few public methods
     id_uuid: saorm.Mapped[UUID] = saorm.mapped_column(
         index=True, unique=True, nullable=False
     )
-    slugTitle: saorm.Mapped[str] = saorm.mapped_column(index=True, nullable=False)
+    slugTitle: saorm.Mapped[str] = saorm.mapped_column(
+        index=True, nullable=False
+    )
     date: saorm.Mapped[datetime.date] = saorm.mapped_column(index=True)
     month: saorm.Mapped[int] = saorm.mapped_column(sa.SmallInteger)
     day: saorm.Mapped[int] = saorm.mapped_column(sa.SmallInteger)
@@ -143,7 +145,9 @@ class Links(Base):  # pylint: disable=R0903  # Too few public methods
     link: saorm.Mapped[str]
 
     def __repr__(self) -> str:
-        return f"<Links>(" f"event_id_uuid={self.event_id_uuid!r}, link={self.link!r})"
+        return (
+            f"<Links>(event_id_uuid={self.event_id_uuid!r}, link={self.link!r})"
+        )
 
 
 class Tags(Base):  # pylint: disable=R0903  # Too few public methods
@@ -157,7 +161,7 @@ class Tags(Base):  # pylint: disable=R0903  # Too few public methods
     tag: saorm.Mapped[str]
 
     def __repr__(self) -> str:
-        return f"<Tags>(" f"event_id_uuid={self.event_id_uuid!r}, tag={self.tag!r})"
+        return f"<Tags>(event_id_uuid={self.event_id_uuid!r}, tag={self.tag!r})"
 
 
 class EventsExtended(Base):  # pylint: disable=R0903  # Too few public methods
@@ -168,17 +172,25 @@ class EventsExtended(Base):  # pylint: disable=R0903  # Too few public methods
     id_int: saorm.Mapped[int] = saorm.mapped_column(primary_key=True)
 
     # We use unique = try in the foreigns keys to force a 1 to 1 relation
-    event_id_int = saorm.mapped_column(sa.ForeignKey("events.id_int"), unique=True)
-    event_id_uuid = saorm.mapped_column(sa.ForeignKey("events.id_uuid"), unique=True)
+    event_id_int = saorm.mapped_column(
+        sa.ForeignKey("events.id_int"), unique=True
+    )
+    event_id_uuid = saorm.mapped_column(
+        sa.ForeignKey("events.id_uuid"), unique=True
+    )
     base_event_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     event_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     base_event_img_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
     img_url: saorm.Mapped[str] = saorm.mapped_column(nullable=True)
-    first_stored_date: saorm.Mapped[datetime.date] = saorm.mapped_column(nullable=True)
-    first_stored_timestamp: saorm.Mapped[datetime.datetime] = saorm.mapped_column(
+    first_stored_date: saorm.Mapped[datetime.date] = saorm.mapped_column(
         nullable=True
     )
-    stored_date: saorm.Mapped[datetime.date] = saorm.mapped_column(nullable=True)
+    first_stored_timestamp: saorm.Mapped[datetime.datetime] = (
+        saorm.mapped_column(nullable=True)
+    )
+    stored_date: saorm.Mapped[datetime.date] = saorm.mapped_column(
+        nullable=True
+    )
     stored_timestamp: saorm.Mapped[datetime.datetime] = saorm.mapped_column(
         nullable=True
     )
@@ -207,7 +219,9 @@ class EventsPosted(Base):  # pylint: disable=R0903  # Too few public methods
 
     url: saorm.Mapped[str] = saorm.mapped_column(nullable=True, unique=True)
     date: saorm.Mapped[datetime.date] = saorm.mapped_column(nullable=True)
-    timestamp: saorm.Mapped[datetime.datetime] = saorm.mapped_column(nullable=True)
+    timestamp: saorm.Mapped[datetime.datetime] = saorm.mapped_column(
+        nullable=True
+    )
 
     def __repr__(self) -> str:
         return (
@@ -394,7 +408,9 @@ class Database:
 
         if event.imgAltText or _img:
             view.images.append(
-                Images(img=_img, imgSrc=event.imgSrc, imgAltText=event.imgAltText)
+                Images(
+                    img=_img, imgSrc=event.imgSrc, imgAltText=event.imgAltText
+                )
             )
 
         for _link in event.links:
@@ -438,7 +454,9 @@ class Database:
             self._update_last_change(session)
             session.commit()
 
-    def get_views_by_month_day(self, month: int, day: int) -> Optional[List[Events]]:
+    def get_views_by_month_day(
+        self, month: int, day: int
+    ) -> Optional[List[Events]]:
         with saorm.sessionmaker(self.engine)() as session:
             stmt_uuids = (
                 sa.select(Events.id_uuid)
@@ -468,7 +486,10 @@ class Database:
             posted_recent = False
             if hasattr(view, "posted") and len(view.posted) > 0:
                 for posted in view.posted:
-                    if posted.date >= (date - datetime.timedelta(days=100)).date():
+                    if (
+                        posted.date
+                        >= (date - datetime.timedelta(days=100)).date()
+                    ):
                         posted_recent = True
                         continue
             else:
@@ -539,10 +560,10 @@ class Database:
             # this error at: https://sqlalche.me/e/20/bhk3)
             # pylint: disable=pointless-statement
             view
-            view.images,
-            view.links,
-            view.tags,
-            view.extended,
+            (view.images,)
+            (view.links,)
+            (view.tags,)
+            (view.extended,)
             view.posted
 
             return view
@@ -589,11 +610,15 @@ class Database:
             view_from_database.tags = view.tags
 
             first_stored_date = view_from_database.extended.first_stored_date
-            first_stored_timestamp = view_from_database.extended.first_stored_timestamp
+            first_stored_timestamp = (
+                view_from_database.extended.first_stored_timestamp
+            )
 
             view_from_database.extended = view.extended
             view_from_database.extended.first_stored_date = first_stored_date
-            view_from_database.extended.first_stored_timestamp = first_stored_timestamp
+            view_from_database.extended.first_stored_timestamp = (
+                first_stored_timestamp
+            )
 
             self._update_event_view(view_from_database)
 

@@ -41,7 +41,9 @@ _val_supabase_url: str | None = (
     if os.environ.get("APC_SUPABASE_URL") is not None
     else apc_lb_conf.supabase.url
 )
-val_supabase_url: str = _val_supabase_url if _val_supabase_url is not None else ""
+val_supabase_url: str = (
+    _val_supabase_url if _val_supabase_url is not None else ""
+)
 del _val_supabase_url
 opt_supabase_url = Annotated[
     str,
@@ -62,7 +64,9 @@ _val_supabase_key: str | None = (
     if os.environ.get("APC_SUPABASE_KEY")
     else apc_lb_conf.supabase.key
 )
-val_supabase_key: str = _val_supabase_key if _val_supabase_key is not None else ""
+val_supabase_key: str = (
+    _val_supabase_key if _val_supabase_key is not None else ""
+)
 del _val_supabase_key
 opt_supabase_key = Annotated[
     str,
@@ -83,7 +87,9 @@ _val_base_event_url: str | None = (
     if os.environ.get("APC_BASE_EVENT_URL")
     else apc_lb_conf.supabase.base_event_url
 )
-val_base_event_url: str = _val_base_event_url if _val_base_event_url is not None else ""
+val_base_event_url: str = (
+    _val_base_event_url if _val_base_event_url is not None else ""
+)
 del _val_base_event_url
 opt_base_event_url = Annotated[
     str,
@@ -123,7 +129,9 @@ _val_local_database: str | None = (
     if os.environ.get("APC_LOCAL_DATABASE") is not None
     else apc_lb_conf.database
 )
-val_local_database: str = _val_local_database if _val_local_database is not None else ""
+val_local_database: str = (
+    _val_local_database if _val_local_database is not None else ""
+)
 del _val_local_database
 
 _val_lemmy_user: str | None = (
@@ -139,7 +147,9 @@ _val_lemmy_password: str | None = (
     if os.environ.get("APC_LEMMY_PASSWORD") is not None
     else apc_lb_conf.lemmy.password
 )
-val_lemmy_password: str = _val_lemmy_password if _val_lemmy_password is not None else ""
+val_lemmy_password: str = (
+    _val_lemmy_password if _val_lemmy_password is not None else ""
+)
 del _val_lemmy_password
 
 _val_lemmy_community: str | None = (
@@ -157,7 +167,9 @@ _val_lemmy_instance: str | None = (
     if os.environ.get("APC_LEMMY_INSTANCE") is not None
     else apc_lb_conf.lemmy.instance
 )
-val_lemmy_instance: str = _val_lemmy_instance if _val_lemmy_instance is not None else ""
+val_lemmy_instance: str = (
+    _val_lemmy_instance if _val_lemmy_instance is not None else ""
+)
 del _val_lemmy_instance
 
 _val_langcode: str | None = os.environ.get("APC_LANGCODE")

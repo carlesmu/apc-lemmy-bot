@@ -326,12 +326,16 @@ def get_dated_events(
     """
     apc_lb_conf.supabase.url = url if url else ""
     apc_lb_conf.supabase.key = key if key else ""
-    apc_lb_conf.supabase.base_event_url = base_event_url if base_event_url else ""
+    apc_lb_conf.supabase.base_event_url = (
+        base_event_url if base_event_url else ""
+    )
     apc_lb_conf.supabase.base_event_img_url = (
         base_event_img_url if base_event_img_url else ""
     )
 
-    supabase: Client = create_client(apc_lb_conf.supabase.url, apc_lb_conf.supabase.key)
+    supabase: Client = create_client(
+        apc_lb_conf.supabase.url, apc_lb_conf.supabase.key
+    )
     response = (
         supabase.table("events")
         .select("*")
@@ -344,5 +348,7 @@ def get_dated_events(
 
     events = []
     for event in response.data:
-        events.append(Event(event, base_event_url, base_event_img_url, force_langcode))
+        events.append(
+            Event(event, base_event_url, base_event_img_url, force_langcode)
+        )
     return events

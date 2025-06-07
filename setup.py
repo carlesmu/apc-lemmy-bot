@@ -6,6 +6,7 @@
 It's executed with `.venv/bin/poetry build`
 See: https://cx-freeze.readthedocs.io/en/latest/setup_script.html
 """
+
 import sys
 from cx_Freeze import setup, Executable
 
@@ -19,6 +20,8 @@ base: str = "console"
 
 setup(
     executables=[
-        Executable("apc_lemmy_bot/__main__.py", base=base, target_name="apc-lemmy-bot")
+        Executable(
+            "apc_lemmy_bot/__main__.py", base=base, target_name="apc-lemmy-bot"
+        )
     ]
 )

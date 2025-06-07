@@ -59,7 +59,9 @@ def _create_event_post(
         print(f"Posting {event.id}: {event.slugTitle}", end=" ... ")
 
     try:
-        create_event_post(event, lemmy, lemmy_community, langcode=event.langcode)
+        create_event_post(
+            event, lemmy, lemmy_community, langcode=event.langcode
+        )
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
         raise typer.Exit(1)

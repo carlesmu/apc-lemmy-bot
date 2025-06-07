@@ -29,7 +29,12 @@ import typer
 
 from apc_lemmy_bot import apc_lb_conf
 from apc_lemmy_bot.event import get_dated_events, Event
-from apc_lemmy_bot.lemmy import LemmyException, login, create_event_post, upload_img
+from apc_lemmy_bot.lemmy import (
+    LemmyException,
+    login,
+    create_event_post,
+    upload_img,
+)
 import apc_lemmy_bot.database
 
 from . import app
@@ -118,9 +123,13 @@ def _create_event_post(
                 if event.imgSrc is not None
                 else ""
             )
-            with tempfile.NamedTemporaryFile(suffix=_suffix, delete=False) as tmp_file:
+            with tempfile.NamedTemporaryFile(
+                suffix=_suffix, delete=False
+            ) as tmp_file:
                 tmp_file.write(
-                    apc_lemmy_bot.database.large_binary_to_bytes(view.images[0].img)
+                    apc_lemmy_bot.database.large_binary_to_bytes(
+                        view.images[0].img
+                    )
                 )
             tmp_file.close()
             img_url = ""
@@ -137,7 +146,9 @@ def _create_event_post(
             event.imgSrc = img_url
 
     try:
-        ret = create_event_post(event, lemmy, lemmy_community, langcode=event.langcode)
+        ret = create_event_post(
+            event, lemmy, lemmy_community, langcode=event.langcode
+        )
     except LemmyException as err:
         print(f"\nLemmyException: {err}")
         raise typer.Exit(1)
@@ -296,12 +307,18 @@ def db(
             pass
 
         case "LEMMY":
-            views = database_obj.get_views_by_month_day(date_dt.month, date_dt.day)
+            views = database_obj.get_views_by_month_day(
+                date_dt.month, date_dt.day
+            )
             if not silence:
-                print(f"{0 if not views else len(views)} found in the database.")
+                print(
+                    f"{0 if not views else len(views)} found in the database."
+                )
             random_event = None
             if views:
-                random_event = database_obj.get_random_dated_event(views, date_dt)
+                random_event = database_obj.get_random_dated_event(
+                    views, date_dt
+                )
             if not random_event:
                 print("There are not events for today or all has been posted.")
             else:
@@ -321,12 +338,18 @@ def db(
                 database_obj.update_posted_event(UUID(random_event.id), url_)
 
         case "SHOW":
-            views = database_obj.get_views_by_month_day(date_dt.month, date_dt.day)
+            views = database_obj.get_views_by_month_day(
+                date_dt.month, date_dt.day
+            )
             if not silence:
-                print(f"{0 if not views else len(views)} found in the database.")
+                print(
+                    f"{0 if not views else len(views)} found in the database."
+                )
             random_event = None
             if views:
-                random_event = database_obj.get_random_dated_event(views, date_dt)
+                random_event = database_obj.get_random_dated_event(
+                    views, date_dt
+                )
             if not random_event:
                 print("There are not events for today or all has been posted.")
             else:
@@ -338,7 +361,9 @@ def db(
                     case "none":
                         pass
                     case _:
-                        raise typer.BadParameter("Non recognized -f {output_format}")
+                        raise typer.BadParameter(
+                            "Non recognized -f {output_format}"
+                        )
 
         case _:
             raise typer.BadParameter(f"Error: unexpected TO '{to_}'")

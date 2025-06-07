@@ -50,7 +50,9 @@ def date(input_date: str) -> str:
     if not input_date:
         return datetime.datetime.today().strftime("%Y-%m-%d")
     try:
-        return datetime.datetime.strptime(input_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+        return datetime.datetime.strptime(input_date, "%Y-%m-%d").strftime(
+            "%Y-%m-%d"
+        )
     except ValueError as err:
         raise typer.BadParameter(f"{err}")
 
@@ -75,7 +77,9 @@ def from_(value: str) -> str:
     """
     if (val := value.upper()) in {"SUPABASE", "DATABASE"}:
         return val
-    raise typer.BadParameter(f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'")
+    raise typer.BadParameter(
+        f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'"
+    )
 
 
 def langcode(value: str | None) -> str | None:
@@ -193,7 +197,9 @@ def to_(value: str) -> str:
     """
     if (val := value.upper()) in {"DATABASE", "LEMMY", "SHOW"}:
         return val
-    raise typer.BadParameter(f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'")
+    raise typer.BadParameter(
+        f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'"
+    )
 
 
 def version(value: bool) -> None:

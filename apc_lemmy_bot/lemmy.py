@@ -42,7 +42,9 @@ def login(
 
     lemmy = Lemmy(instance, raise_exceptions=True, request_timeout=10)
     if not lemmy.nodeinfo:
-        raise LemmyException(f"Sorry, cannot connect to the Lemmy instance {instance}.")
+        raise LemmyException(
+            f"Sorry, cannot connect to the Lemmy instance {instance}."
+        )
 
     if not lemmy.log_in(user, password):
         raise LemmyException(
@@ -105,7 +107,9 @@ def _create_post(
         try:
             language_id = LanguageType[langcode].value
         except Exception:
-            warnings.warn(f"Key 'Langcode '{langcode}' not defined in pythorhead.")
+            warnings.warn(
+                f"Key 'Langcode '{langcode}' not defined in pythorhead."
+            )
 
     community_id = lemmy.discover_community(community)
     if community_id is None:
