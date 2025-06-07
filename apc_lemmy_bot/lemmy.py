@@ -108,7 +108,8 @@ def _create_post(
             language_id = LanguageType[langcode].value
         except Exception:
             warnings.warn(
-                f"Key 'Langcode '{langcode}' not defined in pythorhead."
+                f"Key 'Langcode '{langcode}' not defined in pythorhead.",
+                stacklevel=2,
             )
 
     community_id = lemmy.discover_community(community)
@@ -166,7 +167,8 @@ def create_event_post(
         except Exception as err:
             warnings.warn(
                 f"[{try_num}/{retries}] Error '{err=}/{type(err)=}' \
-                creating post '{event}'."
+                creating post '{event}'.",
+                stacklevel=2,
             )
             if try_num == retries:
                 raise err

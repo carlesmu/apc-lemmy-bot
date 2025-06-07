@@ -104,12 +104,14 @@ class Event:
                     "langcode",
                 ]:
                     warnings.warn(
-                        f"Key '{missed_dict}' missed in event '{event['slugTitle']}'."
+                        f"Key '{missed_dict}' missed in event '{event['slugTitle']}'.",
+                        stacklevel=2,
                     )
 
             for missed_key in [x for x in event if x not in self.__dict__]:
                 warnings.warn(
-                    f"Unexpected key '{missed_key}' in event '{event['slugTitle']}'."
+                    f"Unexpected key '{missed_key}' in event '{event['slugTitle']}'.",
+                    stacklevel=2,
                 )
 
         for e_key, e_value in event.items():
