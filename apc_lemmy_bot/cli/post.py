@@ -144,6 +144,8 @@ def post(
     version: common.opt_version = common.val_version,
 ) -> None:
     """Post a day's events in a lemmy community."""
+    _ = version  # unused variable required fot the command line
+
     apc_lb_conf.supabase.url = supabase_url
     apc_lb_conf.supabase.key = supabase_key
     apc_lb_conf.supabase.base_event_url = base_event_url
