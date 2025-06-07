@@ -33,6 +33,8 @@ from supabase import create_client, Client
 
 from apc_lemmy_bot import apc_lb_conf
 
+TODAY: datetime.date = datetime.datetime.today().date()
+
 
 class Event:
     """A class to store events."""
@@ -293,7 +295,7 @@ class Event:
 
 
 def get_dated_events(
-    date: datetime.date = datetime.datetime.today().date(),
+    date: datetime.date = TODAY,
     url: Optional[str] = apc_lb_conf.supabase.url,
     key: Optional[str] = apc_lb_conf.supabase.key,
     base_event_url: Optional[str] = apc_lb_conf.supabase.base_event_url,
