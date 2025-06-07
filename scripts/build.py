@@ -15,7 +15,7 @@ if not Path(POETRY_EXE).is_file():
     POETRY_EXE = ".venv/bin/poetry.exe"
 
 
-def make_cx_Freeze_build(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
+def make_cx_freeze_build(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
     """Build a cx_Freeze executable."""
     print("- Creating cx_Freeze build")
     foo = subprocess.run([POETRY_EXE, "run", "python", "setup.py", "build"])
@@ -24,4 +24,4 @@ def make_cx_Freeze_build(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
 
 
 if __name__ == "__main__":
-    make_cx_Freeze_build({})
+    make_cx_freeze_build({})
