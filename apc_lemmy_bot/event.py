@@ -45,7 +45,7 @@ class Event:
         base_event_url: Optional[str] = None,
         base_event_img_url: Optional[str] = None,
         force_langcode: Optional[str] = None,
-    ):
+    ) -> None:
         """
         Initialize a Event object.
 

@@ -35,7 +35,7 @@ _ = show
 def main(
     ctx: typer.Context,
     version: common.opt_version = common.val_version,
-):
+) -> None:
     """
     Post supabase events to a Lemmy instance or show them.
 
@@ -44,6 +44,6 @@ def main(
     """
 
 
-def run():
+def run() -> None:
     """Run apc_lemmy_bot CLI."""
     app()

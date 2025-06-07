@@ -258,7 +258,7 @@ class Database:
         self,
         database_url: Optional[str] = apc_lb_conf.database,
         echo: Optional[bool] = True,
-    ):
+    ) -> None:
         """
         Initialize a database object.
 
@@ -556,7 +556,7 @@ class Database:
         else:
             return None
 
-    def update_posted_event(self, id_uuid: UUID, url) -> None:
+    def update_posted_event(self, id_uuid: UUID, url: str) -> None:
         """Update a posted event in the database."""
         view = self.get_view_by_id(id_uuid)
         timestamp = datetime.datetime.now()
@@ -641,15 +641,16 @@ class Database:
 
         """
 
-        def _ignore():
+        def _ignore() -> None:
             if not silence:
                 print("It was stored. Pass")
 
-        def _update():
+        def _update() -> None:
             if not silence:
                 print("It was stored. Updating")
             view = self._create_view_from_event(event)
 
+            view_from_database = Events()
             view_from_database.id_uuid = view.id_uuid
             view_from_database.title = view.title
             view_from_database.slugTitle = view.slugTitle
@@ -677,7 +678,7 @@ class Database:
 
             self._update_event_view(view_from_database)
 
-        def _store():
+        def _store() -> None:
             if not silence:
                 print("It's new. Inserting")
             self._insert_event_view(self._create_view_from_event(event))
@@ -716,4 +717,5 @@ def large_binary_to_bytes(val: sa.LargeBinary) -> bytes:
         The binary value.
 
     """
+    assert isinstance(val, bytes)
     return bytes(val)

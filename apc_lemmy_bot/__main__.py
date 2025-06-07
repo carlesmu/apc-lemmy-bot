@@ -18,7 +18,7 @@
 """apc_lemmy_bot __main__ module."""
 
 
-def main():
+def main() -> None:
     """Call the cli."""
     # Only load the cli if it's needed:
     from apc_lemmy_bot.cli.__main__ import run

@@ -9,12 +9,14 @@ See: https://github.com/python-poetry/poetry/issues/5539
 import shutil
 import os
 
+from typing import Any
+
 POETRY_EXE = ".venv/bin/poetry"
 if not os.path.isfile(POETRY_EXE):
     POETRY_EXE = ".venv/Scripts/poetry.exe"
 
 
-def make_clean(setup_kwargs):
+def make_clean(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
     """Cleanup."""
     print("- Cleaning environment: ")
     for directory in [

@@ -141,7 +141,7 @@ def post(
     langcode: common.opt_langcode = common.val_langcode,
     silence: common.opt_silence = common.val_silence,
     version: common.opt_version = common.val_version,
-):
+) -> None:
     """Post a day's events in a lemmy community."""
     apc_lb_conf.supabase.url = supabase_url
     apc_lb_conf.supabase.key = supabase_key
