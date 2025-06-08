@@ -249,6 +249,10 @@ t_src = "*.py scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
+build = {cmd = "poetry build && scripts/build.py", help = "build the package"}
+build-all = {cmd = "task build && task docs", help = "build the package and the html docs"}
+clean = {cmd = "python scripts/clean.py", help = "runs scripts/clean.py" }
+docs = {cmd = "cd docs && make html", help = "creates html docs" }
 lint = {cmd = "task lint-mypy && task lint-src && task lint-doc", help = "runs all lint-* tests"}
 lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
 lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
@@ -256,5 +260,3 @@ lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
-clean = {cmd ="python scripts/clean.py", help = "runs scripts/clean.py" }
-docs = {cmd ="cd docs && make html", help = "creates html docs" }
