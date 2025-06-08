@@ -22,20 +22,20 @@ GNU Affero General Public License 3.
 
 
 ### Development dependencies
-- [black](https://black.readthedocs.io/):
-  [source code](https://github.com/psf/black).
 - [commitizen](https://commitizen-tools.github.io/commitizen/):
   [source code](https://github.com/commitizen-tools/commitizen).
 - [mypy](https://www.mypy-lang.org/):
   [source code](https://github.com/python/mypy).
 - [poetry](https://python-poetry.org/):
-  [source](https://github.com/python-poetry/poetry)
+  [source code](https://github.com/python-poetry/poetry)
 - [pre-commit](https://pre-commit.com/):
   [source code](https://github.com/pre-commit/pre-commit).
 - [pydocstyle](http://www.pydocstyle.org/):
   [source code](https://github.com/PyCQA/pydocstyle).
 - [pylint](https://pylint.org/):
   [source code](https://github.com/pylint-dev/pylint).
+- [ruff](https://docs.astral.sh/ruff/)
+  [source code](https://github.com/astral-sh/ruff)
 - taskipy:
   [source code](https://github.com/taskipy/taskipy).
 
