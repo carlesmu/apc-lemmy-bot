@@ -250,7 +250,7 @@ t_src = "*.py scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-build = {cmd = "poetry build && scripts/build.py", help = "builds the package"}
+build = {cmd = "poetry build", help = "builds the package"}
 build-all = {cmd = "task build && task docs", help = "builds the package and the docs"}
 clean = {cmd = "python scripts/clean.py", help = "runs scripts/clean.py" }
 docs-all = {cmd = "task docs-html && task docs-man", help = "creates all docs" }
