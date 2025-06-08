@@ -62,6 +62,7 @@ make = "^0.1.6.post2"
 numpy = "^2.2.6"
 sphinx = "^8.2.3"
 sphinx-autoapi = ">=3.6.0,<4.0.0"
+sphinx-mdinclude = "^0.6.2"
 sphinx-rtd-theme = "^3.0.2"
 sphinx-sitemap = "^2.6.0"
 
@@ -249,10 +250,12 @@ t_src = "*.py scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-build = {cmd = "poetry build && scripts/build.py", help = "build the package"}
-build-all = {cmd = "task build && task docs", help = "build the package and the html docs"}
+build = {cmd = "poetry build && scripts/build.py", help = "builds the package"}
+build-all = {cmd = "task build && task docs", help = "builds the package and the docs"}
 clean = {cmd = "python scripts/clean.py", help = "runs scripts/clean.py" }
+docs-all = {cmd = "task docs-html && task docs-man", help = "creates all docs" }
 docs = {cmd = "cd docs && make html", help = "creates html docs" }
+docs-man = {cmd = "cd docs && make man", help = "creates manpage" }
 lint = {cmd = "task lint-mypy && task lint-src && task lint-doc", help = "runs all lint-* tests"}
 lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
 lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}

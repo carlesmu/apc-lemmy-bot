@@ -1,12 +1,59 @@
+------------
 Command line
 ------------
 
-You can run ``apc_lemmy_bot`` from the command line, see:
+.. attention::
 
-.. py:function:: __main__.main() function:
+   This should be used to generate a man page.
 
-You can also run it from python:
+   **TODO:** Rewrite it.
 
->>> import __init__
->>> __version__
-'0.2.0'
+Synopsis
+--------
+
+.. note::
+
+   The description
+
+fooo ....
+
+
+Description
+-----------
+
+.. note::
+
+   The description
+
+fooo ....
+
+
+Examples
+--------
+
+.. note::
+
+   Examples
+
+
+fooo ....
+
+
+See Also
+--------
+
+.. note::
+
+   Other useful information.
+
+
+fooo ...
+
+
+History
+-------
+
+.. note::
+   Add some history.
+
+fooo ...
