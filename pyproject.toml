@@ -16,7 +16,7 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Operating System :: OS Independent",
 ]
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.11,<3.14"
 dependencies = [
     "typer (>=0.16.0,<1.0.0)",
     "typing-extensions (>=4.13.2,<5.0.0)",
@@ -94,7 +94,9 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.build]
 generate-setup-file = false
-script = "scripts/build.py"
+# use `poetry run task build` got generate the standalone executable
+# script is used before the full build
+# script
 
 [tool.pylint.main]
 recursive = true
