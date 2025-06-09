@@ -39,8 +39,6 @@ extensions = [
     "sphinx.ext.duration",
     "sphinx.ext.intersphinx",
     "sphinx.ext.viewcode",
-    "sphinx_automodapi.automodapi",
-    "sphinx_automodapi.smart_resolver",
     "sphinx_mdinclude",
 ]
 templates_path = ["_templates"]
