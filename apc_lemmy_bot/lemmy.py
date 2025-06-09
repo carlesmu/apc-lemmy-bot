@@ -168,7 +168,7 @@ def create_event_post(
                 honeypot=honeypot,
                 langcode=langcode,
             )
-        except Exception as err:
+        except Exception as err:  # noqa: PERF203  try-except-in-loop
             warnings.warn(
                 f"[{try_num}/{retries}] Error '{err=}/{type(err)=}' \
                 creating post '{event}'.",
