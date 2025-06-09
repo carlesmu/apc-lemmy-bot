@@ -34,8 +34,13 @@ packages = [
     {include = "apc_lemmy_bot"}
 ]
 include = [
-    "CHANGELOG.md",
+    { path = "docs/source", format = ["sdist"] },
+    "docs/make.bat",
+    "docs/Makefile",
     { path = "scripts", format = ["sdist"] },
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
 ]
 exclude = []
 
