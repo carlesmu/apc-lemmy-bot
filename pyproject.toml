@@ -64,6 +64,7 @@ types-sqlalchemy-utils = "^1.1.0"
 [tool.poetry.group."dev.docs".dependencies]
 make = "^0.1.6.post2"
 numpy = "^2.2.6"
+numpydoc = "^1.8.0"
 sphinx = "^8.2.3"
 sphinx-autoapi = ">=3.6.0,<4.0.0"
 sphinx-mdinclude = "^0.6.2"
