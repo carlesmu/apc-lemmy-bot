@@ -25,11 +25,8 @@ Welcome to apc-lemmy-bot's documentation!
    :caption: Generated docs:
    :hidden:
 
-Indices and tables
-==================
+Generated docs
+==============
 
 * :ref:`genindex`
 * :ref:`modindex`
-
-.. automodapi::apc_lemmy_bot.__main__
-   :sort:
