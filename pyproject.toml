@@ -55,12 +55,11 @@ poetry = ">=2.1.3,<3.0.0"
 pre-commit = ">=4.2.0,<5.0.0"
 pydocstyle = "^6.3.0"
 pylint = {extras = ["spelling"], version = ">=3.3.7,<4.0.0"}
-trove-classifiers = "^2025.3.19.19"  # for classifiers in this file
+ruff = "^0.11.13"
 sqlalchemy = {extras = ["mypy"], version = ">=2.0.41,<2.1.0"}  # same version that dependencies=...
 taskipy = ">=1.14.1,<2.0.0"
+trove-classifiers = "^2025.3.19.19"  # for classifiers in this file
 types-sqlalchemy-utils = "^1.1.0"
-ruff = "^0.11.13"
-
 
 [tool.poetry.group."dev.docs".dependencies]
 make = "^0.1.6.post2"
@@ -70,6 +69,10 @@ sphinx-autoapi = ">=3.6.0,<4.0.0"
 sphinx-mdinclude = "^0.6.2"
 sphinx-rtd-theme = "^3.0.2"
 sphinx-sitemap = "^2.6.0"
+
+[tool.poetry.group."dev.tools".dependencies]
+fawltydeps = "^0.20.0"
+
 
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
