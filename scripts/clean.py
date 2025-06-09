@@ -26,11 +26,11 @@ def make_clean(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
         "dist",
         "docs/build",
     ]:
-        try:
-            print(f"  - deleting '{directory}'", end=" ... ")
+        print(f"  - deleting '{directory}'", end=" ... ")
+        if Path(directory).exists():
             shutil.rmtree(directory)
             print("Done.")
-        except FileNotFoundError:
+        else:
             print("Not found.")
     return setup_kwargs
 
