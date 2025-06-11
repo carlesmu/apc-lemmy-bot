@@ -1,3 +1,9 @@
+## v0.5.5 (2025-06-11)
+
+### Fix
+
+- **s/rel.sh**: execute the gh cmd when confirmed and find the right files for the release
+
 ## v0.5.4 (2025-06-11)
 
 ### Perf
