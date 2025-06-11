@@ -93,5 +93,5 @@ echo ""
 echo -n "Are you sure to execute the cmd? [yN]"
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
-  eval "${cmd}" && echo "Done." || exit 1
+  eval "${txt}" && echo "Done." || exit 1
 fi
