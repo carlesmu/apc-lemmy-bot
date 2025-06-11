@@ -1,3 +1,9 @@
+## v0.5.4 (2025-06-11)
+
+### Perf
+
+- **scripts/clean.py**: remove try-except in loop
+
 ## v0.5.3 (2025-06-08)
 
 ### Fix
