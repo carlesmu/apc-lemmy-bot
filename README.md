@@ -103,8 +103,13 @@ It will generate the changelog and create the tag.
    git merge dev
    git push
    ```
-3. Create the release and tag it, e.g.:`v0.1.0`. You can use call it
+3. Build the distribution
+   ```
+   .venv/bin/poetry run task build
+   ```
+   **Note:** Use `build-all` to build also the html pages.
+4. Create the release and tag it, e.g.:`v0.1.0`. You can use call it
    from *CLI* using:
    ```
-   gh release create v0.1.0 -F CHANGELOG.md --target main
+   .venv/bin/poetry run task release
    ```

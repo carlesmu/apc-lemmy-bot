@@ -273,3 +273,4 @@ lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
+release = {cmd = "scripts/rel.sh", help = "release a new version (see README.md)"}
