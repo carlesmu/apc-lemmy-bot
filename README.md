@@ -108,7 +108,8 @@ It will generate the changelog and create the tag.
    .venv/bin/poetry run task build
    ```
    **Note:** Use `build-all` to build also the html pages.
-4. Create the release and tag it:
+4. Create the release and tag it. The order will add the dist files and the
+   changelog to the gitlab distribution:
    ```
    .venv/bin/poetry run task release
    ```
