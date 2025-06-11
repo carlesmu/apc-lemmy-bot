@@ -77,7 +77,7 @@ vrels="$(scripts/glr.sh -s)" && echo -n " …" || exit 1
 
 txt="gh release create ${vtagl} --target main -F ${tmpfile}"
 
-files="$(find dist -maxdepth 1 -type f -name apc_lemmy_bot-0.5.3*)" && \
+files="$(find dist -maxdepth 1 -type f -name apc_lemmy_bot-${vtags}*)" && \
   echo -n " …" || exit 1
 
 for file in $files; do
@@ -93,5 +93,5 @@ echo ""
 echo -n "Are you sure to execute the cmd? [yN]"
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
-    ${cmd} && echo "Done." || exit 1
+  eval "${cmd}" && echo "Done." || exit 1
 fi
