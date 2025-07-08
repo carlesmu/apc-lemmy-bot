@@ -243,6 +243,9 @@ class Event:
         str
             The event content.
 
+        .. changedversion: 5.5.1
+           Remove spaces from tags and their search link.
+
         """
         ret = f"## {self.title}\n\n"
 
@@ -277,9 +280,12 @@ class Event:
         if len(self.tags) > 0:
             ret += "- Tags: "
             for i, tag in enumerate(self.tags):
+                if not isinstance(tag, str):
+                    continue
                 ret += (
-                    f"[#{tag}](/search?q=%23{tag}&type=Posts"
-                    "&listingType=All&page=1&sort=New)"
+                    f"[#{tag.replace(' ', '')}](/search?q=%23"
+                    "{tag.replace(' ', '')}&type=Posts&listingType=All&page=1"
+                    "&sort=New)"
                 )
                 if i < len(self.tags) - 1:
                     ret += ", "
