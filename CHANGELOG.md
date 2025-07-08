@@ -1,3 +1,14 @@
+## v0.5.6 (2025-07-08)
+
+### Fix
+
+- **event.py**: remove spaces from tags and their search link
+- **s/rel.sh**: execute the `gh` order when confirmed
+
+### Refactor
+
+- add type parameters for generic type `dict` in annotations
+
 ## v0.5.5 (2025-06-11)
 
 ### Fix
