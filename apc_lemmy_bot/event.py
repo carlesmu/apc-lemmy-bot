@@ -22,6 +22,7 @@ import datetime
 import json
 import textwrap
 import warnings
+from typing import Any
 from urllib.parse import urlsplit
 
 # https://github.com/supabase-community/supabase-py
@@ -37,7 +38,7 @@ class Event:
 
     def __init__(
         self,
-        event: dict,
+        event: dict[Any, Any],
         base_event_url: str | None = None,
         base_event_img_url: str | None = None,
         force_langcode: str | None = None,

@@ -18,7 +18,7 @@
 import datetime
 import tempfile
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Any
 from uuid import UUID
 
 import typer
@@ -44,7 +44,7 @@ def _create_event_post(
     lemmy_password: str,
     lemmy_community: str,
     database_obj: apc_lemmy_bot.database.Database,
-) -> dict | None:
+) -> dict[Any, Any] | None:
     """
     Create a post in a lemmy instance.
 

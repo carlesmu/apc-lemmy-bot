@@ -15,6 +15,7 @@
 """apc_lemmy_bot Lemmy module."""
 
 import warnings
+from typing import Any
 
 from pythorhead import Lemmy
 from pythorhead.types import LanguageType
@@ -99,7 +100,7 @@ def _create_post(
     community: str,
     honeypot: str | None = None,
     langcode: str | None = None,
-) -> dict | None:
+) -> dict[Any, Any] | None:
     """Create a Lemmy post."""
     # Look for the language_id
     language_id = 0  # any
@@ -117,7 +118,7 @@ def _create_post(
         msg = f"Sorry, cannot find community '{community}'"
         raise LemmyError(msg)
 
-    created: dict | None = lemmy.post.create(
+    created: dict[Any, Any] | None = lemmy.post.create(
         community_id,
         name=title,
         url=url,
@@ -143,7 +144,7 @@ def create_event_post(
     honeypot: str | None = None,
     langcode: str | None = None,
     retries: int = 3,
-) -> dict | None:
+) -> dict[Any, Any] | None:
     """
     Create a Lemmy post using an event.
 
@@ -168,7 +169,7 @@ def create_event_post(
                 honeypot=honeypot,
                 langcode=langcode,
             )
-        except Exception as err:  # noqa: PERF203  try-except-in-loop
+        except Exception as err:
             warnings.warn(
                 f"[{try_num}/{retries}] Error '{err=}/{type(err)=}' \
                 creating post '{event}'.",
