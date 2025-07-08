@@ -59,7 +59,7 @@ txt="**Full Changelog**: https://github.com/carlesmu/apc-lemmy-bot/compare/"
 echo "${txt}${vrell}...${vtagl}" > ${tmpfile}
 echo "" >> ${tmpfile}
 
-txt="$(.venv/bin/poetry run cz changelog --dry-run $vrell)" && \
+txt="$(.venv/bin/poetry run cz changelog --dry-run $vtagl)" && \
   echo -n " …" || exit 1
 echo "${txt}" >> ${tmpfile}
 
