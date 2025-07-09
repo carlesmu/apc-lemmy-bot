@@ -285,7 +285,7 @@ class Event:
                     continue
                 ret += (
                     f"[#{tag.replace(' ', '')}](/search?q=%23"
-                    "{tag.replace(' ', '')}&type=Posts&listingType=All&page=1"
+                    f"{tag.replace(' ', '')}&type=Posts&listingType=All&page=1"
                     "&sort=New)"
                 )
                 if i < len(self.tags) - 1:
