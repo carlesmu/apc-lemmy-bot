@@ -1,3 +1,9 @@
+## v0.5.8 (2025-07-09)
+
+### Fix
+
+- **event.py**: correct tag line and link creating the post
+
 ## v0.5.7 (2025-07-08)
 
 ## v0.5.6 (2025-07-08)
