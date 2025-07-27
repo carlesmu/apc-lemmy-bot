@@ -308,7 +308,7 @@ class Event:
         Parameters
         ----------
         other : Event
-            DESCRIPTION.
+            The other event to compare.
 
         Returns
         -------
@@ -319,6 +319,18 @@ class Event:
         if not isinstance(other, Event):
             return NotImplemented
         return self.__dict__ == other.__dict__
+
+    def __hash__(self) -> int:
+        """
+        Return a hash of the object.
+
+        Returns
+        -------
+        int
+            The hashed integer of the representation of the object __dict__.
+
+        """
+        return hash(repr(self.__dict__))
 
 
 def get_dated_events(
