@@ -20,7 +20,7 @@
 def main() -> None:
     """Call the cli."""
     # Only load the cli if it's needed:
-    from apc_lemmy_bot.cli.__main__ import run
+    from apc_lemmy_bot.cli.__main__ import run  # noqa: PLC0415
 
     run()
 
