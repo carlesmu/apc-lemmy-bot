@@ -1,9 +1,9 @@
 [![License: GPLv3+](https://img.shields.io/badge/License-AGPLv3+-blue.svg)](https://www.gu.org/licenses/agpl-3.0)
-![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fcarlesmu%2Fapc-lemmy-bot%2Fmain%2Fpyproject.toml)
+[![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fcarlesmu%2Fapc-lemmy-bot%2Fmain%2Fpyproject.toml)]()
 [![Python](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
 [![GitHub Release](https://img.shields.io/github/v/release/carlesmu/apc-lemmy-bot)](https://github.com/carlesmu/apc-lemmy-bot/releases/latest)
-![GitHub Release Date](https://img.shields.io/github/release-date/carlesmu/apc-lemmy-bot)
-![GitHub commits since latest release](https://img.shields.io/github/commits-since/carlesmu/apc-lemmy-bot/latest)
+[![GitHub Release Date](https://img.shields.io/github/release-date/carlesmu/apc-lemmy-bot)]()
+[![GitHub commits since latest release](https://img.shields.io/github/commits-since/carlesmu/apc-lemmy-bot/latest)]()
 
 # apc-lemmy-bot
 Post supabase database events to a Lemmy instance.
