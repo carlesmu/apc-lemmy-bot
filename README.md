@@ -4,7 +4,7 @@
 
 [![GitHub Release](https://img.shields.io/github/v/release/carlesmu/apc-lemmy-bot)](https://github.com/carlesmu/apc-lemmy-bot/releases/latest)
 [![GitHub Release Date](https://img.shields.io/github/release-date/carlesmu/apc-lemmy-bot)](#)
-[![GitHub commits since latest release](https://img.shields.io/github/commits-since/carlesmu/apc-lemmy-bot/latest)](#)
+[![GitHub commits since latest release](https://img.shields.io/github/commits-since/carlesmu/apc-lemmy-bot/latest)](https://github.com/carlesmu/apc-lemmy-bot/commits/)
 
 # apc-lemmy-bot
 Post supabase database events to a Lemmy instance.
