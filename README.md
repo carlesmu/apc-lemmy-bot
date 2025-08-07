@@ -61,7 +61,7 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
 3. We will use that `venv` for development and update the dependencies and
    the build system:
    ```
-   .venv/bin/poetry install --no-root
+   .venv/bin/poetry install --no-root --all-extras --all-groups
    ```
 4. We have definied in our pyproject 3 groups:
    - The main dependencies, needed to run `apc-lemmy-bot`, and installed in
