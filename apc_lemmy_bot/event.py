@@ -180,6 +180,8 @@ class Event:
         """
         Return a title with part of the short description `self.otd`.
 
+        It returns the text before the latest dot+space.
+
         Parameters
         ----------
         max_length : Optional[int], optional
@@ -193,12 +195,13 @@ class Event:
 
         """
         if max_length:
-            return textwrap.shorten(
+            nice_title = textwrap.shorten(
                 f"{self.title} {self.otd}",
                 width=max_length,
                 placeholder="...",
             )
-        return f"{self.title} {self.otd}"
+        nice_title = f"{self.title} {self.otd}"
+        return nice_title.rsplit(". ", 1)[0]  # until the latest dot+space
 
     def nice_description(self) -> str:
         """
