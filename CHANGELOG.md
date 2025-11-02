@@ -1,3 +1,13 @@
+## v0.6.0 (2025-11-02)
+
+### Feat
+
+- **lemmy-title**: stop the title after the first doc+space
+
+### Refactor
+
+- **event.py**: add __hash__ method to Event class
+
 ## v0.5.8 (2025-07-09)
 
 ### Fix

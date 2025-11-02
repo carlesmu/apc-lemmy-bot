@@ -17,7 +17,7 @@
 from dataclasses import dataclass
 
 __app__: str = "apc_lemmy_bot"
-__version__: str = "0.5.8"
+__version__: str = "0.6.0"
 
 LEMMY_MAX_TITLE_LENGTH: int = 199
 
