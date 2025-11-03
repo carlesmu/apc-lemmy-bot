@@ -201,7 +201,15 @@ class Event:
                 placeholder="...",
             )
         nice_title = f"{self.title} {self.otd}"
-        return nice_title.rsplit(". ", 1)[0]  # until the latest dot+space
+
+        aux_title = nice_title
+        while True:
+            aux_title = aux_title.rsplit(". ", 1)[0]
+            if not aux_title.endswith(
+                (" U.S.A", " U.S", " Mr", " Sr", " Ms", " Dr")
+            ):
+                break
+        return aux_title
 
     def nice_description(self) -> str:
         """
