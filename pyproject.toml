@@ -254,6 +254,11 @@ ignore = [
 "apc_lemmy_bot/database.py" = [
     "N815",    # pep8-naming: mixed-case-variable-in-class-scope
     ]
+"apc_lemmy_bot/resilient_uuid.py" = [
+    "A001",    # flake8-builtins: builtin-variable-shadowing
+    "A002",    # flake8-builtins: builtin-argument-shadowing
+    "ANN401",  # flake8-annotations: any-type
+    ]
 
 [tool.ruff.lint.pycodestyle]
 # convention = "numpy" # TODO: enable this future feature
