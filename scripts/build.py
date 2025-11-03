@@ -11,6 +11,8 @@ from typing import Any
 
 POETRY_EXE = ".venv/bin/poetry"
 if not Path(POETRY_EXE).is_file():
+    POETRY_EXE = "/usr/bin/poetry"
+if not Path(POETRY_EXE).is_file():
     POETRY_EXE = ".venv/bin/poetry.exe"
 
 
