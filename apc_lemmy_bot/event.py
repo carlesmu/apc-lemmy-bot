@@ -202,14 +202,13 @@ class Event:
             )
         nice_title = f"{self.title} {self.otd}"
 
-        aux_title = nice_title
         while True:
-            aux_title = aux_title.rsplit(". ", 1)[0]
-            if not aux_title.endswith(
+            nice_title = nice_title.rsplit(". ", 1)[0]
+            if not nice_title.endswith(
                 (" U.S.A", " U.S", " Mr", " Sr", " Ms", " Dr")
             ):
                 break
-        return aux_title
+        return nice_title
 
     def nice_description(self) -> str:
         """
