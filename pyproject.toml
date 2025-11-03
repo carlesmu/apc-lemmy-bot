@@ -265,7 +265,7 @@ max-line-length = 100
 use_vars = true
 
 [tool.taskipy.variables]
-t_src = "*.py scripts/*.py apc_lemmy_bot"
+t_src = "scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
