@@ -43,6 +43,15 @@ include = [
 ]
 exclude = []
 
+
+[tool.cxfreeze]
+executables = [
+    {script="apc_lemmy_bot/__main__.py", base="console", target_name="apc-lemmy-bot"}
+]
+
+[tool.cxfreeze.build_exe]
+excludes = ["unittest"]
+
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
 
@@ -260,7 +269,7 @@ t_src = "*.py scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-build = {cmd = "python scripts/build.py && poetry build", help = "builds the package"}
+build = {cmd = "cxfreeze build && poetry build", help = "builds the package"}
 build-all = {cmd = "task build && task docs", help = "builds the package and the docs"}
 clean = {cmd = "python scripts/clean.py", help = "runs scripts/clean.py" }
 docs-all = {cmd = "task docs-html && task docs-man", help = "creates all docs" }
