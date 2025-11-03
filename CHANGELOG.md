@@ -1,3 +1,9 @@
+## v0.6.1 (2025-11-03)
+
+### Fix
+
+- **nice_title**: scape some acronymous dots to compose the title
+
 ## v0.6.0 (2025-11-02)
 
 ### Feat
