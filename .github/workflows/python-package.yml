@@ -46,4 +46,5 @@ jobs:
         echo -e "not implemented (pytest)"
     - name: Test build package
       run: |
+        poetry sync --all-groups
         poetry run task build-all
