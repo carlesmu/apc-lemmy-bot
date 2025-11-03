@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
-"""
-scripts/build.py utility.
-
-See: https://github.com/python-poetry/poetry/issues/5539
-"""
+"""scripts/clean.py utility."""
 
 import shutil
 from pathlib import Path
 from typing import Any
 
 POETRY_EXE = ".venv/bin/poetry"
+if not Path(POETRY_EXE).is_file():
+    POETRY_EXE = "poetry"
 if not Path(POETRY_EXE).is_file():
     POETRY_EXE = ".venv/Scripts/poetry.exe"
 
