@@ -17,12 +17,14 @@ def make_clean(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
     print("- Cleaning environment: ")
     for directory in (
         ".mypy_cache",
+        ".pytest_cache",
         ".ruff_cache",
         "apc_lemmy_bot/__pycache__",
         "apc_lemmy_bot/cli/__pycache__",
         "build",
         "dist",
         "docs/build",
+        "tests/__pycache__",
     ):
         print(f"  - deleting '{directory}'", end=" ... ")
         if Path(directory).exists():

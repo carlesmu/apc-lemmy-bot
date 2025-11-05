@@ -82,6 +82,8 @@ sphinx-sitemap = "^2.6.0"
 [tool.poetry.group."dev.tools".dependencies]
 fawltydeps = "^0.20.0"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
 
 [tool.commitizen]
 # See: https://commitizen-tools.github.io/commitizen/
@@ -282,4 +284,5 @@ lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
+test = {cmd = "pytest", help = "runs tests with pytest"}
 release = {cmd = "scripts/rel.sh", help = "release a new version (see README.md)"}
