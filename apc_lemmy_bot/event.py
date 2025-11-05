@@ -206,7 +206,15 @@ class Event:
         while True:
             aux_title = aux_title.rsplit(". ", 1)[0]
             if not aux_title.endswith(
-                (" U.S.A", " U.S", " Mr", " Sr", " Ms", " Dr")
+                (
+                    " Dr",
+                    " Mr",
+                    " Ms",
+                    " Sr",
+                    " U.S",
+                    " U.S.A",
+                    " V",  # for Eugene V. Debes
+                )
             ):
                 break
         return aux_title
