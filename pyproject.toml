@@ -255,8 +255,8 @@ ignore = [
     "N815",    # pep8-naming: mixed-case-variable-in-class-scope
     ]
 "apc_lemmy_bot/resilient_uuid.py" = [
-    "A001",    # flake8-annotations: builtin-variable-shadowing
-    "A002",    # flake8-annotations: builtin-argument-shadowing
+    "A001",    # flake8-builtins: builtin-variable-shadowing
+    "A002",    # flake8-builtins: builtin-argument-shadowing
     "ANN001",  # flake8-annotations: missing-type-function-argument
     "ANN401",  # flake8-annotations: any-type
     ]
@@ -275,17 +275,38 @@ t_src = "scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-build = {cmd = "cxfreeze build && poetry build", help = "builds the package"}
+build = { cmd = '''
+  echo "- cxfreeze build:" && cxfreeze build
+  echo "- poetry build:" && poetry build
+''', help = "builds the package" }
+clean = { cmd = '''
+  echo "- python scripts/clean.py" && python scripts/clean.py
+  ''', help = "runs scripts/clean.py" }
 build-all = {cmd = "task build && task docs", help = "builds the package and the docs"}
-clean = {cmd = "python scripts/clean.py", help = "runs scripts/clean.py" }
-docs-all = {cmd = "task docs-html && task docs-man", help = "creates all docs" }
-docs = {cmd = "cd docs && make html", help = "creates html docs" }
-docs-man = {cmd = "cd docs && make man", help = "creates manpage" }
-lint = {cmd = "task lint-mypy && task lint-src && task lint-doc", help = "runs all lint-* tests"}
-lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
-lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
-lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
+docs = { cmd = "task docs-html && task docs-man", help = "creates all docs" }
+docs-html = { cmd = '''
+  echo "- cd docs && make html:" && cd docs && make html
+  ''', help = "creates html docs" }
+docs-man = { cmd = '''
+  echo "- cd docs && make man:" && cd docs && make man
+  ''', help = "creates manpage" }
+lint = { cmd = '''
+  task lint-mypy && task lint-src && task lint-doc
+  ''', help = "runs all lint-* tests" }
+lint-src = { cmd = '''
+  echo "- pylint --enable-all-extensions {t_src}:" &&
+  pylint --enable-all-extensions {t_src}
+  ''', help = "runs pylint" }
+lint-doc = { cmd = '''
+  echo "- pydocstyle --convention=numpy {t_src}:" &&
+  pydocstyle --convention=numpy {t_src}
+  ''', help = "runs pydocstyle" }
+lint-mypy = { cmd = '''
+  echo "- mypy {t_src}:" && mypy {t_src}
+  ''', help = "runs mypy" }
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
-release = {cmd = "scripts/rel.sh", help = "release a new version (see README.md)"}
+release = { cmd = '''
+  echo "scripts/rel.sh:" && scripts/rel.sh
+  ''', help = "release a new version (see README.md)" }
