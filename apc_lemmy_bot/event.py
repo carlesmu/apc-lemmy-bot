@@ -200,15 +200,30 @@ class Event:
                 width=max_length,
                 placeholder="...",
             )
-        nice_title = f"{self.title} {self.otd}"
+        else:
+            nice_title = f"{self.title} {self.otd}"
 
+        if not nice_title.endswith("..."):
+            return nice_title  # Shorten that max_length
+
+        aux_title = nice_title
         while True:
-            nice_title = nice_title.rsplit(". ", 1)[0]
-            if not nice_title.endswith(
-                (" U.S.A", " U.S", " Mr", " Sr", " Ms", " Dr")
+            new_title = aux_title.rsplit(". ", 1)[0]
+            if not new_title.endswith(
+                (
+                    " Dr",
+                    " Mr",
+                    " Ms",
+                    " Sr",
+                    " U.S.A",
+                    " U.S",
+                    " V ",  # for Eugene V. Debs
+                )
             ):
-                break
-        return nice_title
+                return new_title  # We have found a full sentence
+            if new_title == aux_title:  # Cannot be splited
+                return nice_title  # Return the original title
+            aux_title = new_title  # We try to split it another time
 
     def nice_description(self) -> str:
         """
