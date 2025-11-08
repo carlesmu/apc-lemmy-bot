@@ -248,7 +248,7 @@ def db(
     version: common.opt_version = common.val_version,
 ) -> None:
     """Store events in the database or post or show them."""
-    _ = version  # unused variable required fot the command line
+    _ = version  # unused variable required for the command line
 
     # Some validations
     if from_ == to_:

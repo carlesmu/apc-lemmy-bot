@@ -221,7 +221,7 @@ class Event:
                 )
             ):
                 return new_title  # We have found a full sentence
-            if new_title == aux_title:  # Cannot be splited
+            if new_title == aux_title:  # Cannot be split
                 return nice_title  # Return the original title
             aux_title = new_title  # We try to split it another time
 

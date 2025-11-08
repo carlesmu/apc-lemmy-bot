@@ -26,7 +26,7 @@ from sqlalchemy_utils import database_exists
 from apc_lemmy_bot import __version__, apc_lb_conf
 from apc_lemmy_bot.event import Event
 
-# Changing to the new UUID, returns this error (we mantain the uuid import for
+# Changing to the new UUID, returns this error (we maintain the uuid import for
 # the SQLAlchemy definitions):
 # > sqlalchemy.orm.exc.MappedAnnotationError: Could not locate SQLAlchemy Core
 # > type for Python type <class 'apc_lemmy_bot.resilient_uuid.UUID'> inside the

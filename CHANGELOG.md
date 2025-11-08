@@ -85,7 +85,7 @@
 - improve documentation
 - short long lines
 - use the alias project_copyright instead of copyright
-- use annonymous variable to explicit ignore returns values
+- use anonymous variable to explicit ignore returns values
 - don't use function call in default function argument
 - use 'from' in raised exceptions
 - add explicit stacklevel
@@ -167,15 +167,14 @@
 
 ### Refactor
 
-- **mypy**: more typing compilant
-- **mypy**: more typing compilant
+- **mypy**: more typing compliant
 - added py.typed hint file
 
 ## v0.2.0 (2023-07-03)
 
 ### Feat
 
-- Added suport to langcode in the events and storing in lemmy
+- Added support to langcode in the events and storing in lemmy
 - **event.py**: Use some markdawn in the description (citation)
 
 ### Fix

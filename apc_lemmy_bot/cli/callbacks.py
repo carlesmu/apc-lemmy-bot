@@ -88,7 +88,7 @@ def from_(value: str) -> str:
     """
     if (val := value.upper()) in {"SUPABASE", "DATABASE"}:
         return val
-    msg = f"It sould be 'SUPABASE' or 'DATABASE', not '{value}'"
+    msg = f"It should be 'SUPABASE' or 'DATABASE', not '{value}'"
     raise typer.BadParameter(msg)
 
 
@@ -187,7 +187,7 @@ def supabase_key(ctx: typer.Context, value: str) -> str:
         return value
 
     if not value.strip():
-        msg = f"Cannot precess supabase empty key '{value}'"
+        msg = f"Cannot process supabase empty key '{value}'"
         raise typer.BadParameter(msg)
     return value
 
@@ -215,7 +215,7 @@ def to_(value: str) -> str:
     """
     if (val := value.upper()) in {"DATABASE", "LEMMY", "SHOW"}:
         return val
-    msg = f"It sould be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'"
+    msg = f"It should be 'DATABASE', 'LEMMY' or 'SHOW', not '{value}'"
     raise typer.BadParameter(msg)
 
 
