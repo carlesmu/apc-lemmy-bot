@@ -68,6 +68,7 @@ sqlalchemy = {extras = ["mypy"], version = ">=2.0.41,<2.1.0"}  # same version th
 taskipy = ">=1.14.1,<2.0.0"
 trove-classifiers = "^2025.3.19.19"  # for classifiers in this file
 types-sqlalchemy-utils = "^1.1.0"
+codespell = "^2.4.1"
 
 [tool.poetry.group."dev.docs".dependencies]
 make = "^0.1.6.post2"
@@ -81,6 +82,12 @@ sphinx-sitemap = "^2.6.0"
 
 [tool.poetry.group."dev.tools".dependencies]
 fawltydeps = "^0.20.0"
+
+
+[tool.codespell]
+skip = "*.po,poetry.lock"
+count = false
+quiet = 3
 
 
 [tool.commitizen]
@@ -291,7 +298,7 @@ docs-man = { cmd = '''
   echo "- cd docs && make man:" && cd docs && make man
   ''', help = "creates manpage" }
 lint = { cmd = '''
-  task lint-mypy && task lint-src && task lint-doc
+  task lint-mypy && task lint-src && task lint-doc && lint-cesp
   ''', help = "runs all lint-* tests" }
 lint-src = { cmd = '''
   echo "- pylint --enable-all-extensions {t_src}:" &&
@@ -304,6 +311,9 @@ lint-doc = { cmd = '''
 lint-mypy = { cmd = '''
   echo "- mypy {t_src}:" && mypy {t_src}
   ''', help = "runs mypy" }
+lint-cesp = { cmd ='''
+  echo "- codespell --summary --count:" && codespell --summary --count
+  ''', help = "runs codespell" }
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
