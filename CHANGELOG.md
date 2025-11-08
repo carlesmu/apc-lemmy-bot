@@ -11,7 +11,7 @@
 
 - use tuple instead of list
 - improve annotations of UUID/R_UUID
-- **nice_title**: remove uneeded var
+- **nice_title**: remove unneeded var
 
 ## v0.6.4 (2025-11-03)
 
