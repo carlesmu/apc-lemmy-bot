@@ -497,6 +497,8 @@ class Database:
         with saorm.sessionmaker(self.engine)() as session:
             view_from_database = self.get_view_by_id(view.id_uuid, session)
 
+            assert view_from_database is not None
+
             view.extended.first_stored_date = (
                 view_from_database.extended.first_stored_date
             )
@@ -609,14 +611,14 @@ class Database:
             session.commit()
 
     def get_view_by_id(
-        self, id_uuid: R_UUID, session: saorm.Session | None = None
+        self, id_uuid: R_UUID | UUID, session: saorm.Session | None = None
     ) -> Events | None:
         """
         Get a the database Event object associated with a id.
 
         Parameters
         ----------
-        id_uuid : R_UUID
+        id_uuid : R_UUID | UUID
             The *UUID* to look for.
         session : saorm.Session
             The SQLAlchemy session object.
