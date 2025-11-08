@@ -1,3 +1,18 @@
+## v0.6.5 (2025-11-08)
+
+### Fix
+
+- **nice_title**: don't break a paragraph with the dot of ' V.'
+- **uuid**: add a new resilient_uuid.py source code as a workaround for malformed upstream uuids
+- **nice_title**: improve the selection of a nice title and exclude breaking in a V
+- add a new source file to handle UUIDs that could be malformed
+
+### Refactor
+
+- use tuple instead of list
+- improve annotations of UUID/R_UUID
+- **nice_title**: remove uneeded var
+
 ## v0.6.4 (2025-11-03)
 
 ## v0.6.3 (2025-11-03)
