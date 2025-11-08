@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [project]
 # Used by cx_Freeze
 name = "apc-lemmy-bot"
@@ -28,6 +32,56 @@ dependencies = [
 [project.scripts]
 apc_lemmy_bot = "apc_lemmy_bot.__main__:main"
 
+
+[tool.codespell]
+skip = "*.po,poetry.lock"
+count = false
+quiet = 3
+
+
+[tool.commitizen]
+# See: https://commitizen-tools.github.io/commitizen/
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+major_version_zero = true  # TODO: change it when version >= 1.0.0
+version_files = [
+    "apc_lemmy_bot/__init__.py:^__version__",
+    "docs/source/conf.py:^release",
+    "pyproject.toml:^version",
+]
+
+
+[tool.cxfreeze]
+executables = [
+    {script="apc_lemmy_bot/__main__.py", base="console", target_name="apc-lemmy-bot"}
+]
+
+[tool.cxfreeze.build_exe]
+excludes = ["unittest"]
+
+
+[tool.mypy]
+namespace_packages = false
+show_error_context = true
+show_column_numbers = true
+pretty = true
+error_summary = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = "cx_Freeze.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pythorhead.*"
+ignore_missing_imports = true
+
+
 [tool.poetry]
 packages = [
     {include = "apc_lemmy_bot"}
@@ -43,14 +97,11 @@ include = [
 ]
 exclude = []
 
-
-[tool.cxfreeze]
-executables = [
-    {script="apc_lemmy_bot/__main__.py", base="console", target_name="apc-lemmy-bot"}
-]
-
-[tool.cxfreeze.build_exe]
-excludes = ["unittest"]
+[tool.poetry.build]
+generate-setup-file = false
+# use `poetry run task build` got generate the standalone executable
+# script is used before the full build
+# script
 
 [tool.poetry.dependencies]
 python = ">=3.13,<3.14"
@@ -84,36 +135,6 @@ sphinx-sitemap = "^2.6.0"
 fawltydeps = "^0.20.0"
 
 
-[tool.codespell]
-skip = "*.po,poetry.lock"
-count = false
-quiet = 3
-
-
-[tool.commitizen]
-# See: https://commitizen-tools.github.io/commitizen/
-name = "cz_conventional_commits"
-tag_format = "v$version"
-version_scheme = "pep440"
-version_provider = "pep621"
-update_changelog_on_bump = true
-major_version_zero = true  # TODO: change it when version >= 1.0.0
-version_files = [
-    "apc_lemmy_bot/__init__.py:^__version__",
-    "docs/source/conf.py:^release",
-    "pyproject.toml:^version",
-]
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.build]
-generate-setup-file = false
-# use `poetry run task build` got generate the standalone executable
-# script is used before the full build
-# script
-
 [tool.pylint.main]
 recursive = true
 suggestion-mode = true
@@ -130,12 +151,12 @@ docstring-min-length = 5
 [tool.pylint.format]
 max-line-length = 79
 
-[tool.pylint.messages_control]
-
 [tool.pylint.imports]
 
 [tool.pylint.logging]
 logging-format-style = "new"
+
+[tool.pylint.messages_control]
 
 [tool.pylint."messages control"]
 disable = "empty-comment"  # show errors with the license header
@@ -160,25 +181,6 @@ spelling-ignore-words = "bool, datetime"
 [tool.pylint.typecheck]
 
 [tool.pylint.variables]
-
-
-[tool.mypy]
-namespace_packages = false
-show_error_context = true
-show_column_numbers = true
-pretty = true
-error_summary = true
-warn_return_any = true
-warn_redundant_casts = true
-warn_unused_configs = true
-
-[[tool.mypy.overrides]]
-module = "cx_Freeze.*"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "pythorhead.*"
-ignore_missing_imports = true
 
 
 [tool.ruff]
