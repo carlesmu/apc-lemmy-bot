@@ -180,7 +180,8 @@ class Event:
         """
         Return a title with part of the short description `self.otd`.
 
-        It returns the text before the latest dot+space.
+        .. versionchanged: 0.7.0
+           It returns the text before the latest dot+space.
 
         Parameters
         ----------
@@ -217,7 +218,7 @@ class Event:
                     " Sr",
                     " U.S",
                     " U.S.A",
-                    " V",  # for Eugene V. Debes
+                    " V",  # for Eugene V. Debs
                 )
             ):
                 return new_title  # We have found a full sentence
@@ -269,7 +270,7 @@ class Event:
         str
             The event content.
 
-        .. changedversion: 5.5.1
+        .. versionchanged: 5.5.1
            Remove spaces from tags and their search link.
 
         """
