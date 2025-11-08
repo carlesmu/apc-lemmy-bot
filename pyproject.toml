@@ -300,7 +300,7 @@ docs-man = { cmd = '''
   echo "- cd docs && make man:" && cd docs && make man
   ''', help = "creates manpage" }
 lint = { cmd = '''
-  task lint-mypy && task lint-src && task lint-doc && lint-cesp
+  task lint-mypy && task lint-src && task lint-doc && task lint-cesp
   ''', help = "runs all lint-* tests" }
 lint-src = { cmd = '''
   echo "- pylint --enable-all-extensions {t_src}:" &&
