@@ -194,7 +194,7 @@ class EventsExtended(Base):  # pylint: disable=R0903  # Too few public methods
 
     id_int: saorm.Mapped[int] = saorm.mapped_column(primary_key=True)
 
-    # We use unique = try in the foreigns keys to force a 1 to 1 relation
+    # We use unique = try in the foreigners keys to force a 1 to 1 relation
     event_id_int = saorm.mapped_column(
         sa.ForeignKey("events.id_int"),
         unique=True,
@@ -301,11 +301,11 @@ class Database:
         """
         self.metadata.create_all(self.engine)
         with saorm.sessionmaker(self.engine)() as session:
-            for key, value in [
+            for key, value in (
                 ("apl_lemmy_bot_version", f"{__version__}"),
                 ("creation_date", f"{datetime.datetime.now(tz=datetime.UTC)}"),
                 ("last_change", f"{datetime.datetime.now(tz=datetime.UTC)}"),
-            ]:
+            ):
                 info: Info = Info(key=key, value=value)
                 session.add(info)
             session.commit()

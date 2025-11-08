@@ -24,7 +24,7 @@ LEMMY_MAX_TITLE_LENGTH: int = 199
 
 @dataclass
 class ApcLemmyBotSupabaseConf:
-    """A data class for Supabase data conf."""
+    """A data class for Supabase data configuration."""
 
     url: str = ""  # Not initialized
     key: str = ""  # Not initialized
@@ -34,7 +34,7 @@ class ApcLemmyBotSupabaseConf:
 
 @dataclass
 class ApcLemmyBotLemmyConf:
-    """A data class for Lemmy instances conf."""
+    """A data class for Lemmy instances configuration."""
 
     instance: str = "https://lemmy.world"
     user: str = "roig"

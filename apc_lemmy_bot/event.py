@@ -49,7 +49,7 @@ class Event:
         Parameters
         ----------
         event : dict
-            A dictionary with de event data.
+            A dictionary with event data.
         base_event_url : Optional[str], optional
             The base/common URL shared for the events. The default is None.
         base_event_img_url : Optional[str], optional
@@ -57,8 +57,6 @@ class Event:
         force_langcode : Optional[str], optional
             The ISO 639-2 language code in which the event has been written.
             The default is None.
-         : TYPE
-            DESCRIPTION.
 
         Returns
         -------
@@ -180,7 +178,7 @@ class Event:
         """
         Return a title with part of the short description `self.otd`.
 
-        .. versionchanged: 0.7.0
+        .. versionchanged:: 0.7.0
            It returns the text before the latest dot+space.
 
         Parameters
@@ -270,7 +268,7 @@ class Event:
         str
             The event content.
 
-        .. versionchanged: 5.5.1
+        .. versionchanged:: 5.5.1
            Remove spaces from tags and their search link.
 
         """

@@ -107,6 +107,7 @@ generate-setup-file = false
 python = ">=3.13,<3.14"
 
 [tool.poetry.group.dev.dependencies]
+codespell = "^2.4.1"
 commitizen = ">=4.8.2,<5.0.0"
 cx-freeze = ">=8.3.0,<9.0.0"
 mypy = ">=1.16.0,<2.0.0"
@@ -119,7 +120,6 @@ sqlalchemy = {extras = ["mypy"], version = ">=2.0.41,<2.1.0"}  # same version th
 taskipy = ">=1.14.1,<2.0.0"
 trove-classifiers = "^2025.3.19.19"  # for classifiers in this file
 types-sqlalchemy-utils = "^1.1.0"
-codespell = "^2.4.1"
 
 [tool.poetry.group."dev.docs".dependencies]
 make = "^0.1.6.post2"
@@ -135,31 +135,27 @@ sphinx-sitemap = "^2.6.0"
 fawltydeps = "^0.20.0"
 
 
+[tool.pylint.basic]
+docstring-min-length = 5
+
 [tool.pylint.main]
 recursive = true
 suggestion-mode = true
 exit-zero = true
-load-plugins="pylint.extensions.docparams"
-
-[tool.pylint.basic]
-docstring-min-length = 5
+load-plugins = "pylint.extensions.docparams"
+disable = ["empty-comment", "docstring-first-line-empty"]
 
 [tool.pylint.design]
 
 [tool.pylint.exceptions]
 
 [tool.pylint.format]
-max-line-length = 79
+max-line-length = 100
 
 [tool.pylint.imports]
 
 [tool.pylint.logging]
 logging-format-style = "new"
-
-[tool.pylint.messages_control]
-
-[tool.pylint."messages control"]
-disable = "empty-comment"  # show errors with the license header
 
 [tool.pylint.method_args]
 
@@ -174,6 +170,7 @@ score = true
 [tool.pylint.similarities]
 
 [tool.pylint.spelling]
+max-spelling-suggestions = 6
 spelling-dict = "en_US"
 spelling-private-dict-file = "scripts/extended-dictionary.txt"
 spelling-ignore-words = "bool, datetime"
