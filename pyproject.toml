@@ -1,3 +1,7 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
 [project]
 # Used by cx_Freeze
 name = "apc-lemmy-bot"
@@ -28,6 +32,56 @@ dependencies = [
 [project.scripts]
 apc_lemmy_bot = "apc_lemmy_bot.__main__:main"
 
+
+[tool.codespell]
+skip = "*.po,poetry.lock"
+count = false
+quiet = 3
+
+
+[tool.commitizen]
+# See: https://commitizen-tools.github.io/commitizen/
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "pep621"
+update_changelog_on_bump = true
+major_version_zero = true  # TODO: change it when version >= 1.0.0
+version_files = [
+    "apc_lemmy_bot/__init__.py:^__version__",
+    "docs/source/conf.py:^release",
+    "pyproject.toml:^version",
+]
+
+
+[tool.cxfreeze]
+executables = [
+    {script="apc_lemmy_bot/__main__.py", base="console", target_name="apc-lemmy-bot"}
+]
+
+[tool.cxfreeze.build_exe]
+excludes = ["unittest"]
+
+
+[tool.mypy]
+namespace_packages = false
+show_error_context = true
+show_column_numbers = true
+pretty = true
+error_summary = true
+warn_return_any = true
+warn_redundant_casts = true
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = "cx_Freeze.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pythorhead.*"
+ignore_missing_imports = true
+
+
 [tool.poetry]
 packages = [
     {include = "apc_lemmy_bot"}
@@ -43,19 +97,17 @@ include = [
 ]
 exclude = []
 
-
-[tool.cxfreeze]
-executables = [
-    {script="apc_lemmy_bot/__main__.py", base="console", target_name="apc-lemmy-bot"}
-]
-
-[tool.cxfreeze.build_exe]
-excludes = ["unittest"]
+[tool.poetry.build]
+generate-setup-file = false
+# use `poetry run task build` got generate the standalone executable
+# script is used before the full build
+# script
 
 [tool.poetry.dependencies]
 python = ">=3.13,<3.14"
 
 [tool.poetry.group.dev.dependencies]
+codespell = "^2.4.1"
 commitizen = ">=4.8.2,<5.0.0"
 cx-freeze = ">=8.3.0,<9.0.0"
 mypy = ">=1.16.0,<2.0.0"
@@ -83,55 +135,27 @@ sphinx-sitemap = "^2.6.0"
 fawltydeps = "^0.20.0"
 
 
-[tool.commitizen]
-# See: https://commitizen-tools.github.io/commitizen/
-name = "cz_conventional_commits"
-tag_format = "v$version"
-version_scheme = "pep440"
-version_provider = "pep621"
-update_changelog_on_bump = true
-major_version_zero = true  # TODO: change it when version >= 1.0.0
-version_files = [
-    "apc_lemmy_bot/__init__.py:^__version__",
-    "docs/source/conf.py:^release",
-    "pyproject.toml:^version",
-]
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.build]
-generate-setup-file = false
-# use `poetry run task build` got generate the standalone executable
-# script is used before the full build
-# script
+[tool.pylint.basic]
+docstring-min-length = 5
 
 [tool.pylint.main]
 recursive = true
 suggestion-mode = true
 exit-zero = true
-load-plugins="pylint.extensions.docparams"
-
-[tool.pylint.basic]
-docstring-min-length = 5
+load-plugins = "pylint.extensions.docparams"
+disable = ["empty-comment", "docstring-first-line-empty"]
 
 [tool.pylint.design]
 
 [tool.pylint.exceptions]
 
 [tool.pylint.format]
-max-line-length = 79
-
-[tool.pylint.messages_control]
+max-line-length = 100
 
 [tool.pylint.imports]
 
 [tool.pylint.logging]
 logging-format-style = "new"
-
-[tool.pylint."messages control"]
-disable = "empty-comment"  # show errors with the license header
 
 [tool.pylint.method_args]
 
@@ -146,6 +170,7 @@ score = true
 [tool.pylint.similarities]
 
 [tool.pylint.spelling]
+max-spelling-suggestions = 6
 spelling-dict = "en_US"
 spelling-private-dict-file = "scripts/extended-dictionary.txt"
 spelling-ignore-words = "bool, datetime"
@@ -153,25 +178,6 @@ spelling-ignore-words = "bool, datetime"
 [tool.pylint.typecheck]
 
 [tool.pylint.variables]
-
-
-[tool.mypy]
-namespace_packages = false
-show_error_context = true
-show_column_numbers = true
-pretty = true
-error_summary = true
-warn_return_any = true
-warn_redundant_casts = true
-warn_unused_configs = true
-
-[[tool.mypy.overrides]]
-module = "cx_Freeze.*"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "pythorhead.*"
-ignore_missing_imports = true
 
 
 [tool.ruff]
@@ -257,6 +263,7 @@ ignore = [
 "apc_lemmy_bot/resilient_uuid.py" = [
     "A001",    # flake8-builtins: builtin-variable-shadowing
     "A002",    # flake8-builtins: builtin-argument-shadowing
+    "ANN001",  # flake8-annotations: missing-type-function-argument
     "ANN401",  # flake8-annotations: any-type
     ]
 
@@ -274,17 +281,41 @@ t_src = "scripts/*.py apc_lemmy_bot"
 
 [tool.taskipy.tasks]
 # These tasks can be run with .venv/bin/poetry run task
-build = {cmd = "cxfreeze build && poetry build", help = "builds the package"}
+build = { cmd = '''
+  echo "- cxfreeze build:" && cxfreeze build
+  echo "- poetry build:" && poetry build
+''', help = "builds the package" }
+clean = { cmd = '''
+  echo "- python scripts/clean.py" && python scripts/clean.py
+  ''', help = "runs scripts/clean.py" }
 build-all = {cmd = "task build && task docs", help = "builds the package and the docs"}
-clean = {cmd = "python scripts/clean.py", help = "runs scripts/clean.py" }
-docs-all = {cmd = "task docs-html && task docs-man", help = "creates all docs" }
-docs = {cmd = "cd docs && make html", help = "creates html docs" }
-docs-man = {cmd = "cd docs && make man", help = "creates manpage" }
-lint = {cmd = "task lint-mypy && task lint-src && task lint-doc", help = "runs all lint-* tests"}
-lint-src = {cmd = "pylint --enable-all-extensions {t_src}", help = "runs pylint"}
-lint-doc = {cmd = "pydocstyle --convention=numpy {t_src}", help = "runs pydocstyle"}
-lint-mypy = {cmd = "mypy {t_src}", help = "runs mypy"}
+docs = { cmd = "task docs-html && task docs-man", help = "creates all docs" }
+docs-html = { cmd = '''
+  echo "- cd docs && make html:" && cd docs && make html
+  ''', help = "creates html docs" }
+docs-man = { cmd = '''
+  echo "- cd docs && make man:" && cd docs && make man
+  ''', help = "creates manpage" }
+lint = { cmd = '''
+  task lint-mypy && task lint-src && task lint-doc && task lint-cesp
+  ''', help = "runs all lint-* tests" }
+lint-src = { cmd = '''
+  echo "- pylint --enable-all-extensions {t_src}:" &&
+  pylint --enable-all-extensions {t_src}
+  ''', help = "runs pylint" }
+lint-doc = { cmd = '''
+  echo "- pydocstyle --convention=numpy {t_src}:" &&
+  pydocstyle --convention=numpy {t_src}
+  ''', help = "runs pydocstyle" }
+lint-mypy = { cmd = '''
+  echo "- mypy {t_src}:" && mypy {t_src}
+  ''', help = "runs mypy" }
+lint-cesp = { cmd ='''
+  echo "- codespell --summary --count:" && codespell --summary --count
+  ''', help = "runs codespell" }
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
-release = {cmd = "scripts/rel.sh", help = "release a new version (see README.md)"}
+release = { cmd = '''
+  echo "scripts/rel.sh:" && scripts/rel.sh
+  ''', help = "release a new version (see README.md)" }

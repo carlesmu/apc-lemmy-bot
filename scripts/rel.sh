@@ -44,7 +44,7 @@ echo ""
 echo "notes"
 echo "-----"
 echo "If you not confirm it. You can copy paste the \`cmd\` to call it"
-echo "directy."
+echo "directly."
 echo ""
 
 # tmpfile and tmpfile content ------------------------------------------------

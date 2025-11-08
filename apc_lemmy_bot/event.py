@@ -49,7 +49,7 @@ class Event:
         Parameters
         ----------
         event : dict
-            A dictionary with de event data.
+            A dictionary with event data.
         base_event_url : Optional[str], optional
             The base/common URL shared for the events. The default is None.
         base_event_img_url : Optional[str], optional
@@ -57,8 +57,6 @@ class Event:
         force_langcode : Optional[str], optional
             The ISO 639-2 language code in which the event has been written.
             The default is None.
-         : TYPE
-            DESCRIPTION.
 
         Returns
         -------
@@ -180,7 +178,8 @@ class Event:
         """
         Return a title with part of the short description `self.otd`.
 
-        It returns the text before the latest dot+space.
+        .. versionchanged:: 0.7.0
+           It returns the text before the latest dot+space.
 
         Parameters
         ----------
@@ -200,12 +199,16 @@ class Event:
                 width=max_length,
                 placeholder="...",
             )
-        nice_title = f"{self.title} {self.otd}"
+        else:
+            nice_title = f"{self.title} {self.otd}"
+
+        if not nice_title.endswith("..."):
+            return nice_title  # Shorten that max_length
 
         aux_title = nice_title
         while True:
-            aux_title = aux_title.rsplit(". ", 1)[0]
-            if not aux_title.endswith(
+            new_title = aux_title.rsplit(". ", 1)[0]
+            if not new_title.endswith(
                 (
                     " Dr",
                     " Mr",
@@ -213,11 +216,13 @@ class Event:
                     " Sr",
                     " U.S",
                     " U.S.A",
-                    " V",  # for Eugene V. Debes
+                    " V",  # for Eugene V. Debs
                 )
             ):
-                break
-        return aux_title
+                return new_title  # We have found a full sentence
+            if new_title == aux_title:  # Cannot be split
+                return nice_title  # Return the original title
+            aux_title = new_title  # We try to split it another time
 
     def nice_description(self) -> str:
         """
@@ -263,7 +268,7 @@ class Event:
         str
             The event content.
 
-        .. changedversion: 5.5.1
+        .. versionchanged:: 5.5.1
            Remove spaces from tags and their search link.
 
         """

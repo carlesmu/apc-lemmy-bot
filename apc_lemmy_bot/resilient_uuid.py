@@ -15,6 +15,8 @@
 """
 apc_lemmy_bot resilient_uid module.
 
+versionadded: 0.7.0
+
 @author: Carles Muñoz Gorriz <carlesmu@internautas.org>
 """
 
