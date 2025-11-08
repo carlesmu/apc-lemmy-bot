@@ -26,6 +26,13 @@ from sqlalchemy_utils import database_exists
 from apc_lemmy_bot import __version__, apc_lb_conf
 from apc_lemmy_bot.event import Event
 
+# Changing to the new UUID, returns this error (we mantain the uuid import for
+# the SQLAlchemy definitions):
+# > sqlalchemy.orm.exc.MappedAnnotationError: Could not locate SQLAlchemy Core
+# > type for Python type <class 'apc_lemmy_bot.resilient_uuid.UUID'> inside the
+# > 'id_uuid' attribute Mapped annotation
+from apc_lemmy_bot.resilient_uuid import UUID as R_UUID
+
 
 class DatabaseError(Exception):
     """Exception raised for errors connecting to the database."""
@@ -384,7 +391,7 @@ class Database:
 
         """
         view = Events(
-            id_uuid=UUID(event.id),
+            id_uuid=R_UUID(event.id),
             title=event.title,
             slugTitle=event.slugTitle,
             otd=event.otd,
@@ -480,7 +487,7 @@ class Database:
         Parameters
         ----------
         view : Events
-            The row to insert in the database.
+            The row to update in the database.
 
         Returns
         -------
@@ -488,9 +495,22 @@ class Database:
 
         """
         with saorm.sessionmaker(self.engine)() as session:
-            session.add(view)
-            self._update_last_change(session)
+            view_from_database = self.get_view_by_id(view.id_uuid, session)
+
+            view.extended.first_stored_date = (
+                view_from_database.extended.first_stored_date
+            )
+            view.extended.first_stored_timestamp = (
+                view_from_database.extended.first_stored_timestamp
+            )
+            session.expunge(view_from_database)
+            session.flush()
+            # TODO: the expunge is not working ?????
+            # `session.add(view)`
+            # `self._update_last_change(session)`
+
             session.commit()
+            session.close()
 
     def get_views_by_month_day(
         self,
@@ -564,7 +584,7 @@ class Database:
             return self._get_event_from_view(random.choice(not_posted_recent))
         return None
 
-    def update_posted_event(self, id_uuid: UUID, url: str) -> None:
+    def update_posted_event(self, id_uuid: R_UUID, url: str) -> None:
         """Update a posted event in the database."""
         view = self.get_view_by_id(id_uuid)
         timestamp = datetime.datetime.now(tz=datetime.UTC)
@@ -588,28 +608,34 @@ class Database:
             )
             session.commit()
 
-    def get_view_by_id(self, id_uuid: UUID) -> Events | None:
+    def get_view_by_id(
+        self, id_uuid: R_UUID, session: saorm.Session | None = None
+    ) -> Events | None:
         """
         Get a the database Event object associated with a id.
 
         Parameters
         ----------
-        id_uuid : UUID
+        id_uuid : R_UUID
             The *UUID* to look for.
+        session : saorm.Session
+            The SQLAlchemy session object.
 
         Returns
         -------
-        Tuple[Union[Events | None], Union[Event | None]]
+        Events, None
             The event view/row and the event object.
 
         """
-        with saorm.sessionmaker(self.engine)() as session:
+
+        def _get_view() -> Events | None:
+            """Get the view of the event."""
             # Event:
             view: Events | None = None
 
             stmt_events = sa.select(Events).where(Events.id_uuid == id_uuid)
             try:
-                view = session.scalars(stmt_events).one()
+                view = _session.scalars(stmt_events).one()
             except sa.exc.NoResultFound:
                 return None
             if not view:
@@ -627,8 +653,16 @@ class Database:
             _ = (view.tags,)
             _ = (view.extended,)
             _ = view.posted
-
             return view
+
+        if session is None:
+            with saorm.sessionmaker(self.engine)() as _session:
+                view = _get_view()
+                _session.close()
+        else:
+            _session = session
+            view = _get_view()
+        return view
 
     def add_event(self, event: Event, silence: bool = True) -> None:
         """
@@ -657,35 +691,7 @@ class Database:
         def _update() -> None:
             if not silence:
                 print("It was stored. Updating")
-            view = self._create_view_from_event(event)
-
-            view_from_database = Events()
-            view_from_database.id_uuid = view.id_uuid
-            view_from_database.title = view.title
-            view_from_database.slugTitle = view.slugTitle
-            view_from_database.otd = view.otd
-            view_from_database.description = view.description
-            view_from_database.NSFW = view.NSFW
-            view_from_database.date = view.date
-            view_from_database.month = view.month
-            view_from_database.day = view.day
-            view_from_database.langcode = view.langcode
-            view_from_database.images = view.images
-            view_from_database.links = view.links
-            view_from_database.tags = view.tags
-
-            first_stored_date = view_from_database.extended.first_stored_date
-            first_stored_timestamp = (
-                view_from_database.extended.first_stored_timestamp
-            )
-
-            view_from_database.extended = view.extended
-            view_from_database.extended.first_stored_date = first_stored_date
-            view_from_database.extended.first_stored_timestamp = (
-                first_stored_timestamp
-            )
-
-            self._update_event_view(view_from_database)
+            self._update_event_view(self._create_view_from_event(event))
 
         def _store() -> None:
             if not silence:
@@ -693,7 +699,7 @@ class Database:
             self._insert_event_view(self._create_view_from_event(event))
 
         # It's in the database ?
-        view_from_database = self.get_view_by_id(UUID(event.id))
+        view_from_database = self.get_view_by_id(R_UUID(event.id))
         event_from_database = (
             None
             if not view_from_database

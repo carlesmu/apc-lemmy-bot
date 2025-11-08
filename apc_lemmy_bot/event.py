@@ -215,9 +215,9 @@ class Event:
                     " Mr",
                     " Ms",
                     " Sr",
-                    " U.S.A",
                     " U.S",
-                    " V ",  # for Eugene V. Debs
+                    " U.S.A",
+                    " V",  # for Eugene V. Debes
                 )
             ):
                 return new_title  # We have found a full sentence

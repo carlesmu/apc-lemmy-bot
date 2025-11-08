@@ -19,7 +19,8 @@ apc_lemmy_bot resilient_uid module.
 """
 
 import uuid
-from typing import Any
+
+UUID_MAX_LENGTH = 32
 
 
 class UUID(uuid.UUID):
@@ -31,48 +32,23 @@ class UUID(uuid.UUID):
 
     """
 
-    _append_hex = ""
-
     def __init__(
         self,
-        hex=None,
-        bytes=None,
-        bytes_le=None,
-        fields=None,
-        int=None,
-        version=None,
+        hex: str | None = None,
+        bytes: bytes | None = None,
+        bytes_le: bytes | None = None,
+        fields: tuple[int, int, int, int, int, int] | None = None,
+        int: int | None = None,
+        version: int | None = None,
         *,
-        is_safe=uuid.SafeUUID.unknown,
+        is_safe: uuid.SafeUUID = uuid.SafeUUID.unknown,
     ) -> None:
         """Initialize a UUID object."""
         if hex is not None:
             hex = hex.replace("urn:", "").replace("uuid:", "")
             hex = hex.strip("{}").replace("-", "")
-            if len(hex) > 32:  # noqa: PLR2004
-                self._append_hex = hex[:-32]
-                hex = hex[-32:]
+            if len(hex) > UUID_MAX_LENGTH:
+                hex = hex[(-1 * UUID_MAX_LENGTH) :]
         super().__init__(
             hex, bytes, bytes_le, fields, int, version, is_safe=is_safe
         )
-
-    def __str__(self) -> str:
-        """UUID string representation."""
-        hex = f"{self.int:032x}"
-        return f"{self._append_hex}{hex[:8]}-{hex[8:12]}-{hex[12:16]}-{hex[16:20]}-{hex[20:]}"
-
-    def __getattribute__(self, name) -> Any:
-        """Get an attribute."""
-        if name == "hex":
-            return "{}{}".format(
-                object.__getattribute__(self, "_append_hex"),
-                super().__getattribute__("hex"),
-            )
-        return object.__getattribute__(self, name)
-
-    def __setattr__(self, name, value) -> None:
-        """Set an attribute."""
-        if name == "_append_hex":
-            # we need object because super is inmutable
-            object.__setattr__(self, name, value)
-        else:
-            super().__setattr__(name, value)

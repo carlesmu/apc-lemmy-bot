@@ -19,7 +19,6 @@ import datetime
 import tempfile
 from pathlib import Path
 from typing import Annotated, Any
-from uuid import UUID
 
 import typer
 
@@ -32,6 +31,7 @@ from apc_lemmy_bot.lemmy import (
     login,
     upload_img,
 )
+from apc_lemmy_bot.resilient_uuid import UUID
 
 from . import app, callbacks, common
 
