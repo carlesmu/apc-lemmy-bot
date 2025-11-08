@@ -15,7 +15,7 @@ if not Path(POETRY_EXE).is_file():
 def make_clean(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
     """Cleanup."""
     print("- Cleaning environment: ")
-    for directory in [
+    for directory in (
         ".mypy_cache",
         ".ruff_cache",
         "apc_lemmy_bot/__pycache__",
@@ -23,7 +23,7 @@ def make_clean(setup_kwargs: dict[Any, Any]) -> dict[Any, Any]:
         "build",
         "dist",
         "docs/build",
-    ]:
+    ):
         print(f"  - deleting '{directory}'", end=" ... ")
         if Path(directory).exists():
             shutil.rmtree(directory)
