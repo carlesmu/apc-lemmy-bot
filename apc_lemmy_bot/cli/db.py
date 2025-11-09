@@ -106,7 +106,7 @@ def _create_event_post(
         and view.images[0]
         and view.images[0].img
     ):
-        # We upload the img from the database to the instance and we
+        # We upload the image from the database to the instance and we
         # update the url of the image in the event.
         if not silence:
             print("Uploading image", end=" ... ")
@@ -130,11 +130,11 @@ def _create_event_post(
         try:
             img_url = upload_img(lemmy, tmp_file.name)
         except LemmyError as err:
-            Path(tmp_file.name).unlink()  # the tmp file should be removed
+            Path(tmp_file.name).unlink()  # the temp file should be removed
             print(f"\nLemmyError: {err}")
             raise typer.Exit(1) from err
 
-        Path(tmp_file.name).unlink()  # the tmp file should be removed
+        Path(tmp_file.name).unlink()  # the temp file should be removed
 
         event.base_event_img_url = ""
         event.imgSrc = img_url
@@ -248,7 +248,7 @@ def db(
     version: common.opt_version = common.val_version,
 ) -> None:
     """Store events in the database or post or show them."""
-    _ = version  # unused variable required fot the command line
+    _ = version  # unused variable required for the command line
 
     # Some validations
     if from_ == to_:

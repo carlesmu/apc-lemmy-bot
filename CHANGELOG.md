@@ -1,3 +1,20 @@
+## v0.7.0 (2025-11-08)
+
+## v0.6.5 (2025-11-08)
+
+### Fix
+
+- **nice_title**: don't break a paragraph with the dot of ' V.'
+- **uuid**: add a new resilient_uuid.py source code as a workaround for malformed upstream uuids
+- **nice_title**: improve the selection of a nice title and exclude breaking in a V
+- add a new source file to handle UUIDs that could be malformed
+
+### Refactor
+
+- use tuple instead of list
+- improve annotations of UUID/R_UUID
+- **nice_title**: remove unneeded var
+
 ## v0.6.4 (2025-11-03)
 
 ## v0.6.3 (2025-11-03)
@@ -85,7 +102,7 @@
 - improve documentation
 - short long lines
 - use the alias project_copyright instead of copyright
-- use annonymous variable to explicit ignore returns values
+- use anonymous variable to explicit ignore returns values
 - don't use function call in default function argument
 - use 'from' in raised exceptions
 - add explicit stacklevel
@@ -167,15 +184,14 @@
 
 ### Refactor
 
-- **mypy**: more typing compilant
-- **mypy**: more typing compilant
+- **mypy**: more typing compliant
 - added py.typed hint file
 
 ## v0.2.0 (2023-07-03)
 
 ### Feat
 
-- Added suport to langcode in the events and storing in lemmy
+- Added support to langcode in the events and storing in lemmy
 - **event.py**: Use some markdawn in the description (citation)
 
 ### Fix

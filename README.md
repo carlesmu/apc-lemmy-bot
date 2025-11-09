@@ -63,10 +63,10 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    ```
    .venv/bin/poetry install --no-root
    ```
-4. We have definied in our pyproject 3 groups:
+4. We have defined in our pyproject 3 groups:
    - The main dependencies, needed to run `apc-lemmy-bot`, and installed in
      step 3.
-   - The dev dependencies, useful utilities to build and mantain the package,
+   - The dev dependencies, useful utilities to build and maintain the package,
      and installed in step 3.
    - an optional IDE dependencies for `spyder`. SOme times they are not
     autoupload with poetry, ig you are stuck with this problem, you can use:
@@ -83,7 +83,7 @@ Note: depending of the OS, you should use or a `Script` or a `bin` directory.
    git branch dev
    git switch dev
    ```
-2. Optimize/modify/test chanches.
+2. Optimize/modify/test changes.
 3. Add changes and commit them
    ```
    git add [files]

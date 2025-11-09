@@ -36,7 +36,7 @@ def main(
     """
     Post supabase events to a Lemmy instance or show them.
 
-    You can show additional command help information running, by exemple,
+    You can show additional command help information running, by example,
     'apc_lemmy_bot post --help'
     """
 
