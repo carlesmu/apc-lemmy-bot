@@ -261,6 +261,9 @@ ignore = [
     "A002",    # flake8-builtins: builtin-argument-shadowing
     "ANN401",  # flake8-annotations: any-type
     ]
+"tests/**.py" = [
+    "INP001",  # flake8-no-pep420: implicit-namespace-package
+]
 
 [tool.ruff.lint.pycodestyle]
 # convention = "numpy" # TODO: enable this future feature
