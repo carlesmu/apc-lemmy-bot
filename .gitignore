@@ -137,6 +137,9 @@ venv.bak/
 .spyderproject
 .spyproject
 
+# csvodium settings
+.vscode
+
 # Rope project settings
 .ropeproject
 

@@ -134,6 +134,8 @@ sphinx-sitemap = "^2.6.0"
 [tool.poetry.group."dev.tools".dependencies]
 fawltydeps = "^0.20.0"
 
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
 
 [tool.pylint.basic]
 docstring-min-length = 5
@@ -266,6 +268,9 @@ ignore = [
     "ANN001",  # flake8-annotations: missing-type-function-argument
     "ANN401",  # flake8-annotations: any-type
     ]
+"tests/**.py" = [
+    "INP001",  # flake8-no-pep420: implicit-namespace-package
+]
 
 [tool.ruff.lint.pycodestyle]
 # convention = "numpy" # TODO: enable this future feature
@@ -316,6 +321,7 @@ lint-cesp = { cmd ='''
 lintf-src = {cmd = "pylint --enable-all-extensions", help = "runs pylint in a file (argument)"}
 lintf-doc = {cmd = "pydocstyle --convention=numpy", help = "runs pydocstyle in a file (argument)"}
 lintf-mypy = {cmd = "mypy", help = "runs mypy in a file (argument)"}
+test = {cmd = "pytest", help = "runs tests with pytest"}
 release = { cmd = '''
   echo "scripts/rel.sh:" && scripts/rel.sh
   ''', help = "release a new version (see README.md)" }
