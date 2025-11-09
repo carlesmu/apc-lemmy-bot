@@ -43,7 +43,8 @@ jobs:
         poetry run task lint
     - name: Test with pytest
       run: |
-        echo -e "not implemented (pytest)"
+        poetry sync --all-groups
+        poetry run task test
     - name: Test build package
       run: |
         poetry sync --all-groups
